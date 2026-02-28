@@ -28,8 +28,8 @@ extends CharacterBody3D
 # ── Movement ──────────────────────────────────────────────────────────────────
 
 @export_group("Movement")
-@export var walk_speed: float = 4.0       # m/s
-@export var sprint_speed: float = 8.0     # m/s
+@export var walk_speed: float = 10.0       # m/s
+@export var sprint_speed: float = 30.0     # m/s
 ## How quickly the player reaches target speed.
 @export var acceleration: float = 10.0
 ## How quickly the player decelerates when no input is given.
