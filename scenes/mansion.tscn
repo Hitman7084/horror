@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://c1ie1xol5qwms"]
+
+[ext_resource type="PackedScene" uid="uid://bbqain2aor8vs" path="res://scenes/player.tscn" id="1_t0213"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_b0ldg"]
+size = Vector2(280, 220)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t0213"]
+size = Vector3(280, 0.1, 220)
+
+[node name="Mansion" type="Node3D" unique_id=116153108]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1891248236]
+mesh = SubResource("PlaneMesh_b0ldg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1598817989]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=31773182]
+shape = SubResource("BoxShape3D_t0213")
+
+[node name="Player" parent="." unique_id=638567615 instance=ExtResource("1_t0213")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 117, 6, 0)
