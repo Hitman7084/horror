@@ -1,6 +1,5 @@
 [gd_scene format=4 uid="uid://sn6cllppiu2y"]
 
-[ext_resource type="Script" uid="uid://bakfj7e1ux4vk" path="res://scripts/flicker_light.gd" id="1_sugp2"]
 [ext_resource type="Texture2D" uid="uid://cjp5hy0t1gyk2" path="res://assets/mesh/walls/outsideWalls_6.png" id="1_trceg"]
 [ext_resource type="Texture2D" uid="uid://byge8443oqcdo" path="res://assets/mesh/walls/outsideWalls_7.png" id="2_a8y0u"]
 [ext_resource type="Script" uid="uid://ci0a2o381ddqf" path="res://scripts/lightning_manager.gd" id="2_jyhfs"]
@@ -17,7 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://b0fn0edb3bek4" path="res://assets/mesh/walls/Statue/OutsideStatue_1.png" id="8_gqmmt"]
 [ext_resource type="Texture2D" uid="uid://dfjlw8ja7g7aj" path="res://assets/mesh/walls/Statue/OutsideStatue_2.jpg" id="9_yc10j"]
 [ext_resource type="AudioStream" uid="uid://cswlewn5htowp" path="res://assets/sound/gateOpening/gate_opening.wav" id="11_dp3eg"]
-[ext_resource type="Script" uid="uid://bkfi3cakui70t" path="res://scripts/player_controller.gd" id="18_dp3eg"]
+[ext_resource type="PackedScene" uid="uid://c1ie1xol5qwms" path="res://scenes/mansion.tscn" id="17_dp3eg"]
+[ext_resource type="PackedScene" uid="uid://bbqain2aor8vs" path="res://scenes/player.tscn" id="18_dp3eg"]
 
 [sub_resource type="Environment" id="Environment_sgp6g"]
 background_color = Color(0.039215688, 0.039215688, 0.07058824, 1)
@@ -256,46 +256,6 @@ color_ramp = SubResource("GradientTexture1D_ya4ey")
 [sub_resource type="QuadMesh" id="QuadMesh_trceg"]
 size = Vector2(0.01, 0.01)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_o5qli"]
-size = Vector2(36, 36)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_0wfyh"]
-size = Vector3(36, 0.1, 36)
-
-[sub_resource type="BoxMesh" id="BoxMesh_sugp2"]
-size = Vector3(36, 3, 0.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_jyhfs"]
-size = Vector3(36, 3, 0.2)
-
-[sub_resource type="BoxMesh" id="BoxMesh_tbgi4"]
-size = Vector3(17, 3, 0.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_tefeu"]
-size = Vector3(17, 3, 0.2)
-
-[sub_resource type="BoxMesh" id="BoxMesh_o6xl0"]
-size = Vector3(3, 0.5, 0.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_tipki"]
-size = Vector3(3, 0.5, 0.2)
-
-[sub_resource type="BoxMesh" id="BoxMesh_sgp6g"]
-size = Vector3(0.2, 3, 36)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_o5qli"]
-size = Vector3(0.2, 3, 36)
-
-[sub_resource type="BoxMesh" id="BoxMesh_tefeu"]
-size = Vector3(36, 0.2, 36)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_o6xl0"]
-size = Vector3(36, 0.2, 36)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
-radius = 0.3
-height = 1.5
-
 [node name="Main" type="Node3D" unique_id=1114403167]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1272990579]
@@ -306,6 +266,24 @@ transform = Transform3D(0.8660254, -0.3535534, 0.3535534, 0, 0.7071068, 0.707106
 light_color = Color(0.6666667, 0.7490196, 1, 1)
 light_energy = 0.5
 shadow_enabled = true
+
+[node name="LightningManager" type="Node3D" parent="." unique_id=1923313390 node_paths=PackedStringArray("world_env")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+script = ExtResource("2_jyhfs")
+world_env = NodePath("../WorldEnvironment")
+
+[node name="StormLight" type="DirectionalLight3D" parent="LightningManager" unique_id=962903810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 237.0031, 404.62173)
+light_energy = 0.0
+shadow_enabled = true
+
+[node name="StormTimer" type="Timer" parent="LightningManager" unique_id=189824636]
+wait_time = 20.0
+one_shot = true
+
+[node name="ThunderPlayer" type="AudioStreamPlayer" parent="LightningManager" unique_id=541351946]
+stream = ExtResource("3_jyhfs")
+volume_db = -8.0
 
 [node name="OutsideBoundary" type="Node3D" parent="." unique_id=1307619359]
 
@@ -2219,128 +2197,8 @@ light_color = Color(1, 0.4392157, 0.1254902, 1)
 light_energy = 2.0
 shadow_enabled = true
 
-[node name="House" type="Node3D" parent="." unique_id=551016145]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+[node name="Mansion" parent="." unique_id=116153108 instance=ExtResource("17_dp3eg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
 
-[node name="FloorMesh" type="MeshInstance3D" parent="House" unique_id=1835776429]
-mesh = SubResource("PlaneMesh_o5qli")
-
-[node name="FloorCollision" type="StaticBody3D" parent="House" unique_id=111272042]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="House/FloorCollision" unique_id=612629744]
-shape = SubResource("BoxShape3D_0wfyh")
-
-[node name="Walls" type="Node3D" parent="House" unique_id=1392720827]
-
-[node name="WallNorth" type="StaticBody3D" parent="House/Walls" unique_id=1865747574]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -18)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="House/Walls/WallNorth" unique_id=1375513184]
-mesh = SubResource("BoxMesh_sugp2")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Walls/WallNorth" unique_id=2092145285]
-shape = SubResource("BoxShape3D_jyhfs")
-
-[node name="WallSouth" type="StaticBody3D" parent="House/Walls" unique_id=523870710]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 18)
-
-[node name="DoorwayLeft" type="StaticBody3D" parent="House/Walls/WallSouth" unique_id=767084332]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="House/Walls/WallSouth/DoorwayLeft" unique_id=444224317]
-mesh = SubResource("BoxMesh_tbgi4")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Walls/WallSouth/DoorwayLeft" unique_id=212502985]
-shape = SubResource("BoxShape3D_tefeu")
-
-[node name="DoorwayRight" type="StaticBody3D" parent="House/Walls/WallSouth" unique_id=1605299323]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="House/Walls/WallSouth/DoorwayRight" unique_id=1080934490]
-mesh = SubResource("BoxMesh_tbgi4")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Walls/WallSouth/DoorwayRight" unique_id=1963355016]
-shape = SubResource("BoxShape3D_tefeu")
-
-[node name="DoorwayTop" type="StaticBody3D" parent="House/Walls/WallSouth" unique_id=186314100]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.75, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="House/Walls/WallSouth/DoorwayTop" unique_id=631477028]
-mesh = SubResource("BoxMesh_o6xl0")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Walls/WallSouth/DoorwayTop" unique_id=1513297914]
-shape = SubResource("BoxShape3D_tipki")
-
-[node name="WallEast" type="StaticBody3D" parent="House/Walls" unique_id=1730243259]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.5, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="House/Walls/WallEast" unique_id=1203127022]
-mesh = SubResource("BoxMesh_sgp6g")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Walls/WallEast" unique_id=60838975]
-shape = SubResource("BoxShape3D_o5qli")
-
-[node name="WallWest" type="StaticBody3D" parent="House/Walls" unique_id=1916860905]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 1.5, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="House/Walls/WallWest" unique_id=1726289996]
-mesh = SubResource("BoxMesh_sgp6g")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Walls/WallWest" unique_id=339138212]
-shape = SubResource("BoxShape3D_o5qli")
-
-[node name="Ceiling" type="StaticBody3D" parent="House" unique_id=1174058728]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="House/Ceiling" unique_id=1133865875]
-mesh = SubResource("BoxMesh_tefeu")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Ceiling" unique_id=58266657]
-shape = SubResource("BoxShape3D_o6xl0")
-
-[node name="FlickerLight" type="OmniLight3D" parent="House" unique_id=2115905019]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
-light_color = Color(1, 0.84705883, 0.627451, 1)
-light_energy = 1.2
-shadow_enabled = true
-omni_range = 6.0
-script = ExtResource("1_sugp2")
-
-[node name="FlickerTimer" type="Timer" parent="House/FlickerLight" unique_id=1416314832]
-wait_time = 3.0
-one_shot = true
-
-[node name="FlickerStepTimer" type="Timer" parent="House/FlickerLight" unique_id=9437564]
-wait_time = 0.05
-
-[node name="LightningManager" type="Node3D" parent="House" unique_id=1923313390 node_paths=PackedStringArray("world_env")]
-script = ExtResource("2_jyhfs")
-world_env = NodePath("../../WorldEnvironment")
-
-[node name="StormLight" type="DirectionalLight3D" parent="House/LightningManager" unique_id=962903810]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 237.0031, 404.62173)
-light_energy = 0.0
-shadow_enabled = true
-
-[node name="StormTimer" type="Timer" parent="House/LightningManager" unique_id=189824636]
-wait_time = 20.0
-one_shot = true
-
-[node name="ThunderPlayer" type="AudioStreamPlayer" parent="House/LightningManager" unique_id=541351946]
-stream = ExtResource("3_jyhfs")
-volume_db = -8.0
-
-[node name="Player" type="CharacterBody3D" parent="." unique_id=638567615 groups=["player"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 155)
-script = ExtResource("18_dp3eg")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=416583930]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
-shape = SubResource("CapsuleShape3D_u8vuu")
-
-[node name="Head" type="Node3D" parent="Player" unique_id=889981936]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Player/Head" unique_id=566672221]
-fov = 80.0
+[node name="Player" parent="." unique_id=638567615 groups=["player"] instance=ExtResource("18_dp3eg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0)

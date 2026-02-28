@@ -77,6 +77,7 @@ signal stamina_changed(current: float, maximum: float)
 
 @onready var _head: Node3D = $Head
 @onready var _camera: Camera3D = $Head/Camera3D
+@onready var hand_anchor: Node3D = $Head/Camera3D/HandAnchor
 
 
 # ── Internal State ────────────────────────────────────────────────────────────
@@ -94,12 +95,39 @@ var _shake_remaining: float = 0.0
 var _shake_total_duration: float = 1.0   # set by apply_shake; avoids div-by-zero
 var _shake_offset: Vector3 = Vector3.ZERO
 
+# ── Breathing Sway ───────────────────────────────────────────────────────────
+var sway_time := 0.0
+var sway_amount_position := 0.03
+var sway_amount_rotation := 1.5
+var sway_speed := 1.5
+
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
 func _ready() -> void:
 	_stamina = max_stamina
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+func _process(delta: float) -> void:
+	if not hand_anchor:
+		return
+	sway_time += delta * sway_speed
+
+	var pos_offset := Vector3(
+		sin(sway_time) * sway_amount_position,
+		cos(sway_time * 0.5) * sway_amount_position,
+		0.0
+	)
+
+	var rot_offset := Vector3(
+		cos(sway_time) * sway_amount_rotation,
+		sin(sway_time) * sway_amount_rotation,
+		0.0
+	)
+
+	hand_anchor.position = Vector3(0.4, -0.5, -0.8) + pos_offset
+	hand_anchor.rotation_degrees = Vector3(10.0, -15.0, 5.0) + rot_offset
 
 
 func _unhandled_input(event: InputEvent) -> void:
