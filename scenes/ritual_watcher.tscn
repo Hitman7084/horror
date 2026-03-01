@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://m0yupk5tfu32"]
+
+[ext_resource type="Script" uid="uid://bqk5mj516it7j" path="res://scripts/RitualWatcher.gd" id="1_vovif"]
+[ext_resource type="Script" uid="uid://khdiyvrgjjj" path="res://scripts/BehaviorTree.gd" id="2_f35ro"]
+[ext_resource type="Script" uid="uid://ckfiqnt8fn2ds" path="res://scripts/NoiseDetector.gd" id="3_2irh8"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ufdd3"]
+radius = 0.3
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7pcws"]
+radius = 0.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vovif"]
+radius = 70.0
+
+[node name="RitualWatcher" type="CharacterBody3D" unique_id=2111863990]
+script = ExtResource("1_vovif")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=333758176]
+mesh = SubResource("CapsuleMesh_ufdd3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=651358587]
+shape = SubResource("CapsuleShape3D_7pcws")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=488180980]
+
+[node name="BehaviorTree" type="Node3D" parent="." unique_id=35526427]
+script = ExtResource("2_f35ro")
+
+[node name="NoiseDetector" type="Area3D" parent="." unique_id=1645572898]
+script = ExtResource("3_2irh8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NoiseDetector" unique_id=1186106801]
+shape = SubResource("SphereShape3D_vovif")
+
+[node name="ExploreTimer" type="Timer" parent="." unique_id=264864195]

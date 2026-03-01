@@ -86,6 +86,10 @@ var _stamina: float
 var _stamina_regen_timer: float = 0.0
 var _is_sprinting: bool = false
 
+## Current noise level broadcast to nearby AI detectors.
+## 0 = Idle, 1 = Walking, 2 = Jumping, 3 = Sprinting
+var current_noise_level: int = 0
+
 var _bob_time: float = 0.0
 var _bob_offset: Vector3 = Vector3.ZERO
 
@@ -146,6 +150,7 @@ func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
 	_handle_jump()
 	_update_stamina(delta)
+	_update_noise_level()
 	_handle_movement(delta)
 	_handle_head_bob(delta)
 	_process_shake(delta)
@@ -197,6 +202,24 @@ func _update_stamina(delta: float) -> void:
 			_stamina = minf(_stamina + stamina_regen_rate * delta, max_stamina)
 
 	stamina_changed.emit(_stamina, max_stamina)
+
+
+# ── Noise Level ────────────────────────────────────────────────────────────────
+
+func _update_noise_level() -> void:
+	# jump is checked before move_and_slide runs, so velocity.y hasn't been
+	# zeroed yet — is_on_floor() is the reliable ground check here.
+	var just_jumped: bool = Input.is_action_just_pressed("jump") and is_on_floor()
+	var is_moving: bool   = Vector2(velocity.x, velocity.z).length() > 0.5
+
+	if just_jumped:
+		current_noise_level = 2
+	elif _is_sprinting:
+		current_noise_level = 3
+	elif is_moving:
+		current_noise_level = 1
+	else:
+		current_noise_level = 0
 
 
 # ── Movement ──────────────────────────────────────────────────────────────────
