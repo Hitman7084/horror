@@ -29,10 +29,10 @@ func _ready() -> void:
 		# print("[Gate] GateArea signals connected")
 
 func _unhandled_input(event: InputEvent) -> void:
-	# if event.is_action_pressed("gate_interact"):
+	# if event.is_action_pressed("player_interact"):
 	# 	print("[Gate] F pressed | player_nearby=", _player_nearby, " | gate_area assigned=", gate_area != null)
 	var can_interact := _player_nearby if gate_area != null else true
-	if can_interact and event.is_action_pressed("gate_interact"):
+	if can_interact and event.is_action_pressed("player_interact"):
 		_toggle()
 
 # ── Toggle ─────────────────────────────────────────────────────────────────────
