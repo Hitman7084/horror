@@ -34,6 +34,8 @@ extends CharacterBody3D
 @export var acceleration: float = 10.0
 ## How quickly the player decelerates when no input is given.
 @export var friction: float = 14.0
+## Max height of a single stair step the player can automatically step over.
+@export var step_height: float = 0.35
 
 
 # ── Jump & Gravity ─────────────────────────────────────────────────────────────
@@ -93,6 +95,13 @@ var current_noise_level: int = 0
 var _bob_time: float = 0.0
 var _bob_offset: Vector3 = Vector3.ZERO
 
+## Y-position recorded at the end of the last physics frame (step-up detection).
+var _prev_floor_y:     float = 0.0
+## Whether the player was grounded last physics frame.
+var _on_floor_prev:    bool  = false
+## One-shot upward camera bump triggered each time a stair step is climbed.
+var _stair_bob_offset: float = 0.0
+
 # ── Camera Shake ──────────────────────────────────────────────────────────────
 var _shake_magnitude: float = 0.0
 var _shake_remaining: float = 0.0
@@ -111,6 +120,8 @@ var sway_speed := 1.5
 func _ready() -> void:
 	_stamina = max_stamina
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	# Increase snap-down length so CharacterBody3D stays in contact with 0.2 m stairs.
+	floor_snap_length = 0.3
 
 
 func _process(delta: float) -> void:
@@ -152,6 +163,8 @@ func _physics_process(delta: float) -> void:
 	_update_stamina(delta)
 	_update_noise_level()
 	_handle_movement(delta)
+	_handle_step_up()
+	_detect_stair_step(delta)
 	_handle_head_bob(delta)
 	_process_shake(delta)
 	move_and_slide()
@@ -247,6 +260,43 @@ func _handle_movement(delta: float) -> void:
 
 # ── Head Bob ──────────────────────────────────────────────────────────────────
 
+## Automatically steps the player up onto low obstacles (stair steps).
+## Uses test_move() against the player's own collision shape:
+##   • blocked at current height AND clear when raised → it's a step → snap up.
+##   • still blocked when raised           → it's a wall → slide as normal.
+func _handle_step_up() -> void:
+	if not is_on_floor():
+		return
+	var h_vel := Vector3(velocity.x, 0.0, velocity.z)
+	if h_vel.length_squared() < 0.25:   # skip while nearly stationary
+		return
+	var probe := h_vel.normalized() * 0.5   # 0.5 m forward probe
+	if not test_move(global_transform, probe):
+		return   # path is clear — nothing to step over
+	var lifted := global_transform
+	lifted.origin.y += step_height
+	if test_move(lifted, probe):
+		return   # still blocked when raised — it's a wall
+	global_position.y += step_height
+
+
+## Detects stair step-ups by comparing Y position to the previous frame.
+## When a rise > 0.08 m is detected on two consecutive grounded frames,
+## a one-shot upward camera bump is triggered.
+func _detect_stair_step(delta: float) -> void:
+	# Decay the bump every frame so it fades smoothly.
+	_stair_bob_offset = move_toward(_stair_bob_offset, 0.0, bob_smoothing * delta)
+
+	if is_on_floor() and _on_floor_prev:
+		var y_rise: float = global_position.y - _prev_floor_y
+		# 0.08 m threshold: above micro-bumps, below a full 0.2 m step.
+		if y_rise > 0.08:
+			_stair_bob_offset = bob_amplitude * 3.0
+
+	_on_floor_prev = is_on_floor()
+	_prev_floor_y  = global_position.y
+
+
 func _handle_head_bob(delta: float) -> void:
 	var horizontal_speed: float = Vector2(velocity.x, velocity.z).length()
 	var grounded: bool = is_on_floor()
@@ -265,7 +315,7 @@ func _handle_head_bob(delta: float) -> void:
 		# Smoothly return the camera to the neutral position when still or airborne
 		_bob_offset = _bob_offset.lerp(Vector3.ZERO, bob_smoothing * delta)
 
-	_camera.position = _bob_offset + _shake_offset
+	_camera.position = _bob_offset + _shake_offset + Vector3(0.0, _stair_bob_offset, 0.0)
 
 
 # ── Camera Shake ──────────────────────────────────────────────────────────────

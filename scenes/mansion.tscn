@@ -176,15 +176,6 @@ size = Vector3(0.3, 5, 40)
 [sub_resource type="BoxShape3D" id="BoxShape3D_fwhs1"]
 size = Vector3(0.3, 5, 40)
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_8ciwx"]
-geometry_parsed_geometry_type = 1
-geometry_source_geometry_mode = 1
-cell_height = 0.15
-agent_height = 2.0
-agent_radius = 0.3
-agent_max_climb = 0.35
-agent_max_slope = 30.0
-
 [sub_resource type="BoxMesh" id="BoxMesh_ay0ti"]
 size = Vector3(257, 0.3, 230)
 
@@ -426,10 +417,6 @@ one_shot = true
 
 [node name="FlickerStepTimer" type="Timer" parent="Basement/RitualRoom/FlickerLight" unique_id=355140725]
 wait_time = 0.05
-
-[node name="RitualWatcher" parent="Basement/RitualRoom" unique_id=2111863990 node_paths=PackedStringArray("player_node") instance=ExtResource("7_8ciwx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 3)
-player_node = NodePath("../../../GroundFloor/Stairs/Player")
 
 [node name="BoilerRoom" type="Node3D" parent="Basement" unique_id=661286188]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, 0, -60)
@@ -723,6 +710,11 @@ mesh = SubResource("BoxMesh_85jle")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair25" unique_id=1739809592]
 shape = SubResource("BoxShape3D_8ls81")
 
+[node name="RitualWatcher" parent="Basement/BoilerRoom" unique_id=2111863990 node_paths=PackedStringArray("player_node", "patrol_waypoints") instance=ExtResource("7_8ciwx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 3)
+player_node = NodePath("../../../GroundFloor/Stairs/Player")
+patrol_waypoints = [NodePath("../../WaypointRoot/WP_RitualCenter"), NodePath("../../WaypointRoot/WP_RitualEntry"), NodePath("../../WaypointRoot/WP_Hall3_North"), NodePath("../../WaypointRoot/WP_Hall3_South"), NodePath("../../WaypointRoot/WP_Passage_North"), NodePath("../../WaypointRoot/WP_Passage_South"), NodePath("../../WaypointRoot/WP_Hall2_North"), NodePath("../../WaypointRoot/WP_Hall2_Mid"), NodePath("../../WaypointRoot/WP_Hall2_South"), NodePath("../../WaypointRoot/WP_Boiler_Center"), NodePath("../../WaypointRoot/WP_Hall_West"), NodePath("../../WaypointRoot/WP_Hall_Center"), NodePath("../../WaypointRoot/WP_Hall_East"), NodePath("../../WaypointRoot/WP_Storage")]
+
 [node name="Hall" type="Node3D" parent="Basement" unique_id=1397235558]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -100)
 
@@ -940,10 +932,52 @@ mesh = SubResource("BoxMesh_4ntdr")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Hall3/Wall2" unique_id=1615050918]
 shape = SubResource("BoxShape3D_fwhs1")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Basement" unique_id=475511132 groups=["navigation"]]
-navigation_mesh = SubResource("NavigationMesh_8ciwx")
+[node name="WaypointRoot" type="Node3D" parent="Basement" unique_id=161096433]
+
+[node name="WP_RitualCenter" type="Node3D" parent="Basement/WaypointRoot" unique_id=777355381]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, -3.9, 75)
+
+[node name="WP_RitualEntry" type="Node3D" parent="Basement/WaypointRoot" unique_id=1697275923]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, -3.9, 62)
+
+[node name="WP_Hall3_North" type="Node3D" parent="Basement/WaypointRoot" unique_id=956670740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, -3.9, 50)
+
+[node name="WP_Hall3_South" type="Node3D" parent="Basement/WaypointRoot" unique_id=1865039111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, -3.9, 42)
+
+[node name="WP_Passage_North" type="Node3D" parent="Basement/WaypointRoot" unique_id=2083198082]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, -3.9, 18)
+
+[node name="WP_Passage_South" type="Node3D" parent="Basement/WaypointRoot" unique_id=518254671]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, -3.9, 8)
+
+[node name="WP_Hall2_North" type="Node3D" parent="Basement/WaypointRoot" unique_id=304899007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, -3.9, -10)
+
+[node name="WP_Hall2_Mid" type="Node3D" parent="Basement/WaypointRoot" unique_id=465174152]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, -3.9, -30)
+
+[node name="WP_Hall2_South" type="Node3D" parent="Basement/WaypointRoot" unique_id=440365531]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, -3.9, -55)
+
+[node name="WP_Boiler_Center" type="Node3D" parent="Basement/WaypointRoot" unique_id=1173188208]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, -3.9, -60)
+
+[node name="WP_Hall_West" type="Node3D" parent="Basement/WaypointRoot" unique_id=599094069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -3.9, -10)
+
+[node name="WP_Hall_Center" type="Node3D" parent="Basement/WaypointRoot" unique_id=568073742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -3.9, -10)
+
+[node name="WP_Hall_East" type="Node3D" parent="Basement/WaypointRoot" unique_id=366844654]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -3.9, -10)
+
+[node name="WP_Storage" type="Node3D" parent="Basement/WaypointRoot" unique_id=883413756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, -3.9, -90)
 
 [node name="BasementCeiling" type="Node3D" parent="." unique_id=794757617]
+visible = false
 
 [node name="Ceiling1" type="StaticBody3D" parent="BasementCeiling" unique_id=1598817989]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
