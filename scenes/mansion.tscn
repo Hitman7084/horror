@@ -68,6 +68,9 @@ size = Vector3(3, 5, 0.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_8ls81"]
 size = Vector3(3, 5, 0.2)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ramp1"]
+size = Vector3(3, 0.3, 7.9)
+
 [sub_resource type="BoxMesh" id="BoxMesh_5gmoe"]
 size = Vector3(50, 0.3, 2)
 
@@ -493,6 +496,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair1" unique_id=504861034]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair2" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1916359643]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.20000005, -0.20000076)
@@ -502,6 +506,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair2" unique_id=1280869560]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair3" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1302278744]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4000001, -0.39999962)
@@ -511,6 +516,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair3" unique_id=496471859]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair4" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1531555476]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.60000014, -0.6000004)
@@ -520,6 +526,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair4" unique_id=1500590789]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair5" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1309876520]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8000002, -0.80000114)
@@ -529,6 +536,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair5" unique_id=1822206081]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair6" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1338898650]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0000002, -1.0000019)
@@ -538,6 +546,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair6" unique_id=1529548975]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair7" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1471316535]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2000003, -1.2000027)
@@ -547,6 +556,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair7" unique_id=315415740]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair8" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=569602453]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.4000003, -1.4000034)
@@ -556,6 +566,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair8" unique_id=888351957]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair9" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=924785289]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6000004, -1.6000042)
@@ -565,6 +576,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair9" unique_id=1484135576]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair10" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1521004053]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8000002, -1.800005)
@@ -574,6 +586,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair10" unique_id=266858602]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair11" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1134979979]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -2.0000038)
@@ -583,6 +596,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair11" unique_id=1183484680]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair12" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1604652316]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.1999998, -2.2000046)
@@ -592,6 +606,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair12" unique_id=2038741824]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair13" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=712993326]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.3999996, -2.4000053)
@@ -601,6 +616,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair13" unique_id=256887880]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair14" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1745855998]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5999994, -2.600006)
@@ -610,6 +626,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair14" unique_id=1662612992]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair15" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=573697777]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.7999992, -2.8000069)
@@ -619,6 +636,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair15" unique_id=1075187279]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair16" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=270281137]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.999999, -3.0000076)
@@ -628,6 +646,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair16" unique_id=543801191]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair17" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1490074609]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.1999989, -3.2000084)
@@ -637,6 +656,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair17" unique_id=1945341023]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair18" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1555402245]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.3999987, -3.4000092)
@@ -646,6 +666,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair18" unique_id=1695590812]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair19" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1523300851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.5999985, -3.60001)
@@ -655,6 +676,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair19" unique_id=1714095775]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair20" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1038035557]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.7999983, -3.8000107)
@@ -664,6 +686,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair20" unique_id=1142370786]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair21" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=835663490]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.999998, -4.0000114)
@@ -673,6 +696,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair21" unique_id=1315852893]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair22" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=743427697]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.199998, -4.200012)
@@ -682,6 +706,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair22" unique_id=1726025554]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair23" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=2082920355]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.3999977, -4.400013)
@@ -691,6 +716,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair23" unique_id=186885380]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair24" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1388624549]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.5999975, -4.6000137)
@@ -700,6 +726,7 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair24" unique_id=414760354]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
 [node name="Stair25" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=875228887]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7999973, -4.8000145)
@@ -709,11 +736,17 @@ mesh = SubResource("BoxMesh_85jle")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair25" unique_id=1739809592]
 shape = SubResource("BoxShape3D_8ls81")
+disabled = true
 
-[node name="RitualWatcher" parent="Basement/BoilerRoom" unique_id=2111863990 node_paths=PackedStringArray("player_node", "patrol_waypoints") instance=ExtResource("7_8ciwx")]
+[node name="StairRamp" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1574512129]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/StairRamp" unique_id=174062915]
+transform = Transform3D(1, 0, 0, 0, -0.70710677, -0.70710677, 0, 0.70710677, -0.70710677, 0, -0.4, -2.7)
+shape = SubResource("BoxShape3D_ramp1")
+
+[node name="RitualWatcher" parent="Basement/BoilerRoom" unique_id=2111863990 node_paths=PackedStringArray("player_node") instance=ExtResource("7_8ciwx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 3)
 player_node = NodePath("../../../GroundFloor/Stairs/Player")
-patrol_waypoints = [NodePath("../../WaypointRoot/WP_RitualCenter"), NodePath("../../WaypointRoot/WP_RitualEntry"), NodePath("../../WaypointRoot/WP_Hall3_North"), NodePath("../../WaypointRoot/WP_Hall3_South"), NodePath("../../WaypointRoot/WP_Passage_North"), NodePath("../../WaypointRoot/WP_Passage_South"), NodePath("../../WaypointRoot/WP_Hall2_North"), NodePath("../../WaypointRoot/WP_Hall2_Mid"), NodePath("../../WaypointRoot/WP_Hall2_South"), NodePath("../../WaypointRoot/WP_Boiler_Center"), NodePath("../../WaypointRoot/WP_Hall_West"), NodePath("../../WaypointRoot/WP_Hall_Center"), NodePath("../../WaypointRoot/WP_Hall_East"), NodePath("../../WaypointRoot/WP_Storage")]
 
 [node name="Hall" type="Node3D" parent="Basement" unique_id=1397235558]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -100)
