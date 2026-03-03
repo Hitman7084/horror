@@ -8,6 +8,10 @@
 [ext_resource type="AudioStream" uid="uid://c2f454uc3xi8t" path="res://assets/sound/door/close_door.wav" id="5_85jle"]
 [ext_resource type="PackedScene" uid="uid://m0yupk5tfu32" path="res://scenes/ritual_watcher.tscn" id="7_8ciwx"]
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_8ciwx"]
+vertices = PackedVector3Array(-131, 0.45000267, -33.4, -122.5, 0.45000267, -33.4, -122.25, 0.45000267, -35.65, -131, 0.45000267, -114.65, -122.25, 0.45000267, -28.150002, -122.5, 0.45000267, -30.400002, -131, 0.45000267, -30.400002, -131, 0.45000267, 114.6, 138, 0.45000267, -114.65, -117.5, 0.45000267, -35.4, -117.75, 0.45000267, -28.150002, 138, 0.45000267, 114.6, 18.75, -4.5499973, -100.4, 18.75, -4.5499973, -99.65, 20.75, -4.5499973, -99.4, 20.75, -4.5499973, -100.65, 69.25, -4.5499973, -114.15, 20.75, -4.5499973, -114.15, 59.75, -4.5499973, -65.4, 59.75, -4.5499973, -29.900002, 60.25, -4.5499973, -30.150002, 60.25, -4.5499973, -65.4, 69.25, -4.5499973, -65.65, 20.75, -4.5499973, -65.65, -129.25, -4.5499973, -68.4, -105.75, -4.5499973, -68.4, -105.75, -4.5499973, -70.4, -105, -4.5499973, -70.65, -105, -4.5499973, -109.15, -129.25, -4.5499973, -109.15, -30.75, -4.5499973, -99.4, -28.75, -4.5499973, -99.65, -28.75, -4.5499973, -100.4, -30.75, -4.5499973, -100.65, -30.75, -4.5499973, -109.15, -104.25, -4.5499973, -70.4, -30.75, -4.5499973, -68.4, -104.25, -4.5499973, -68.4, -120.75, -0.04999733, -29.650002, -119, -0.04999733, -29.650002, -118.75, -4.2999973, -34.15, -121, -4.5499973, -35.65, -120.95, -4.5499973, -34.450005, -120.9, -3.7999973, -33.25, -129.25, -4.5499973, -35.65, -117.75, -4.5499973, -33.9, -105.75, -4.5499973, -31.900002, -117.75, -4.5499973, -31.900002, -104.25, -4.5499973, -29.650002, -105, -4.5499973, -29.400002, -105, -4.5499973, -10.650002, -30.75, -4.5499973, -10.650002, -129.25, -4.5499973, -34.4, -129.25, -4.5499973, -29.650002, -122, -4.5499973, -29.650002, -122, -4.5499973, -34.4, -105.75, -4.5499973, -29.650002, -117.75, -4.5499973, -28.400002, -120, -4.5499973, -28.150002, -120, -4.5499973, -10.650002, 75.25, -4.5499973, 19.599998, 76.75, -4.5499973, 19.349998, 76.75, -4.5499973, 5.8499985, 60.75, -4.5499973, 5.8499985, 74.5, -4.5499973, 19.349998, 59.75, -4.5499973, 5.5999985, 53.25, -4.5499973, 5.8499985, 53.25, -4.5499973, 19.349998, 60.25, -4.5499973, 5.3499985, 74.75, -4.5499973, 40.1, 75.25, -4.5499973, 39.85, -129.25, -4.5499973, -28.400002, -129.25, -4.5499973, -10.650002, 68, -4.5499973, 60.85, 68, -4.5499973, 67.1, 68.75, -4.5499973, 67.35, 74.75, -4.5499973, 60.6, 81.25, -4.5499973, 67.35, 82, -4.5499973, 67.1, 82, -4.5499973, 60.85, 75.75, -4.5499973, 60.85, 68.75, -4.5499973, 68.35, 81.25, -4.5499973, 68.35, 75.25, -4.5499973, 60.35, 60.75, -4.5499973, 68.1, 67.25, -4.5499973, 68.1, 67.25, -4.5499973, 67.35, 60.75, -4.5499973, 60.85, 82.75, -4.5499973, 67.35, 82.75, -4.5499973, 68.1, 89.25, -4.5499973, 68.1, 89.25, -4.5499973, 60.85, 60.75, -4.5499973, 81.85, 67.25, -4.5499973, 81.85, 67.5, -4.5499973, 81.1, 67.5, -4.5499973, 68.85, 68.5, -4.5499973, 81.1, 68.5, -4.5499973, 68.85, 82.5, -4.5499973, 68.85, 82.5, -4.5499973, 81.1, 82.75, -4.5499973, 81.85, 89.25, -4.5499973, 81.85, 81.5, -4.5499973, 68.85, 81.5, -4.5499973, 81.1, 68.75, -4.5499973, 81.6, 81.25, -4.5499973, 81.6, 68, -4.5499973, 89.35, 82, -4.5499973, 89.35, 82, -4.5499973, 82.85, 81.25, -4.5499973, 82.6, 68.75, -4.5499973, 82.6, 68, -4.5499973, 82.85, 67.25, -4.5499973, 82.6, 60.75, -4.5499973, 89.35, 82.75, -4.5499973, 82.6, 89.25, -4.5499973, 89.35)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(10, 9, 8), PackedInt32Array(2, 3, 9), PackedInt32Array(9, 3, 8), PackedInt32Array(7, 10, 11), PackedInt32Array(11, 10, 8), PackedInt32Array(7, 4, 10), PackedInt32Array(12, 15, 13), PackedInt32Array(13, 15, 14), PackedInt32Array(15, 17, 16), PackedInt32Array(21, 20, 18), PackedInt32Array(18, 20, 19), PackedInt32Array(14, 15, 16), PackedInt32Array(21, 18, 22), PackedInt32Array(22, 18, 23), PackedInt32Array(22, 23, 14), PackedInt32Array(22, 14, 16), PackedInt32Array(26, 25, 24), PackedInt32Array(26, 24, 27), PackedInt32Array(27, 24, 28), PackedInt32Array(28, 24, 29), PackedInt32Array(31, 30, 32), PackedInt32Array(32, 30, 33), PackedInt32Array(33, 30, 28), PackedInt32Array(28, 34, 33), PackedInt32Array(27, 28, 35), PackedInt32Array(35, 28, 30), PackedInt32Array(35, 30, 36), PackedInt32Array(36, 37, 35), PackedInt32Array(32, 12, 31), PackedInt32Array(31, 12, 13), PackedInt32Array(41, 40, 42), PackedInt32Array(42, 40, 43), PackedInt32Array(43, 40, 38), PackedInt32Array(38, 40, 39), PackedInt32Array(41, 44, 24), PackedInt32Array(40, 41, 45), PackedInt32Array(45, 41, 46), PackedInt32Array(46, 41, 25), PackedInt32Array(25, 41, 24), PackedInt32Array(46, 47, 45), PackedInt32Array(49, 48, 50), PackedInt32Array(50, 48, 51), PackedInt32Array(37, 36, 48), PackedInt32Array(48, 36, 51), PackedInt32Array(55, 54, 52), PackedInt32Array(52, 54, 53), PackedInt32Array(0, 1, 6), PackedInt32Array(6, 1, 5), PackedInt32Array(46, 56, 47), PackedInt32Array(47, 56, 57), PackedInt32Array(56, 49, 57), PackedInt32Array(57, 49, 58), PackedInt32Array(58, 49, 59), PackedInt32Array(59, 49, 50), PackedInt32Array(60, 64, 61), PackedInt32Array(61, 64, 62), PackedInt32Array(62, 64, 63), PackedInt32Array(65, 63, 66), PackedInt32Array(66, 63, 67), PackedInt32Array(67, 63, 64), PackedInt32Array(20, 68, 19), PackedInt32Array(19, 68, 65), PackedInt32Array(63, 65, 68), PackedInt32Array(70, 69, 60), PackedInt32Array(60, 69, 64), PackedInt32Array(59, 72, 58), PackedInt32Array(58, 72, 71), PackedInt32Array(74, 73, 75), PackedInt32Array(75, 73, 76), PackedInt32Array(78, 77, 79), PackedInt32Array(79, 77, 80), PackedInt32Array(76, 83, 75), PackedInt32Array(75, 83, 81), PackedInt32Array(81, 83, 77), PackedInt32Array(81, 77, 82), PackedInt32Array(70, 83, 69), PackedInt32Array(69, 83, 76), PackedInt32Array(83, 80, 77), PackedInt32Array(86, 85, 84), PackedInt32Array(74, 86, 73), PackedInt32Array(73, 86, 87), PackedInt32Array(87, 86, 84), PackedInt32Array(90, 89, 88), PackedInt32Array(78, 79, 88), PackedInt32Array(88, 79, 91), PackedInt32Array(88, 91, 90), PackedInt32Array(85, 95, 84), PackedInt32Array(84, 95, 94), PackedInt32Array(84, 94, 93), PackedInt32Array(84, 93, 92), PackedInt32Array(95, 97, 94), PackedInt32Array(94, 97, 96), PackedInt32Array(89, 90, 98), PackedInt32Array(98, 90, 99), PackedInt32Array(99, 90, 100), PackedInt32Array(100, 90, 101), PackedInt32Array(98, 99, 102), PackedInt32Array(102, 99, 103), PackedInt32Array(104, 96, 97), PackedInt32Array(102, 103, 105), PackedInt32Array(82, 102, 81), PackedInt32Array(81, 102, 97), PackedInt32Array(97, 102, 105), PackedInt32Array(97, 105, 104), PackedInt32Array(111, 110, 106), PackedInt32Array(106, 110, 109), PackedInt32Array(106, 109, 108), PackedInt32Array(106, 108, 107), PackedInt32Array(110, 104, 109), PackedInt32Array(109, 104, 105), PackedInt32Array(92, 93, 112), PackedInt32Array(111, 106, 112), PackedInt32Array(112, 106, 113), PackedInt32Array(112, 113, 92), PackedInt32Array(114, 100, 101), PackedInt32Array(108, 114, 107), PackedInt32Array(107, 114, 115), PackedInt32Array(115, 114, 101)]
+
 [sub_resource type="BoxMesh" id="BoxMesh_t0213"]
 size = Vector3(30, 0.3, 30)
 
@@ -309,104 +313,113 @@ size = Vector3(1, 2.5, 2.2)
 
 [node name="Mansion" type="Node3D" unique_id=116153108]
 
-[node name="Basement" type="Node3D" parent="." unique_id=336046874]
+[node name="MoonLight" type="DirectionalLight3D" parent="." unique_id=1447115917]
+transform = Transform3D(0.8660254, -0.3535534, 0.3535534, 0, 0.7071068, 0.7071068, -0.5, -0.61237246, 0.61237246, -39.530975, 104.336105, 0)
+light_color = Color(0.6666667, 0.7490196, 1, 1)
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=22832902]
+navigation_mesh = SubResource("NavigationMesh_8ciwx")
+
+[node name="Basement" type="Node3D" parent="NavigationRegion3D" unique_id=336046874]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
 
-[node name="RitualRoom" type="Node3D" parent="Basement" unique_id=1639547491]
+[node name="RitualRoom" type="Node3D" parent="NavigationRegion3D/Basement" unique_id=1639547491]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 75)
 
-[node name="RitualFloor" type="StaticBody3D" parent="Basement/RitualRoom" unique_id=1661528516]
+[node name="RitualFloor" type="StaticBody3D" parent="NavigationRegion3D/Basement/RitualRoom" unique_id=1661528516]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/RitualRoom/RitualFloor" unique_id=1305586953]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualFloor" unique_id=1305586953]
 mesh = SubResource("BoxMesh_t0213")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/RitualRoom/RitualFloor" unique_id=1715644494]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualFloor" unique_id=1715644494]
 shape = SubResource("BoxShape3D_b0ldg")
 
-[node name="pillar2" type="StaticBody3D" parent="Basement/RitualRoom" unique_id=824361633]
+[node name="pillar2" type="StaticBody3D" parent="NavigationRegion3D/Basement/RitualRoom" unique_id=824361633]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2.5, 7)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/RitualRoom/pillar2" unique_id=1194609762]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/RitualRoom/pillar2" unique_id=1194609762]
 mesh = SubResource("BoxMesh_b0ldg")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/RitualRoom/pillar2" unique_id=227113312]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/RitualRoom/pillar2" unique_id=227113312]
 shape = SubResource("BoxShape3D_e71x4")
 
-[node name="pillar3" type="StaticBody3D" parent="Basement/RitualRoom" unique_id=1361802419]
+[node name="pillar3" type="StaticBody3D" parent="NavigationRegion3D/Basement/RitualRoom" unique_id=1361802419]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 2.5, 7)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/RitualRoom/pillar3" unique_id=1965167463]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/RitualRoom/pillar3" unique_id=1965167463]
 mesh = SubResource("BoxMesh_b0ldg")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/RitualRoom/pillar3" unique_id=2067704411]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/RitualRoom/pillar3" unique_id=2067704411]
 shape = SubResource("BoxShape3D_e71x4")
 
-[node name="pillar4" type="StaticBody3D" parent="Basement/RitualRoom" unique_id=1335616551]
+[node name="pillar4" type="StaticBody3D" parent="NavigationRegion3D/Basement/RitualRoom" unique_id=1335616551]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 2.5, -7)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/RitualRoom/pillar4" unique_id=679918795]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/RitualRoom/pillar4" unique_id=679918795]
 mesh = SubResource("BoxMesh_b0ldg")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/RitualRoom/pillar4" unique_id=1465150918]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/RitualRoom/pillar4" unique_id=1465150918]
 shape = SubResource("BoxShape3D_e71x4")
 
-[node name="pillar5" type="StaticBody3D" parent="Basement/RitualRoom" unique_id=920063315]
+[node name="pillar5" type="StaticBody3D" parent="NavigationRegion3D/Basement/RitualRoom" unique_id=920063315]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2.5, -7)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/RitualRoom/pillar5" unique_id=240941937]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/RitualRoom/pillar5" unique_id=240941937]
 mesh = SubResource("BoxMesh_b0ldg")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/RitualRoom/pillar5" unique_id=396668313]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/RitualRoom/pillar5" unique_id=396668313]
 shape = SubResource("BoxShape3D_e71x4")
 
-[node name="RitualWalls" type="Node3D" parent="Basement/RitualRoom" unique_id=803619318]
+[node name="RitualWalls" type="Node3D" parent="NavigationRegion3D/Basement/RitualRoom" unique_id=803619318]
 
-[node name="Wall" type="StaticBody3D" parent="Basement/RitualRoom/RitualWalls" unique_id=395030048]
+[node name="Wall" type="StaticBody3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls" unique_id=395030048]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/RitualRoom/RitualWalls/Wall" unique_id=809779947]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls/Wall" unique_id=809779947]
 mesh = SubResource("BoxMesh_r5cxe")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/RitualRoom/RitualWalls/Wall" unique_id=542134122]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls/Wall" unique_id=542134122]
 shape = SubResource("BoxShape3D_uymgw")
 
-[node name="Wall2" type="StaticBody3D" parent="Basement/RitualRoom/RitualWalls" unique_id=639632959]
+[node name="Wall2" type="StaticBody3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls" unique_id=639632959]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/RitualRoom/RitualWalls/Wall2" unique_id=231197860]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls/Wall2" unique_id=231197860]
 mesh = SubResource("BoxMesh_r5cxe")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/RitualRoom/RitualWalls/Wall2" unique_id=1605724233]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls/Wall2" unique_id=1605724233]
 shape = SubResource("BoxShape3D_uymgw")
 
-[node name="Wall3" type="StaticBody3D" parent="Basement/RitualRoom/RitualWalls" unique_id=1220103057]
+[node name="Wall3" type="StaticBody3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls" unique_id=1220103057]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.5, 15)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/RitualRoom/RitualWalls/Wall3" unique_id=1365404861]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls/Wall3" unique_id=1365404861]
 mesh = SubResource("BoxMesh_r5cxe")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/RitualRoom/RitualWalls/Wall3" unique_id=1683269237]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls/Wall3" unique_id=1683269237]
 shape = SubResource("BoxShape3D_uymgw")
 
-[node name="RitualDoorWall" type="StaticBody3D" parent="Basement/RitualRoom/RitualWalls" unique_id=1709200662]
+[node name="RitualDoorWall" type="StaticBody3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls" unique_id=1709200662]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2.5, -15)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/RitualRoom/RitualWalls/RitualDoorWall" unique_id=585320221]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls/RitualDoorWall" unique_id=585320221]
 mesh = SubResource("BoxMesh_be2l0")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/RitualRoom/RitualWalls/RitualDoorWall" unique_id=49324953]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls/RitualDoorWall" unique_id=49324953]
 shape = SubResource("BoxShape3D_8ciwx")
 
-[node name="RitualDoorWall2" type="StaticBody3D" parent="Basement/RitualRoom/RitualWalls" unique_id=2006931184]
+[node name="RitualDoorWall2" type="StaticBody3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls" unique_id=2006931184]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2.5, -15)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/RitualRoom/RitualWalls/RitualDoorWall2" unique_id=2012342690]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls/RitualDoorWall2" unique_id=2012342690]
 mesh = SubResource("BoxMesh_be2l0")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/RitualRoom/RitualWalls/RitualDoorWall2" unique_id=478126764]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/RitualRoom/RitualWalls/RitualDoorWall2" unique_id=478126764]
 shape = SubResource("BoxShape3D_8ciwx")
 
-[node name="FlickerLight" type="OmniLight3D" parent="Basement/RitualRoom" unique_id=766931682]
+[node name="FlickerLight" type="OmniLight3D" parent="NavigationRegion3D/Basement/RitualRoom" unique_id=766931682]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 light_color = Color(1, 0.84705883, 0.627451, 1)
 light_energy = 1.2
@@ -414,702 +427,702 @@ shadow_enabled = true
 omni_range = 6.0
 script = ExtResource("1_b0ldg")
 
-[node name="FlickerTimer" type="Timer" parent="Basement/RitualRoom/FlickerLight" unique_id=1248484519]
+[node name="FlickerTimer" type="Timer" parent="NavigationRegion3D/Basement/RitualRoom/FlickerLight" unique_id=1248484519]
 wait_time = 3.0
 one_shot = true
 
-[node name="FlickerStepTimer" type="Timer" parent="Basement/RitualRoom/FlickerLight" unique_id=355140725]
+[node name="FlickerStepTimer" type="Timer" parent="NavigationRegion3D/Basement/RitualRoom/FlickerLight" unique_id=355140725]
 wait_time = 0.05
 
-[node name="BoilerRoom" type="Node3D" parent="Basement" unique_id=661286188]
+[node name="RitualWatcher" parent="NavigationRegion3D/Basement/RitualRoom" unique_id=2111863990 node_paths=PackedStringArray("player_node") instance=ExtResource("7_8ciwx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+player_node = NodePath("../../../GroundFloor/Stairs/Player")
+
+[node name="BoilerRoom" type="Node3D" parent="NavigationRegion3D/Basement" unique_id=661286188]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, 0, -60)
 
-[node name="BoilerFloor" type="StaticBody3D" parent="Basement/BoilerRoom" unique_id=1990937401]
+[node name="BoilerFloor" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom" unique_id=1990937401]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/BoilerFloor" unique_id=2022883663]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerFloor" unique_id=2022883663]
 mesh = SubResource("BoxMesh_e71x4")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/BoilerFloor" unique_id=523415208]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerFloor" unique_id=523415208]
 shape = SubResource("BoxShape3D_r5cxe")
 
-[node name="BoilerWall" type="StaticBody3D" parent="Basement/BoilerRoom" unique_id=1011305777]
+[node name="BoilerWall" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom" unique_id=1011305777]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 50)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/BoilerWall" unique_id=816211467]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerWall" unique_id=816211467]
 mesh = SubResource("BoxMesh_uymgw")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/BoilerWall" unique_id=822722303]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerWall" unique_id=822722303]
 shape = SubResource("BoxShape3D_be2l0")
 
-[node name="BoilerWall2" type="StaticBody3D" parent="Basement/BoilerRoom" unique_id=1939468369]
+[node name="BoilerWall2" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom" unique_id=1939468369]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -50)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/BoilerWall2" unique_id=13878742]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerWall2" unique_id=13878742]
 mesh = SubResource("BoxMesh_uymgw")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/BoilerWall2" unique_id=229506099]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerWall2" unique_id=229506099]
 shape = SubResource("BoxShape3D_be2l0")
 
-[node name="BoilerWall3" type="StaticBody3D" parent="Basement/BoilerRoom" unique_id=729698472]
+[node name="BoilerWall3" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom" unique_id=729698472]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -50, 2.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/BoilerWall3" unique_id=324730867]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerWall3" unique_id=324730867]
 mesh = SubResource("BoxMesh_uymgw")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/BoilerWall3" unique_id=480606277]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerWall3" unique_id=480606277]
 shape = SubResource("BoxShape3D_be2l0")
 
-[node name="BoilerWall4" type="StaticBody3D" parent="Basement/BoilerRoom" unique_id=1165630406]
+[node name="BoilerWall4" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom" unique_id=1165630406]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 2.5, 5.5)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/BoilerWall4" unique_id=613412552]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerWall4" unique_id=613412552]
 mesh = SubResource("BoxMesh_wdmtw")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/BoilerWall4" unique_id=1946347439]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerWall4" unique_id=1946347439]
 shape = SubResource("BoxShape3D_sk0me")
 
-[node name="BoilerWall5" type="StaticBody3D" parent="Basement/BoilerRoom" unique_id=1650236388]
+[node name="BoilerWall5" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom" unique_id=1650236388]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 2.5, -45.5)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/BoilerWall5" unique_id=729413978]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerWall5" unique_id=729413978]
 mesh = SubResource("BoxMesh_hsyp7")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/BoilerWall5" unique_id=1679201799]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/BoilerWall5" unique_id=1679201799]
 shape = SubResource("BoxShape3D_5gq5o")
 
-[node name="SegmentWall" type="StaticBody3D" parent="Basement/BoilerRoom" unique_id=1053304927]
+[node name="SegmentWall" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom" unique_id=1053304927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, 10)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/SegmentWall" unique_id=757255269]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/SegmentWall" unique_id=757255269]
 mesh = SubResource("BoxMesh_8ciwx")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/SegmentWall" unique_id=1481851681]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/SegmentWall" unique_id=1481851681]
 shape = SubResource("BoxShape3D_ay0ti")
 
-[node name="Stairs" type="Node3D" parent="Basement/BoilerRoom" unique_id=1586581360]
+[node name="Stairs" type="Node3D" parent="NavigationRegion3D/Basement/BoilerRoom" unique_id=1586581360]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 2.5, 31)
 
-[node name="Stair1" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=568186297]
+[node name="Stair1" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=568186297]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair1" unique_id=1891932737]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair1" unique_id=1891932737]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair1" unique_id=504861034]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair1" unique_id=504861034]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair2" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1916359643]
+[node name="Stair2" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1916359643]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.20000005, -0.20000076)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair2" unique_id=1761285544]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair2" unique_id=1761285544]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair2" unique_id=1280869560]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair2" unique_id=1280869560]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair3" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1302278744]
+[node name="Stair3" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1302278744]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4000001, -0.39999962)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair3" unique_id=1605799856]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair3" unique_id=1605799856]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair3" unique_id=496471859]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair3" unique_id=496471859]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair4" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1531555476]
+[node name="Stair4" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1531555476]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.60000014, -0.6000004)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair4" unique_id=697182128]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair4" unique_id=697182128]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair4" unique_id=1500590789]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair4" unique_id=1500590789]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair5" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1309876520]
+[node name="Stair5" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1309876520]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8000002, -0.80000114)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair5" unique_id=1344625519]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair5" unique_id=1344625519]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair5" unique_id=1822206081]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair5" unique_id=1822206081]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair6" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1338898650]
+[node name="Stair6" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1338898650]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0000002, -1.0000019)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair6" unique_id=83456444]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair6" unique_id=83456444]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair6" unique_id=1529548975]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair6" unique_id=1529548975]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair7" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1471316535]
+[node name="Stair7" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1471316535]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2000003, -1.2000027)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair7" unique_id=1036288608]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair7" unique_id=1036288608]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair7" unique_id=315415740]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair7" unique_id=315415740]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair8" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=569602453]
+[node name="Stair8" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=569602453]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.4000003, -1.4000034)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair8" unique_id=1345686708]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair8" unique_id=1345686708]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair8" unique_id=888351957]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair8" unique_id=888351957]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair9" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=924785289]
+[node name="Stair9" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=924785289]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6000004, -1.6000042)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair9" unique_id=1643265377]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair9" unique_id=1643265377]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair9" unique_id=1484135576]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair9" unique_id=1484135576]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair10" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1521004053]
+[node name="Stair10" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1521004053]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8000002, -1.800005)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair10" unique_id=836868780]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair10" unique_id=836868780]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair10" unique_id=266858602]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair10" unique_id=266858602]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair11" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1134979979]
+[node name="Stair11" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1134979979]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -2.0000038)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair11" unique_id=1248275636]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair11" unique_id=1248275636]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair11" unique_id=1183484680]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair11" unique_id=1183484680]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair12" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1604652316]
+[node name="Stair12" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1604652316]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.1999998, -2.2000046)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair12" unique_id=1538576284]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair12" unique_id=1538576284]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair12" unique_id=2038741824]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair12" unique_id=2038741824]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair13" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=712993326]
+[node name="Stair13" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=712993326]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.3999996, -2.4000053)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair13" unique_id=1025279508]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair13" unique_id=1025279508]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair13" unique_id=256887880]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair13" unique_id=256887880]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair14" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1745855998]
+[node name="Stair14" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1745855998]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5999994, -2.600006)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair14" unique_id=1257634943]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair14" unique_id=1257634943]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair14" unique_id=1662612992]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair14" unique_id=1662612992]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair15" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=573697777]
+[node name="Stair15" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=573697777]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.7999992, -2.8000069)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair15" unique_id=1637643866]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair15" unique_id=1637643866]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair15" unique_id=1075187279]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair15" unique_id=1075187279]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair16" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=270281137]
+[node name="Stair16" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=270281137]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.999999, -3.0000076)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair16" unique_id=1265708083]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair16" unique_id=1265708083]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair16" unique_id=543801191]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair16" unique_id=543801191]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair17" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1490074609]
+[node name="Stair17" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1490074609]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.1999989, -3.2000084)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair17" unique_id=922132778]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair17" unique_id=922132778]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair17" unique_id=1945341023]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair17" unique_id=1945341023]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair18" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1555402245]
+[node name="Stair18" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1555402245]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.3999987, -3.4000092)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair18" unique_id=675721326]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair18" unique_id=675721326]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair18" unique_id=1695590812]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair18" unique_id=1695590812]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair19" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1523300851]
+[node name="Stair19" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1523300851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.5999985, -3.60001)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair19" unique_id=645308093]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair19" unique_id=645308093]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair19" unique_id=1714095775]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair19" unique_id=1714095775]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair20" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1038035557]
+[node name="Stair20" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1038035557]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.7999983, -3.8000107)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair20" unique_id=1129475201]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair20" unique_id=1129475201]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair20" unique_id=1142370786]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair20" unique_id=1142370786]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair21" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=835663490]
+[node name="Stair21" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=835663490]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.999998, -4.0000114)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair21" unique_id=1308297261]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair21" unique_id=1308297261]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair21" unique_id=1315852893]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair21" unique_id=1315852893]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair22" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=743427697]
+[node name="Stair22" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=743427697]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.199998, -4.200012)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair22" unique_id=1430208290]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair22" unique_id=1430208290]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair22" unique_id=1726025554]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair22" unique_id=1726025554]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair23" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=2082920355]
+[node name="Stair23" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=2082920355]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.3999977, -4.400013)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair23" unique_id=278630989]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair23" unique_id=278630989]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair23" unique_id=186885380]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair23" unique_id=186885380]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair24" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1388624549]
+[node name="Stair24" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1388624549]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.5999975, -4.6000137)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair24" unique_id=1638804793]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair24" unique_id=1638804793]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair24" unique_id=414760354]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair24" unique_id=414760354]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="Stair25" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=875228887]
+[node name="Stair25" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=875228887]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7999973, -4.8000145)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/BoilerRoom/Stairs/Stair25" unique_id=1240360179]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair25" unique_id=1240360179]
 mesh = SubResource("BoxMesh_85jle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/Stair25" unique_id=1739809592]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/Stair25" unique_id=1739809592]
 shape = SubResource("BoxShape3D_8ls81")
 disabled = true
 
-[node name="StairRamp" type="StaticBody3D" parent="Basement/BoilerRoom/Stairs" unique_id=1574512129]
+[node name="StairRamp" type="StaticBody3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs" unique_id=1574512129]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/BoilerRoom/Stairs/StairRamp" unique_id=174062915]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/BoilerRoom/Stairs/StairRamp" unique_id=174062915]
 transform = Transform3D(1, 0, 0, 0, -0.70710677, -0.70710677, 0, 0.70710677, -0.70710677, 0, -0.4, -2.7)
 shape = SubResource("BoxShape3D_ramp1")
 
-[node name="RitualWatcher" parent="Basement/BoilerRoom" unique_id=2111863990 node_paths=PackedStringArray("player_node") instance=ExtResource("7_8ciwx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 3)
-player_node = NodePath("../../../GroundFloor/Stairs/Player")
-
-[node name="Hall" type="Node3D" parent="Basement" unique_id=1397235558]
+[node name="Hall" type="Node3D" parent="NavigationRegion3D/Basement" unique_id=1397235558]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -100)
 
-[node name="HallFloor" type="StaticBody3D" parent="Basement/Hall" unique_id=508551337]
+[node name="HallFloor" type="StaticBody3D" parent="NavigationRegion3D/Basement/Hall" unique_id=508551337]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Hall/HallFloor" unique_id=463417430]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Hall/HallFloor" unique_id=463417430]
 mesh = SubResource("BoxMesh_5gmoe")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Hall/HallFloor" unique_id=309908926]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Hall/HallFloor" unique_id=309908926]
 shape = SubResource("BoxShape3D_v8s7k")
 
-[node name="Wall1" type="StaticBody3D" parent="Basement/Hall" unique_id=1800998662]
+[node name="Wall1" type="StaticBody3D" parent="NavigationRegion3D/Basement/Hall" unique_id=1800998662]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -1.1)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Hall/Wall1" unique_id=1184726173]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Hall/Wall1" unique_id=1184726173]
 mesh = SubResource("BoxMesh_sk0me")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Hall/Wall1" unique_id=1037673234]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Hall/Wall1" unique_id=1037673234]
 shape = SubResource("BoxShape3D_hsyp7")
 
-[node name="Wall2" type="StaticBody3D" parent="Basement/Hall" unique_id=1827535160]
+[node name="Wall2" type="StaticBody3D" parent="NavigationRegion3D/Basement/Hall" unique_id=1827535160]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 1.1)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Hall/Wall2" unique_id=1925376684]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Hall/Wall2" unique_id=1925376684]
 mesh = SubResource("BoxMesh_sk0me")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Hall/Wall2" unique_id=1468401703]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Hall/Wall2" unique_id=1468401703]
 shape = SubResource("BoxShape3D_hsyp7")
 
-[node name="StorageRoom" type="Node3D" parent="Basement" unique_id=1601832912]
+[node name="StorageRoom" type="Node3D" parent="NavigationRegion3D/Basement" unique_id=1601832912]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, -90)
 
-[node name="StorageFloor" type="StaticBody3D" parent="Basement/StorageRoom" unique_id=22045579]
+[node name="StorageFloor" type="StaticBody3D" parent="NavigationRegion3D/Basement/StorageRoom" unique_id=22045579]
 
-[node name="StaticBody3D" type="MeshInstance3D" parent="Basement/StorageRoom/StorageFloor" unique_id=726381069]
+[node name="StaticBody3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/StorageRoom/StorageFloor" unique_id=726381069]
 mesh = SubResource("BoxMesh_8ls81")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/StorageRoom/StorageFloor" unique_id=1328264876]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/StorageRoom/StorageFloor" unique_id=1328264876]
 shape = SubResource("BoxShape3D_pp7fy")
 
-[node name="Wall1" type="StaticBody3D" parent="Basement/StorageRoom" unique_id=371409076]
+[node name="Wall1" type="StaticBody3D" parent="NavigationRegion3D/Basement/StorageRoom" unique_id=371409076]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/StorageRoom/Wall1" unique_id=1903592853]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall1" unique_id=1903592853]
 mesh = SubResource("BoxMesh_jb1k3")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/StorageRoom/Wall1" unique_id=1606518145]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall1" unique_id=1606518145]
 shape = SubResource("BoxShape3D_c040l")
 
-[node name="Wall2" type="StaticBody3D" parent="Basement/StorageRoom" unique_id=2063293918]
+[node name="Wall2" type="StaticBody3D" parent="NavigationRegion3D/Basement/StorageRoom" unique_id=2063293918]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.5, -25)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/StorageRoom/Wall2" unique_id=679036340]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall2" unique_id=679036340]
 mesh = SubResource("BoxMesh_jb1k3")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/StorageRoom/Wall2" unique_id=227840032]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall2" unique_id=227840032]
 shape = SubResource("BoxShape3D_c040l")
 
-[node name="Wall3" type="StaticBody3D" parent="Basement/StorageRoom" unique_id=1434923203]
+[node name="Wall3" type="StaticBody3D" parent="NavigationRegion3D/Basement/StorageRoom" unique_id=1434923203]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, 8)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/StorageRoom/Wall3" unique_id=461137169]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall3" unique_id=461137169]
 mesh = SubResource("BoxMesh_5gq5o")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/StorageRoom/Wall3" unique_id=1905980653]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall3" unique_id=1905980653]
 shape = SubResource("BoxShape3D_jb1k3")
 
-[node name="Wall4" type="StaticBody3D" parent="Basement/StorageRoom" unique_id=521159176]
+[node name="Wall4" type="StaticBody3D" parent="NavigationRegion3D/Basement/StorageRoom" unique_id=521159176]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, -18)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/StorageRoom/Wall4" unique_id=1603536693]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall4" unique_id=1603536693]
 mesh = SubResource("BoxMesh_c040l")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/StorageRoom/Wall4" unique_id=259100677]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall4" unique_id=259100677]
 shape = SubResource("BoxShape3D_6ve30")
 
-[node name="Wall5" type="StaticBody3D" parent="Basement/StorageRoom" unique_id=1239835610]
+[node name="Wall5" type="StaticBody3D" parent="NavigationRegion3D/Basement/StorageRoom" unique_id=1239835610]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 2.5, 25)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/StorageRoom/Wall5" unique_id=425753827]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall5" unique_id=425753827]
 mesh = SubResource("BoxMesh_xunqf")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/StorageRoom/Wall5" unique_id=447704464]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall5" unique_id=447704464]
 shape = SubResource("BoxShape3D_4ntdr")
 
-[node name="Wall6" type="StaticBody3D" parent="Basement/StorageRoom" unique_id=2110300051]
+[node name="Wall6" type="StaticBody3D" parent="NavigationRegion3D/Basement/StorageRoom" unique_id=2110300051]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5, 2.5, 25)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/StorageRoom/Wall6" unique_id=114896501]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall6" unique_id=114896501]
 mesh = SubResource("BoxMesh_fwhs1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/StorageRoom/Wall6" unique_id=84053780]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/StorageRoom/Wall6" unique_id=84053780]
 shape = SubResource("BoxShape3D_fr62r")
 
-[node name="Hall2" type="Node3D" parent="Basement" unique_id=1258337115]
+[node name="Hall2" type="Node3D" parent="NavigationRegion3D/Basement" unique_id=1258337115]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -30)
 
-[node name="HallFloor" type="StaticBody3D" parent="Basement/Hall2" unique_id=1710147178]
+[node name="HallFloor" type="StaticBody3D" parent="NavigationRegion3D/Basement/Hall2" unique_id=1710147178]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Hall2/HallFloor" unique_id=1649718659]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Hall2/HallFloor" unique_id=1649718659]
 mesh = SubResource("BoxMesh_wxj6n")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Hall2/HallFloor" unique_id=1227621725]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Hall2/HallFloor" unique_id=1227621725]
 shape = SubResource("BoxShape3D_85jle")
 
-[node name="Wall" type="StaticBody3D" parent="Basement/Hall2" unique_id=1665562244]
+[node name="Wall" type="StaticBody3D" parent="NavigationRegion3D/Basement/Hall2" unique_id=1665562244]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 2.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Hall2/Wall" unique_id=1301924406]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Hall2/Wall" unique_id=1301924406]
 mesh = SubResource("BoxMesh_qx5ju")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Hall2/Wall" unique_id=1504821116]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Hall2/Wall" unique_id=1504821116]
 shape = SubResource("BoxShape3D_qsma3")
 
-[node name="Wall2" type="StaticBody3D" parent="Basement/Hall2" unique_id=858620910]
+[node name="Wall2" type="StaticBody3D" parent="NavigationRegion3D/Basement/Hall2" unique_id=858620910]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 2.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Hall2/Wall2" unique_id=1107812635]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Hall2/Wall2" unique_id=1107812635]
 mesh = SubResource("BoxMesh_qx5ju")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Hall2/Wall2" unique_id=23058026]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Hall2/Wall2" unique_id=23058026]
 shape = SubResource("BoxShape3D_qsma3")
 
-[node name="Passage" type="Node3D" parent="Basement" unique_id=2045030975]
+[node name="Passage" type="Node3D" parent="NavigationRegion3D/Basement" unique_id=2045030975]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 0, 12.5)
 
-[node name="PassageFloor" type="StaticBody3D" parent="Basement/Passage" unique_id=1226225274]
+[node name="PassageFloor" type="StaticBody3D" parent="NavigationRegion3D/Basement/Passage" unique_id=1226225274]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Passage/PassageFloor" unique_id=1936624942]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Passage/PassageFloor" unique_id=1936624942]
 mesh = SubResource("BoxMesh_v8s7k")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Passage/PassageFloor" unique_id=1428004833]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Passage/PassageFloor" unique_id=1428004833]
 shape = SubResource("BoxShape3D_rsv4c")
 
-[node name="Wall1" type="StaticBody3D" parent="Basement/Passage" unique_id=665408419]
+[node name="Wall1" type="StaticBody3D" parent="NavigationRegion3D/Basement/Passage" unique_id=665408419]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 2.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Passage/Wall1" unique_id=693127262]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Passage/Wall1" unique_id=693127262]
 mesh = SubResource("BoxMesh_nsvle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Passage/Wall1" unique_id=695336589]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Passage/Wall1" unique_id=695336589]
 shape = SubResource("BoxShape3D_hnnd2")
 
-[node name="Wall2" type="StaticBody3D" parent="Basement/Passage" unique_id=2067988363]
+[node name="Wall2" type="StaticBody3D" parent="NavigationRegion3D/Basement/Passage" unique_id=2067988363]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 2.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Passage/Wall2" unique_id=709977143]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Passage/Wall2" unique_id=709977143]
 mesh = SubResource("BoxMesh_nsvle")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Passage/Wall2" unique_id=458301587]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Passage/Wall2" unique_id=458301587]
 shape = SubResource("BoxShape3D_hnnd2")
 
-[node name="Wall3" type="StaticBody3D" parent="Basement/Passage" unique_id=86386717]
+[node name="Wall3" type="StaticBody3D" parent="NavigationRegion3D/Basement/Passage" unique_id=86386717]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 2.5, 7.5)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Passage/Wall3" unique_id=456996735]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Passage/Wall3" unique_id=456996735]
 mesh = SubResource("BoxMesh_5ishu")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Passage/Wall3" unique_id=1823874402]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Passage/Wall3" unique_id=1823874402]
 shape = SubResource("BoxShape3D_br3xn")
 
-[node name="Wall4" type="StaticBody3D" parent="Basement/Passage" unique_id=1124432024]
+[node name="Wall4" type="StaticBody3D" parent="NavigationRegion3D/Basement/Passage" unique_id=1124432024]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.75, 2.5, 7.5)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Passage/Wall4" unique_id=793388294]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Passage/Wall4" unique_id=793388294]
 mesh = SubResource("BoxMesh_wyosp")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Passage/Wall4" unique_id=1715652519]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Passage/Wall4" unique_id=1715652519]
 shape = SubResource("BoxShape3D_1k5ql")
 
-[node name="Wall5" type="StaticBody3D" parent="Basement/Passage" unique_id=636088054]
+[node name="Wall5" type="StaticBody3D" parent="NavigationRegion3D/Basement/Passage" unique_id=636088054]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.25, 2.5, -7.5)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Passage/Wall5" unique_id=167709446]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Passage/Wall5" unique_id=167709446]
 mesh = SubResource("BoxMesh_qnqhw")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Passage/Wall5" unique_id=1027763949]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Passage/Wall5" unique_id=1027763949]
 shape = SubResource("BoxShape3D_mgusg")
 
-[node name="Wall6" type="StaticBody3D" parent="Basement/Passage" unique_id=882771442]
+[node name="Wall6" type="StaticBody3D" parent="NavigationRegion3D/Basement/Passage" unique_id=882771442]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.25, 2.5, -7.5)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Passage/Wall6" unique_id=1949817962]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Passage/Wall6" unique_id=1949817962]
 mesh = SubResource("BoxMesh_6ve30")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Passage/Wall6" unique_id=1540074384]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Passage/Wall6" unique_id=1540074384]
 shape = SubResource("BoxShape3D_xunqf")
 
-[node name="Hall3" type="Node3D" parent="Basement" unique_id=930041975]
+[node name="Hall3" type="Node3D" parent="NavigationRegion3D/Basement" unique_id=930041975]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 40)
 
-[node name="HallFloor" type="StaticBody3D" parent="Basement/Hall3" unique_id=1090527075]
+[node name="HallFloor" type="StaticBody3D" parent="NavigationRegion3D/Basement/Hall3" unique_id=1090527075]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Hall3/HallFloor" unique_id=1317383278]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Hall3/HallFloor" unique_id=1317383278]
 mesh = SubResource("BoxMesh_rsv4c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Hall3/HallFloor" unique_id=1106387751]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Hall3/HallFloor" unique_id=1106387751]
 shape = SubResource("BoxShape3D_oegrd")
 
-[node name="Wall1" type="StaticBody3D" parent="Basement/Hall3" unique_id=1004093019]
+[node name="Wall1" type="StaticBody3D" parent="NavigationRegion3D/Basement/Hall3" unique_id=1004093019]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 2.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Hall3/Wall1" unique_id=466610875]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Hall3/Wall1" unique_id=466610875]
 mesh = SubResource("BoxMesh_4ntdr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Hall3/Wall1" unique_id=740696769]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Hall3/Wall1" unique_id=740696769]
 shape = SubResource("BoxShape3D_fwhs1")
 
-[node name="Wall2" type="StaticBody3D" parent="Basement/Hall3" unique_id=1899416315]
+[node name="Wall2" type="StaticBody3D" parent="NavigationRegion3D/Basement/Hall3" unique_id=1899416315]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 2.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Basement/Hall3/Wall2" unique_id=1845863202]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Basement/Hall3/Wall2" unique_id=1845863202]
 mesh = SubResource("BoxMesh_4ntdr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Basement/Hall3/Wall2" unique_id=1615050918]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Basement/Hall3/Wall2" unique_id=1615050918]
 shape = SubResource("BoxShape3D_fwhs1")
 
-[node name="WaypointRoot" type="Node3D" parent="Basement" unique_id=161096433]
+[node name="WaypointRoot" type="Node3D" parent="NavigationRegion3D/Basement" unique_id=161096433]
 
-[node name="WP_RitualCenter" type="Node3D" parent="Basement/WaypointRoot" unique_id=777355381]
+[node name="WP_RitualCenter" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=777355381]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, -3.9, 75)
 
-[node name="WP_RitualEntry" type="Node3D" parent="Basement/WaypointRoot" unique_id=1697275923]
+[node name="WP_RitualEntry" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=1697275923]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, -3.9, 62)
 
-[node name="WP_Hall3_North" type="Node3D" parent="Basement/WaypointRoot" unique_id=956670740]
+[node name="WP_Hall3_North" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=956670740]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, -3.9, 50)
 
-[node name="WP_Hall3_South" type="Node3D" parent="Basement/WaypointRoot" unique_id=1865039111]
+[node name="WP_Hall3_South" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=1865039111]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, -3.9, 42)
 
-[node name="WP_Passage_North" type="Node3D" parent="Basement/WaypointRoot" unique_id=2083198082]
+[node name="WP_Passage_North" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=2083198082]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, -3.9, 18)
 
-[node name="WP_Passage_South" type="Node3D" parent="Basement/WaypointRoot" unique_id=518254671]
+[node name="WP_Passage_South" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=518254671]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, -3.9, 8)
 
-[node name="WP_Hall2_North" type="Node3D" parent="Basement/WaypointRoot" unique_id=304899007]
+[node name="WP_Hall2_North" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=304899007]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, -3.9, -10)
 
-[node name="WP_Hall2_Mid" type="Node3D" parent="Basement/WaypointRoot" unique_id=465174152]
+[node name="WP_Hall2_Mid" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=465174152]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, -3.9, -30)
 
-[node name="WP_Hall2_South" type="Node3D" parent="Basement/WaypointRoot" unique_id=440365531]
+[node name="WP_Hall2_South" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=440365531]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, -3.9, -55)
 
-[node name="WP_Boiler_Center" type="Node3D" parent="Basement/WaypointRoot" unique_id=1173188208]
+[node name="WP_Boiler_Center" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=1173188208]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, -3.9, -60)
 
-[node name="WP_Hall_West" type="Node3D" parent="Basement/WaypointRoot" unique_id=599094069]
+[node name="WP_Hall_West" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=599094069]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -3.9, -10)
 
-[node name="WP_Hall_Center" type="Node3D" parent="Basement/WaypointRoot" unique_id=568073742]
+[node name="WP_Hall_Center" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=568073742]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -3.9, -10)
 
-[node name="WP_Hall_East" type="Node3D" parent="Basement/WaypointRoot" unique_id=366844654]
+[node name="WP_Hall_East" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=366844654]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -3.9, -10)
 
-[node name="WP_Storage" type="Node3D" parent="Basement/WaypointRoot" unique_id=883413756]
+[node name="WP_Storage" type="Node3D" parent="NavigationRegion3D/Basement/WaypointRoot" unique_id=883413756]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, -3.9, -90)
 
-[node name="BasementCeiling" type="Node3D" parent="." unique_id=794757617]
+[node name="BasementCeiling" type="Node3D" parent="NavigationRegion3D" unique_id=794757617]
 visible = false
 
-[node name="Ceiling1" type="StaticBody3D" parent="BasementCeiling" unique_id=1598817989]
+[node name="Ceiling1" type="StaticBody3D" parent="NavigationRegion3D/BasementCeiling" unique_id=1598817989]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="BasementCeiling/Ceiling1" unique_id=1891248236]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/BasementCeiling/Ceiling1" unique_id=1891248236]
 mesh = SubResource("BoxMesh_ay0ti")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BasementCeiling/Ceiling1" unique_id=31773182]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/BasementCeiling/Ceiling1" unique_id=31773182]
 shape = SubResource("BoxShape3D_t0213")
 
-[node name="Ceiling2" type="StaticBody3D" parent="BasementCeiling" unique_id=1682092252]
+[node name="Ceiling2" type="StaticBody3D" parent="NavigationRegion3D/BasementCeiling" unique_id=1682092252]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -125, 0, 43)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="BasementCeiling/Ceiling2" unique_id=1586592715]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/BasementCeiling/Ceiling2" unique_id=1586592715]
 mesh = SubResource("BoxMesh_pp7fy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BasementCeiling/Ceiling2" unique_id=446657309]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/BasementCeiling/Ceiling2" unique_id=446657309]
 shape = SubResource("BoxShape3D_wxj6n")
 
-[node name="Ceiling3" type="StaticBody3D" parent="BasementCeiling" unique_id=1037691916]
+[node name="Ceiling3" type="StaticBody3D" parent="NavigationRegion3D/BasementCeiling" unique_id=1037691916]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -125, 0, -75)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="BasementCeiling/Ceiling3" unique_id=417538445]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/BasementCeiling/Ceiling3" unique_id=417538445]
 mesh = SubResource("BoxMesh_oegrd")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BasementCeiling/Ceiling3" unique_id=4452153]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/BasementCeiling/Ceiling3" unique_id=4452153]
 shape = SubResource("BoxShape3D_yr4oa")
 
-[node name="Ceiling4" type="StaticBody3D" parent="BasementCeiling" unique_id=1014846740]
+[node name="Ceiling4" type="StaticBody3D" parent="NavigationRegion3D/BasementCeiling" unique_id=1014846740]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -126.5, -2.5, -32)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="BasementCeiling/Ceiling4" unique_id=590232417]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/BasementCeiling/Ceiling4" unique_id=590232417]
 mesh = SubResource("BoxMesh_bc51w")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BasementCeiling/Ceiling4" unique_id=2109931997]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/BasementCeiling/Ceiling4" unique_id=2109931997]
 shape = SubResource("BoxShape3D_kldyd")
 
-[node name="GroundFloor" type="Node3D" parent="." unique_id=1397709815]
+[node name="GroundFloor" type="Node3D" parent="NavigationRegion3D" unique_id=1397709815]
 
-[node name="Stairs" type="Node3D" parent="GroundFloor" unique_id=2031754189]
+[node name="Stairs" type="Node3D" parent="NavigationRegion3D/GroundFloor" unique_id=2031754189]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -120, 2.5, -29)
 
-[node name="StairsPassage" type="StaticBody3D" parent="GroundFloor/Stairs" unique_id=1244469072]
+[node name="StairsPassage" type="StaticBody3D" parent="NavigationRegion3D/GroundFloor/Stairs" unique_id=1244469072]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65, 0, -3)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GroundFloor/Stairs/StairsPassage" unique_id=1476324637]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/GroundFloor/Stairs/StairsPassage" unique_id=1476324637]
 mesh = SubResource("BoxMesh_yr4oa")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundFloor/Stairs/StairsPassage" unique_id=786672040]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/GroundFloor/Stairs/StairsPassage" unique_id=786672040]
 shape = SubResource("BoxShape3D_bc51w")
 
-[node name="StairsPassage2" type="StaticBody3D" parent="GroundFloor/Stairs" unique_id=1283660036]
+[node name="StairsPassage2" type="StaticBody3D" parent="NavigationRegion3D/GroundFloor/Stairs" unique_id=1283660036]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65, 0, -3)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GroundFloor/Stairs/StairsPassage2" unique_id=948815059]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/GroundFloor/Stairs/StairsPassage2" unique_id=948815059]
 mesh = SubResource("BoxMesh_yr4oa")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundFloor/Stairs/StairsPassage2" unique_id=1128022830]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/GroundFloor/Stairs/StairsPassage2" unique_id=1128022830]
 shape = SubResource("BoxShape3D_bc51w")
 
-[node name="StairsPassage3" type="StaticBody3D" parent="GroundFloor/Stairs" unique_id=2141629128]
+[node name="StairsPassage3" type="StaticBody3D" parent="NavigationRegion3D/GroundFloor/Stairs" unique_id=2141629128]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GroundFloor/Stairs/StairsPassage3" unique_id=261396554]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/GroundFloor/Stairs/StairsPassage3" unique_id=261396554]
 mesh = SubResource("BoxMesh_kldyd")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundFloor/Stairs/StairsPassage3" unique_id=2082563062]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/GroundFloor/Stairs/StairsPassage3" unique_id=2082563062]
 shape = SubResource("BoxShape3D_wdmtw")
 
-[node name="DoorHold" type="Node3D" parent="GroundFloor/Stairs" unique_id=559491579]
+[node name="DoorHold" type="Node3D" parent="NavigationRegion3D/GroundFloor/Stairs" unique_id=559491579]
 
-[node name="HoldLeft" type="StaticBody3D" parent="GroundFloor/Stairs/DoorHold" unique_id=2031490312]
+[node name="HoldLeft" type="StaticBody3D" parent="NavigationRegion3D/GroundFloor/Stairs/DoorHold" unique_id=2031490312]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GroundFloor/Stairs/DoorHold/HoldLeft" unique_id=135556101]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/GroundFloor/Stairs/DoorHold/HoldLeft" unique_id=135556101]
 mesh = SubResource("BoxMesh_fr62r")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundFloor/Stairs/DoorHold/HoldLeft" unique_id=958268370]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/GroundFloor/Stairs/DoorHold/HoldLeft" unique_id=958268370]
 shape = SubResource("BoxShape3D_qx5ju")
 
-[node name="HoldRight" type="StaticBody3D" parent="GroundFloor/Stairs/DoorHold" unique_id=784341765]
+[node name="HoldRight" type="StaticBody3D" parent="NavigationRegion3D/GroundFloor/Stairs/DoorHold" unique_id=784341765]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GroundFloor/Stairs/DoorHold/HoldRight" unique_id=902289912]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/GroundFloor/Stairs/DoorHold/HoldRight" unique_id=902289912]
 mesh = SubResource("BoxMesh_fr62r")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundFloor/Stairs/DoorHold/HoldRight" unique_id=174348963]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/GroundFloor/Stairs/DoorHold/HoldRight" unique_id=174348963]
 shape = SubResource("BoxShape3D_qx5ju")
 
-[node name="HoldTop" type="StaticBody3D" parent="GroundFloor/Stairs/DoorHold" unique_id=896539627]
+[node name="HoldTop" type="StaticBody3D" parent="NavigationRegion3D/GroundFloor/Stairs/DoorHold" unique_id=896539627]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GroundFloor/Stairs/DoorHold/HoldTop" unique_id=1792727511]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/GroundFloor/Stairs/DoorHold/HoldTop" unique_id=1792727511]
 mesh = SubResource("BoxMesh_qsma3")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundFloor/Stairs/DoorHold/HoldTop" unique_id=649871874]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/GroundFloor/Stairs/DoorHold/HoldTop" unique_id=649871874]
 shape = SubResource("BoxShape3D_nsvle")
 
-[node name="WornDoor" type="Node3D" parent="GroundFloor/Stairs" unique_id=1280433769 node_paths=PackedStringArray("door_hinge", "door_handle", "door_area", "door_open_audio", "door_close_audio") groups=["player"]]
+[node name="WornDoor" type="Node3D" parent="NavigationRegion3D/GroundFloor/Stairs" unique_id=1280433769 node_paths=PackedStringArray("door_hinge", "door_handle", "door_area", "door_open_audio", "door_close_audio") groups=["player"]]
 transform = Transform3D(2.3, 0, 0, 0, -1.0053619e-07, 2.3, 0, -2.3, -1.0053619e-07, 0.9, 0, 0)
 script = ExtResource("2_be2l0")
 door_hinge = NodePath("DoorHinge")
@@ -1118,42 +1131,33 @@ door_area = NodePath("DoorHinge/Area3D")
 door_open_audio = NodePath("DoorOpen")
 door_close_audio = NodePath("DoorClose")
 
-[node name="DoorHinge" type="AnimatableBody3D" parent="GroundFloor/Stairs/WornDoor" unique_id=1117268947]
+[node name="DoorHinge" type="AnimatableBody3D" parent="NavigationRegion3D/GroundFloor/Stairs/WornDoor" unique_id=1117268947]
 transform = Transform3D(1, 0, 0, 0, 1, 3.5527137e-15, 0, -3.5527137e-15, 1, 0, 0, 0)
 
-[node name="WornDoor" type="MeshInstance3D" parent="GroundFloor/Stairs/WornDoor/DoorHinge" unique_id=1356140290]
+[node name="WornDoor" type="MeshInstance3D" parent="NavigationRegion3D/GroundFloor/Stairs/WornDoor/DoorHinge" unique_id=1356140290]
 mesh = SubResource("ArrayMesh_81nfk")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundFloor/Stairs/WornDoor/DoorHinge" unique_id=799648663]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/GroundFloor/Stairs/WornDoor/DoorHinge" unique_id=799648663]
 shape = SubResource("ConvexPolygonShape3D_be2l0")
 
-[node name="DoorHandle" type="Node3D" parent="GroundFloor/Stairs/WornDoor/DoorHinge" unique_id=2038023985]
+[node name="DoorHandle" type="Node3D" parent="NavigationRegion3D/GroundFloor/Stairs/WornDoor/DoorHinge" unique_id=2038023985]
 transform = Transform3D(1.258071, -1.3197907e-24, 0.023406256, -1.110223e-16, 1.2582885, 3.5527137e-15, -0.023406256, 0, 1.258071, -0.6967659, -0.051573753, -0.23062718)
 
-[node name="DoorHandle" type="MeshInstance3D" parent="GroundFloor/Stairs/WornDoor/DoorHinge/DoorHandle" unique_id=161010988]
+[node name="DoorHandle" type="MeshInstance3D" parent="NavigationRegion3D/GroundFloor/Stairs/WornDoor/DoorHinge/DoorHandle" unique_id=161010988]
 mesh = SubResource("ArrayMesh_uvy5u")
 
-[node name="Area3D" type="Area3D" parent="GroundFloor/Stairs/WornDoor/DoorHinge" unique_id=85124606]
+[node name="Area3D" type="Area3D" parent="NavigationRegion3D/GroundFloor/Stairs/WornDoor/DoorHinge" unique_id=85124606]
 transform = Transform3D(1, -1.5299268e-16, 0, 9.6541136e-17, 1.0000001, 7.1054274e-15, 4.2199467e-24, -7.1054274e-15, 1, -0.4, 0, 0)
 collision_layer = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundFloor/Stairs/WornDoor/DoorHinge/Area3D" unique_id=91844122]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/GroundFloor/Stairs/WornDoor/DoorHinge/Area3D" unique_id=91844122]
 shape = SubResource("BoxShape3D_5gmoe")
 
-[node name="DoorOpen" type="AudioStreamPlayer3D" parent="GroundFloor/Stairs/WornDoor" unique_id=643808870]
+[node name="DoorOpen" type="AudioStreamPlayer3D" parent="NavigationRegion3D/GroundFloor/Stairs/WornDoor" unique_id=643808870]
 stream = ExtResource("4_ay0ti")
 
-[node name="DoorClose" type="AudioStreamPlayer3D" parent="GroundFloor/Stairs/WornDoor" unique_id=1124712050]
+[node name="DoorClose" type="AudioStreamPlayer3D" parent="NavigationRegion3D/GroundFloor/Stairs/WornDoor" unique_id=1124712050]
 stream = ExtResource("5_85jle")
 
-[node name="Player" parent="GroundFloor/Stairs" unique_id=638567615 groups=["player"] instance=ExtResource("1_t0213")]
+[node name="Player" parent="NavigationRegion3D/GroundFloor/Stairs" unique_id=638567615 groups=["player"] instance=ExtResource("1_t0213")]
 transform = Transform3D(1, 0, 0, 0, 1, 3.5527137e-15, 0, -3.5527137e-15, 1, 10, 0, 0)
-
-[node name="Node3D" type="Node3D" parent="." unique_id=145652591]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -118.5, 0, -29)
-
-[node name="MoonLight" type="DirectionalLight3D" parent="." unique_id=1447115917]
-transform = Transform3D(0.8660254, -0.3535534, 0.3535534, 0, 0.7071068, 0.7071068, -0.5, -0.61237246, 0.61237246, -39.530975, 104.336105, 0)
-light_color = Color(0.6666667, 0.7490196, 1, 1)
-light_energy = 0.5
-shadow_enabled = true
