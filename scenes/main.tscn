@@ -17,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://dfjlw8ja7g7aj" path="res://assets/mesh/walls/Statue/OutsideStatue_2.jpg" id="9_yc10j"]
 [ext_resource type="AudioStream" uid="uid://cswlewn5htowp" path="res://assets/sound/gateOpening/gate_opening.wav" id="11_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://c1ie1xol5qwms" path="res://scenes/mansion.tscn" id="17_dp3eg"]
-[ext_resource type="PackedScene" uid="uid://bbqain2aor8vs" path="res://scenes/player.tscn" id="18_dp3eg"]
 
 [sub_resource type="Environment" id="Environment_sgp6g"]
 background_color = Color(0.039215688, 0.039215688, 0.07058824, 1)
@@ -2199,6 +2198,3 @@ shadow_enabled = true
 
 [node name="Mansion" parent="." unique_id=116153108 instance=ExtResource("17_dp3eg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
-
-[node name="Player" parent="." unique_id=638567615 groups=["player"] instance=ExtResource("18_dp3eg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0)

@@ -1,13 +1,6 @@
 class_name RitualWatcher
 extends CharacterBody3D
 
-# ── Floor IDs ─────────────────────────────────────────────────────────────────
-## Numeric identifiers returned by _get_floor(). Stored in the blackboard so
-## every branch can read them without recomputing per-frame.
-const FLOOR_BASEMENT:   int = 0   # Y < basement_ceiling_y
-const FLOOR_TRANSITION: int = 1   # on stairs (between the two thresholds)
-const FLOOR_GROUND:     int = 2   # Y > ground_floor_y
-
 ## ── RitualWatcher AI Controller ───────────────────────────────────────────────
 ##
 ## Horror AI using a Behaviour Tree architecture backed by the baked
@@ -16,9 +9,8 @@ const FLOOR_GROUND:     int = 2   # Y > ground_floor_y
 ##
 ## Behaviours (priority order):
 ##   1. HUNT_PLAYER        — chase the player with Weeping Angel freeze mechanic
-##   2. CROSS_FLOOR        — pursue the player across floors via the navmesh stairs
-##   3. INVESTIGATE_SOUND  — move toward the last heard loud noise
-##   4. EXPLORE            — roam to random navmesh points
+##   2. INVESTIGATE_SOUND  — move toward the last heard loud noise
+##   3. EXPLORE            — roam to random navmesh points
 ##
 ## Required scene structure:
 ##   RitualWatcher (CharacterBody3D)   <- attach this script
@@ -43,9 +35,9 @@ const FLOOR_GROUND:     int = 2   # Y > ground_floor_y
 
 @export_group("Detection")
 ## Distance at which the AI begins hunting the player (m).
-@export var hunt_enter_distance: float = 10.0
+@export var hunt_enter_distance: float = 50.0
 ## Hysteresis distance — AI stops hunting only when player moves beyond this (m).
-@export var hunt_exit_distance: float  = 15.0
+@export var hunt_exit_distance: float  = 55.0
 ## Camera-to-AI dot product threshold that counts as "being looked at".
 ## 0.6 means the player must be facing within ~53° of the AI.
 @export var look_dot_threshold: float  = 0.6
@@ -53,14 +45,10 @@ const FLOOR_GROUND:     int = 2   # Y > ground_floor_y
 @export var catch_distance: float      = 2.0
 ## Distance at which a sound investigation target is considered "reached" (m).
 @export var sound_reach_distance: float = 3.0
-## Y below this is treated as the basement floor.
-@export var basement_ceiling_y: float = -1.0
-## Y above this is treated as the ground floor.
-@export var ground_floor_y: float     =  1.0
 
 @export_group("Movement")
 ## Speed while hunting the player (m/s).
-@export var hunt_speed: float        = 5.0
+@export var hunt_speed: float        = 3.5
 ## Speed while investigating a sound (m/s).
 @export var investigate_speed: float = 3.0
 ## Speed while exploring randomly (m/s).
@@ -86,14 +74,11 @@ const FLOOR_GROUND:     int = 2   # Y > ground_floor_y
 ## underlying object, so every write here is immediately visible everywhere.
 
 var blackboard: Dictionary = {
-	"last_heard_sound_position":  Vector3.ZERO,
-	"distance_to_player":         INF,
-	"is_being_looked_at":         false,
-	"has_sound_target":           false,
-	"is_hunting":                 false,  # internal hysteresis flag
-	"ai_floor":                   FLOOR_BASEMENT,
-	"player_floor":               FLOOR_GROUND,
-	"cross_floor_pursue":         false,  # true while heading to the player's floor
+	"last_heard_sound_position": Vector3.ZERO,
+	"distance_to_player":        INF,
+	"is_being_looked_at":        false,
+	"has_sound_target":          false,
+	"is_hunting":                false,
 }
 
 
@@ -104,6 +89,13 @@ var _current_speed: float = 0.0
 
 ## Cached Camera3D from the player scene. Set in _ready(), lazily refreshed.
 var _player_camera: Camera3D = null
+
+## Game-time (seconds) when we last issued a path request to the NavigationAgent3D.
+## Prevents path thrashing: resetting target_position every frame discards
+## the previous path before NavigationServer3D has a chance to compute it.
+var _last_path_time: float = -1.0
+## Minimum seconds between NavigationAgent3D path requests.
+const PATH_COOLDOWN: float = 0.5
 
 # ── Debug ──────────────────────────────────────────────────────────────────────
 ## Accumulates delta; prints a status snapshot every DEBUG_INTERVAL seconds.
@@ -139,8 +131,15 @@ func _ready() -> void:
 	floor_snap_length = 0.4
 
 	# Configure NavigationAgent3D.
-	_nav_agent.path_desired_distance   = 0.5
-	_nav_agent.target_desired_distance = 0.5
+	# path_desired_distance must be large enough to account for Y offset
+	# between the AI's CharacterBody3D and the navmesh surface.  The navmesh
+	# sits at Y = -4.55 while the AI spawns at Y ~= -3.6 (a gap of ~0.95 m).
+	# A value of 0.5 would be smaller than this gap, causing the agent to
+	# never advance past the first waypoint.  2.0 gives comfortable margin.
+	# target_desired_distance is smaller (1.0) so the AI actually reaches
+	# the destination floor rather than stopping 2 m away vertically.
+	_nav_agent.path_desired_distance   = 2.0
+	_nav_agent.target_desired_distance = 1.0
 	_nav_agent.avoidance_enabled       = false
 
 	# Exploration timer — triggers a new random explore target periodically.
@@ -172,6 +171,7 @@ func _physics_process(delta: float) -> void:
 	if _debug_timer >= DEBUG_INTERVAL:
 		_debug_timer = 0.0
 		print("────────── [RitualWatcher] DEBUG ──────────")
+		print("  ai_position    : ", global_position.snapped(Vector3.ONE * 0.01))
 		print("  dist_to_player : ", snappedf(blackboard["distance_to_player"], 0.1))
 		print("  is_hunting     : ", blackboard["is_hunting"])
 		print("  is_looked_at   : ", blackboard["is_being_looked_at"])
@@ -179,12 +179,11 @@ func _physics_process(delta: float) -> void:
 		print("  current_speed  : ", _current_speed)
 		print("  velocity       : ", velocity.snapped(Vector3.ONE * 0.01))
 		print("  on_floor       : ", is_on_floor())
-		print("  ai_floor       : ", blackboard["ai_floor"],
-			"  (0=basement 1=stairs 2=ground)")
-		print("  player_floor   : ", blackboard["player_floor"],
-			"  (0=basement 1=stairs 2=ground)")
-		print("  cross_floor    : ", blackboard["cross_floor_pursue"])
 		print("  nav_finished   : ", _nav_agent.is_navigation_finished())
+		var _dbg_path := _nav_agent.get_current_navigation_path()
+		print("  path_size      : ", _dbg_path.size())
+		if _dbg_path.size() > 0:
+			print("  next_path_pos  : ", _nav_agent.get_next_path_position().snapped(Vector3.ONE * 0.01))
 		print("───────────────────────────────────────────")
 
 
@@ -196,28 +195,6 @@ func _update_blackboard() -> void:
 	blackboard["distance_to_player"] = global_position.distance_to(
 		player_node.global_position
 	)
-	blackboard["ai_floor"]     = _get_floor(global_position.y)
-	blackboard["player_floor"] = _get_floor(player_node.global_position.y)
-
-	# Cross-floor pursuit trigger: player jumps (or sprints) while on a different floor.
-	if blackboard["player_floor"] != blackboard["ai_floor"] \
-			and not blackboard["is_hunting"] \
-			and not blackboard["cross_floor_pursue"]:
-		var noise: int = player_node.get("current_noise_level") \
-				if "current_noise_level" in player_node else 0
-		if noise >= 2:
-			blackboard["cross_floor_pursue"] = true
-			print("[RW] Cross-floor pursue triggered (noise=", noise, ")")
-
-
-## Returns the floor ID constant for a given world Y position.
-func _get_floor(y: float) -> int:
-	if y < basement_ceiling_y:
-		return FLOOR_BASEMENT
-	elif y > ground_floor_y:
-		return FLOOR_GROUND
-	else:
-		return FLOOR_TRANSITION
 
 
 # ── Behaviour Tree Construction ───────────────────────────────────────────────
@@ -225,21 +202,13 @@ func _get_floor(y: float) -> int:
 func _build_behavior_tree() -> void:
 
 	# ── HUNT_PLAYER ───────────────────────────────────────────────────────────
-	# Activates when the player is within hunt_enter_distance on the same floor.
+	# Activates when the player is within hunt_enter_distance.
 	# Weeping Angel: the AI freezes while the player's camera is facing it.
 	var hunt_seq := SequenceNode.new([
 		ConditionNode.new(_condition_should_hunt),
 		ActionNode.new(_action_update_look_detection),
 		ActionNode.new(_action_hunt_movement),
 		ActionNode.new(_action_check_caught),
-	])
-
-	# ── CROSS_FLOOR_PURSUIT ────────────────────────────────────────────────────
-	# Activates when the player makes noise (jump/sprint) on a different floor.
-	# NavigationAgent3D routes through the navmesh stairs automatically.
-	var cross_floor_seq := SequenceNode.new([
-		ConditionNode.new(_condition_cross_floor_pursue),
-		ActionNode.new(_action_cross_floor_pursue),
 	])
 
 	# ── INVESTIGATE_SOUND ─────────────────────────────────────────────────────
@@ -256,7 +225,9 @@ func _build_behavior_tree() -> void:
 	])
 
 	# Root Selector tries branches in priority order.
-	var root := SelectorNode.new([hunt_seq, cross_floor_seq, investigate_seq, explore_seq])
+	# INVESTIGATE_SOUND fires before HUNT so the AI goes to a noise position
+	# rather than directly chasing the player when both conditions are active.
+	var root := SelectorNode.new([investigate_seq, hunt_seq, explore_seq])
 	_behavior_tree.set_root(root)
 
 
@@ -265,14 +236,6 @@ func _build_behavior_tree() -> void:
 ## Hysteresis gate: engage hunt at <=hunt_enter_distance, hold until >hunt_exit_distance.
 ## Prevents the AI from rapidly toggling in/out of hunt at the boundary.
 func _condition_should_hunt() -> bool:
-	# Never hunt across floors — wait for cross_floor_pursue to bring AI to player's floor.
-	if blackboard["ai_floor"] != blackboard["player_floor"]:
-		if blackboard["is_hunting"]:
-			blackboard["is_hunting"] = false
-			_clear_path()
-			_pick_explore_target()
-		return false
-
 	var dist: float = blackboard["distance_to_player"]
 
 	if blackboard["is_hunting"]:
@@ -342,9 +305,8 @@ func _action_hunt_movement() -> int:
 	# Player is not looking — move toward their current position.
 	_current_speed = hunt_speed
 
-	# Recompute path when the player has moved significantly or path is finished.
-	if _nav_agent.is_navigation_finished() \
-			or _nav_agent.target_position.distance_to(player_node.global_position) > 1.5:
+	# Recompute path when finished or after the cooldown (player keeps moving).
+	if _nav_agent.is_navigation_finished() or _can_recompute_path():
 		_compute_path_to(player_node.global_position)
 
 	return BaseNode.Status.RUNNING
@@ -357,41 +319,6 @@ func _action_check_caught() -> int:
 	return BaseNode.Status.SUCCESS
 
 
-# ── Conditions / Actions: Cross-Floor Pursuit Branch ─────────────────────────
-
-## Gate: true while the AI is routing to the player on a different floor.
-## Auto-cancels when AI and player share the same floor.
-func _condition_cross_floor_pursue() -> bool:
-	if not blackboard["cross_floor_pursue"]:
-		return false
-	if blackboard["ai_floor"] == blackboard["player_floor"]:
-		blackboard["cross_floor_pursue"] = false
-		_clear_path()
-		return false
-	return true
-
-
-## Pathfind directly to the player's position.
-## The baked navmesh routes through the stairs automatically — no stair
-## discovery logic needed.
-func _action_cross_floor_pursue() -> int:
-	_current_speed = hunt_speed
-
-	# Keep the nav target fresh as the player moves.
-	if _nav_agent.is_navigation_finished() \
-			or _nav_agent.target_position.distance_to(player_node.global_position) > 2.0:
-		_compute_path_to(player_node.global_position)
-
-	# Cancel once we've reached the player's floor.
-	if blackboard["ai_floor"] == blackboard["player_floor"]:
-		blackboard["cross_floor_pursue"] = false
-		_clear_path()
-		print("[RW] Cross-floor pursue complete — reached player's floor.")
-		return BaseNode.Status.SUCCESS
-
-	return BaseNode.Status.RUNNING
-
-
 # ── Actions: Investigate Branch ───────────────────────────────────────────────
 
 ## Navigate toward the last heard sound using the navmesh.
@@ -399,24 +326,16 @@ func _action_cross_floor_pursue() -> int:
 func _action_navigate_to_sound() -> int:
 	var target: Vector3 = blackboard["last_heard_sound_position"]
 
-	# Discard sounds from other floors — cross-floor sounds trigger
-	# the dedicated cross_floor_pursue branch instead.
-	if _get_floor(target.y) != blackboard["ai_floor"]:
-		blackboard["has_sound_target"] = false
-		_clear_path()
-		return BaseNode.Status.FAILURE
-
 	_current_speed = investigate_speed
 
 	# Set nav target if stale or finished.
-	if _nav_agent.is_navigation_finished() \
-			or _nav_agent.target_position.distance_to(target) > 2.0:
+	if _nav_agent.is_navigation_finished() or _can_recompute_path():
 		_compute_path_to(target)
 
 	if global_position.distance_to(target) <= sound_reach_distance:
-		# Arrived at the sound source — clear the target.
+		# Arrived at the sound source — clear the target and resume roaming.
 		blackboard["has_sound_target"] = false
-		_clear_path()
+		_pick_explore_target()
 		return BaseNode.Status.SUCCESS
 
 	return BaseNode.Status.RUNNING
@@ -449,14 +368,23 @@ func _pick_explore_target() -> void:
 # ── Path Computation ─────────────────────────────────────────────────────────
 
 ## Tell the NavigationAgent3D to path to a world position.
-## The agent uses the baked navmesh — no manual A* or path caching needed.
+## Records the request time to enforce PATH_COOLDOWN between requests.
 func _compute_path_to(target: Vector3) -> void:
 	_nav_agent.target_position = target
+	_last_path_time = Time.get_ticks_msec() / 1000.0
+
+
+## Returns true when enough time has passed since the last path request.
+## Prevents path thrashing caused by updating target_position every frame.
+func _can_recompute_path() -> bool:
+	return (Time.get_ticks_msec() / 1000.0) - _last_path_time >= PATH_COOLDOWN
 
 
 ## Reset the navigation target to halt movement.
+## Also resets the cooldown so the very next path request fires immediately.
 func _clear_path() -> void:
 	_nav_agent.target_position = global_position
+	_last_path_time = -1.0
 
 
 # ── Movement ─────────────────────────────────────────────────────────────────
@@ -481,16 +409,19 @@ func _apply_movement(delta: float) -> void:
 		next_pos.z - global_position.z
 	)
 	var xz_dist: float = flat_dir.length()
-	if xz_dist > 0.01:
-		flat_dir /= xz_dist
+	if xz_dist < 0.01:
+		# At the next waypoint in XZ — coast to a stop and let the agent advance.
+		velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
+		velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
+		return
+	flat_dir /= xz_dist
 
 	velocity.x = flat_dir.x * _current_speed
 	velocity.z = flat_dir.z * _current_speed
 
 	# Smoothly rotate the AI body to face its direction of travel.
-	if flat_dir.length_squared() > 0.001:
-		var target_angle: float = atan2(flat_dir.x, flat_dir.z)
-		rotation.y = lerp_angle(rotation.y, target_angle, rotation_speed * delta)
+	var target_angle: float = atan2(flat_dir.x, flat_dir.z)
+	rotation.y = lerp_angle(rotation.y, target_angle, rotation_speed * delta)
 
 
 # ── Multiplayer ───────────────────────────────────────────────────────────────

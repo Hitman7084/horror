@@ -47,7 +47,7 @@ extends CharacterBody3D
 # ── Stamina ───────────────────────────────────────────────────────────────────
 
 @export_group("Stamina")
-@export var max_stamina: float = 100.0
+@export var max_stamina: float = 300.0
 ## Stamina drained per second while actively sprinting.
 @export var stamina_drain_rate: float = 25.0
 ## Stamina restored per second when not sprinting.
