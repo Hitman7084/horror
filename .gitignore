@@ -3,6 +3,7 @@
 /android/
 *tmpclaud
 assets/
+textures/
 ./build/
 ./export_presets.cfg
 tmpclaude-*-cwd

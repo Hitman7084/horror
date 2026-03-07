@@ -10,7 +10,8 @@ extends CharacterBody3D
 ## Behaviours (priority order):
 ##   1. HUNT_PLAYER        — chase the player with Weeping Angel freeze mechanic
 ##   2. INVESTIGATE_SOUND  — move toward the last heard loud noise
-##   3. EXPLORE            — roam to random navmesh points
+##   3. PURSUE_LAST_KNOWN  — walk to the player's last seen position
+##   4. EXPLORE            — roam to random navmesh points
 ##
 ## Required scene structure:
 ##   RitualWatcher (CharacterBody3D)   <- attach this script
@@ -34,10 +35,13 @@ extends CharacterBody3D
 @export var player_node: CharacterBody3D
 
 @export_group("Detection")
+## Toggle the Weeping Angel mechanic on/off for testing.
+## When false the AI ignores whether the player is looking and always moves.
+@export var weeping_angel_enabled: bool = false
 ## Distance at which the AI begins hunting the player (m).
-@export var hunt_enter_distance: float = 10
+@export var hunt_enter_distance: float = 70
 ## Hysteresis distance — AI stops hunting only when player moves beyond this (m).
-@export var hunt_exit_distance: float  = 15
+@export var hunt_exit_distance: float  = 75
 ## Camera-to-AI dot product threshold that counts as "being looked at".
 ## 0.6 means the player must be facing within ~53° of the AI.
 @export var look_dot_threshold: float  = 0.6
@@ -85,7 +89,10 @@ extends CharacterBody3D
 @export var neck_yaw_clamp_deg: float  = 60.0
 
 @export_group("Walk Animation")
-@export var walk_cycle_speed: float        = 2.5
+## Metres the AI's foot travels per step. The walk cycle advances by exactly
+## PI radians per this distance, so feet plant without sliding at any speed.
+## Tune to match the visual leg length — shorter legs need a smaller value.
+@export var walk_stride_length: float      = 0.65
 @export var walk_leg_swing_amp: float      = 0.45
 @export var walk_knee_bend_amp: float      = 0.4
 @export var walk_arm_swing_amp: float      = 0.35
@@ -106,7 +113,7 @@ extends CharacterBody3D
 
 @export_group("Idle Animation")
 @export var idle_breath_speed: float        = 1.2
-@export var idle_breath_spine_amp: float    = 0.02
+@export var idle_breath_spine_amp: float    = 0.025
 @export var idle_breath_shoulder_amp: float = 0.015
 @export var idle_finger_twitch_chance: float = 0.02
 @export var idle_weight_shift_speed: float  = 0.3
@@ -140,6 +147,9 @@ extends CharacterBody3D
 @export var run_spine_lean: float       = 0.14
 ## Speed at which the blend transitions between walk and run poses (higher = snappier).
 @export var run_blend_speed: float      = 4.0
+## Metres per step while running. Longer than walk_stride_length because
+## each running footfall covers more ground — prevents sliding at hunt speed.
+@export var run_stride_length: float    = 0.90
 
 @export_group("Footfall")
 ## Magnitude of the hip/spine compression on each foot plant.
@@ -639,11 +649,11 @@ func _build_behavior_tree() -> void:
 	])
 
 	# Root Selector tries branches in priority order:
-	#   1. INVESTIGATE_SOUND   — react to loud noise on the same floor
-	#   2. HUNT_PLAYER         — chase the player when close and on same floor
+	#   1. HUNT_PLAYER         — chase the player when close and on same floor
+	#   2. INVESTIGATE_SOUND   — react to loud noise on the same floor
 	#   3. PURSUE_LAST_KNOWN   — walk to the spot where the player last escaped
 	#   4. EXPLORE             — roam idle
-	var root := SelectorNode.new([investigate_seq, hunt_seq, last_known_seq, explore_seq])
+	var root := SelectorNode.new([hunt_seq, investigate_seq, last_known_seq, explore_seq])
 	_behavior_tree.set_root(root)
 
 
@@ -687,7 +697,8 @@ func _condition_should_hunt() -> bool:
 	else:
 		# Not currently hunting — begin only if player is close enough.
 		if dist <= hunt_enter_distance:
-			blackboard["is_hunting"] = true
+			blackboard["is_hunting"]       = true
+			blackboard["has_sound_target"] = false
 			_clear_path()
 			return true
 		return false
@@ -742,12 +753,10 @@ func _action_update_look_detection() -> int:
 ## Pathfinds through the navmesh to the player's position.
 ## Returns RUNNING to keep the hunt branch active every frame.
 func _action_hunt_movement() -> int:
-	if blackboard["is_being_looked_at"]:
+	if weeping_angel_enabled and blackboard["is_being_looked_at"]:
 		# Weeping Angel: completely stop while the player is watching.
 		_current_speed = 0.0
 		return BaseNode.Status.RUNNING
-
-	# Player is not looking — move toward their current position.
 	_current_speed = hunt_speed
 
 	# Recompute path when finished or after the cooldown (player keeps moving).
@@ -774,7 +783,7 @@ func _action_check_caught() -> int:
 ## through to exploration if the player has not re-entered hunt range.
 func _action_pursue_last_known() -> int:
 	# Weeping Angel: freeze while the player is watching.
-	if blackboard["is_being_looked_at"]:
+	if weeping_angel_enabled and blackboard["is_being_looked_at"]:
 		_current_speed = 0.0
 		return BaseNode.Status.RUNNING
 
@@ -800,7 +809,7 @@ func _action_pursue_last_known() -> int:
 func _action_navigate_to_sound() -> int:
 	# Weeping Angel: freeze in place while the player is watching,
 	# even during investigation so the effect applies to all movement.
-	if blackboard["is_being_looked_at"]:
+	if weeping_angel_enabled and blackboard["is_being_looked_at"]:
 		_current_speed = 0.0
 		return BaseNode.Status.RUNNING
 
@@ -878,14 +887,23 @@ func _update_stuck_check(delta: float) -> void:
 		_stuck_sample_elapsed = 0.0
 		_stuck_sample_pos     = global_position
 
-	# Teleport to spawn once stuck time exceeds the threshold.
+	# Teleport to spawn once stuck time exceeds the threshold,
+	# then immediately pick a fresh random explore target so the AI does not
+	# path back toward the same direction that caused the stuck state.
 	if _stuck_timer >= stuck_timeout:
 		_stuck_timer          = 0.0
 		_stuck_sample_elapsed = 0.0
 		_stuck_sample_pos     = _spawn_position
 		global_position       = _spawn_position
 		velocity              = Vector3.ZERO
-		_compute_path_to(_spawn_position)
+		# Clear any stale nav target and cooldown so the next request fires immediately.
+		_clear_path()
+		# Also clear any lingering sound / last-known targets that may have been
+		# pointing toward the problematic location.
+		blackboard["has_sound_target"]      = false
+		blackboard["has_last_known_target"] = false
+		# Pick a brand new random explore point on the navmesh.
+		_pick_explore_target()
 		print("[RW] Stuck reset — teleported to spawn: ", _spawn_position)
 
 
@@ -1199,7 +1217,11 @@ func _update_walk_animation(delta: float) -> void:
 	var xz_speed: float = Vector2(velocity.x, velocity.z).length()
 
 	if xz_speed > 0.05:
-		_walk_cycle      += delta * xz_speed * walk_cycle_speed
+		# Advance the walk cycle by distance, not time, so feet never slide.
+		# PI per step: one full 2π cycle = two footfalls = 2 × stride_length of ground.
+		# Blend stride length toward the longer run value during the hunt.
+		var _blended_stride: float = lerpf(walk_stride_length, run_stride_length, _run_blend_weight)
+		_walk_cycle      += delta * xz_speed * (PI / _blended_stride)
 		_walk_anim_weight = move_toward(_walk_anim_weight, 1.0, walk_blend_in_speed * delta)
 	else:
 		_walk_anim_weight = move_toward(_walk_anim_weight, 0.0, walk_blend_out_speed * delta)
@@ -1386,16 +1408,18 @@ func _update_idle_animation(delta: float) -> void:
 	var breath: float = sin(_idle_time * idle_breath_speed * TAU)
 	var iw: float = idle_weight
 
-	# Breathing — spine chain expands/contracts.
-	var spine_idx: int = _bi("mixamorig_Spine_02")
-	if spine_idx >= 0:
-		_idle_offset_idx(spine_idx, _bone_sagittal_axis[spine_idx], breath * idle_breath_spine_amp * iw)
+	# Breathing — chest only. The lower spine (Spine_02) stays completely still
+	# so the hips and pelvis never rock. Only the mid and upper thoracic bones
+	# move, producing a visible chest rise without full-body rocking.
 	var spine1_idx: int = _bi("mixamorig_Spine1_03")
 	if spine1_idx >= 0:
-		_idle_offset_idx(spine1_idx, _bone_sagittal_axis[spine1_idx], breath * idle_breath_spine_amp * 0.7 * iw)
+		_idle_offset_idx(spine1_idx, _bone_sagittal_axis[spine1_idx], breath * idle_breath_spine_amp * iw)
 	var spine2_idx: int = _bi("mixamorig_Spine2_04")
 	if spine2_idx >= 0:
-		_idle_offset_idx(spine2_idx, _bone_sagittal_axis[spine2_idx], breath * idle_breath_spine_amp * 0.4 * iw)
+		# Sagittal: chest gently pushes forward on inhale.
+		_idle_offset_idx(spine2_idx, _bone_sagittal_axis[spine2_idx], breath * idle_breath_spine_amp * 0.65 * iw)
+		# Lateral: subtle ribcage expansion without exaggerating the pose.
+		_idle_offset_idx(spine2_idx, _bone_lateral_axis[spine2_idx], breath * idle_breath_spine_amp * 0.3 * iw)
 
 	# Shoulders rise/fall with breathing.
 	var l_sh_idx: int = _bi("mixamorig_LeftShoulder_08")
@@ -1405,15 +1429,11 @@ func _update_idle_animation(delta: float) -> void:
 	if r_sh_idx >= 0:
 		_idle_offset_idx(r_sh_idx, _bone_vertical_axis[r_sh_idx], breath * idle_breath_shoulder_amp * iw)
 
-	# Hips — subtle weight shifting side to side.
+	# Hips — subtle weight shifting side to side (natural standing balance).
 	var hips_idx: int = _bi("mixamorig_Hips_01")
 	if hips_idx >= 0:
 		var shift: float = sin(_idle_time * idle_weight_shift_speed * TAU) * idle_weight_shift_amp * iw
 		_idle_offset_idx(hips_idx, _bone_lateral_axis[hips_idx], shift)
-
-	# Hips — subtle vertical breathing bob.
-	if hips_idx >= 0:
-		_idle_offset_idx(hips_idx, _bone_sagittal_axis[hips_idx], breath * 0.01 * iw)
 
 	# Hands — slight wrist fidget.
 	var l_hand_idx: int = _bi("mixamorig_LeftHand_011")
