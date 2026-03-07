@@ -26,6 +26,15 @@ extends Area3D
 const NOISE_THRESHOLD: int = 2
 
 
+# ── Exports ───────────────────────────────────────────────────────────────────
+
+@export_group("Detection")
+## Maximum vertical distance (m) between the AI and the player for noise to
+## register as a valid target.  Set this just below the floor-to-floor height
+## of your level so the AI never reacts to noise coming from a different storey.
+@export var same_floor_y_threshold: float = 2.5
+
+
 # ── State ──────────────────────────────────────────────────────────────────────
 
 ## All player bodies currently inside the detection sphere.
@@ -66,8 +75,15 @@ func _on_body_exited(body: Node3D) -> void:
 ## Updates blackboard["has_sound_target"] and ["last_heard_sound_position"]
 ## if any player inside the zone is making enough noise.
 func check_noise(blackboard: Dictionary) -> void:
+	var ai_y: float = global_position.y
 	for player in _players_in_range:
 		if not is_instance_valid(player):
+			continue
+
+		# Ignore noise from players on a different floor.
+		# global_position.y of this Area3D matches the parent AI's Y closely
+		# enough (no positional offset) to serve as the floor reference.
+		if absf(player.global_position.y - ai_y) > same_floor_y_threshold:
 			continue
 
 		# Use get() so the system degrades gracefully if the property is missing.
@@ -75,9 +91,12 @@ func check_noise(blackboard: Dictionary) -> void:
 				"current_noise_level" in player else 0
 
 		if noise_level >= NOISE_THRESHOLD:
-			blackboard["has_sound_target"]          = true
-			blackboard["last_heard_sound_position"] = player.global_position
-			# Only the loudest first threshold matters per frame; return early.
+			# Lock the position on first detection only.
+			# If we kept updating it the AI would effectively chase the player
+			# rather than investigating the spot where the noise was made.
+			if not blackboard["has_sound_target"]:
+				blackboard["has_sound_target"]          = true
+				blackboard["last_heard_sound_position"] = player.global_position
 			return
 	# No players are loud enough. The sound target is intentionally NOT cleared
 	# here — it persists until the AI investigates and reaches the location.

@@ -45,6 +45,15 @@ extends CharacterBody3D
 @export var catch_distance: float      = 2.0
 ## Distance at which a sound investigation target is considered "reached" (m).
 @export var sound_reach_distance: float = 3.0
+## Maximum vertical distance (m) between the AI and the player before the AI
+## ignores the player entirely.  Set this just below your floor-to-floor height
+## so the AI never hunts a player standing on a different storey.
+@export var same_floor_y_threshold: float = 2.5
+## Maximum distance at which the AI can spot the player through its vision cone (m).
+@export var ai_sight_distance: float = 20.0
+## Dot product threshold for the AI's forward vision cone.
+## 0.3 ≈ 72° half-angle (full ~144° cone).  0.5 ≈ 60°.
+@export var ai_sight_dot_threshold: float = 0.3
 
 @export_group("Movement")
 ## Speed while hunting the player (m/s).
@@ -74,11 +83,14 @@ extends CharacterBody3D
 ## underlying object, so every write here is immediately visible everywhere.
 
 var blackboard: Dictionary = {
-	"last_heard_sound_position": Vector3.ZERO,
-	"distance_to_player":        INF,
-	"is_being_looked_at":        false,
-	"has_sound_target":          false,
-	"is_hunting":                false,
+	"last_heard_sound_position":  Vector3.ZERO,
+	"last_known_player_position": Vector3.ZERO,
+	"distance_to_player":         INF,
+	"is_being_looked_at":         false,
+	"player_visible_to_ai":       false,
+	"has_sound_target":           false,
+	"has_last_known_target":      false,
+	"is_hunting":                 false,
 }
 
 
@@ -161,10 +173,12 @@ func _physics_process(delta: float) -> void:
 
 	_update_blackboard()                    # 1. refresh sensor values
 	_noise_detector.check_noise(blackboard) # 2. poll the sound detector
-	_behavior_tree.tick()                   # 3. evaluate tree (sets speed, sets nav target)
-	_apply_movement(delta)                  # 4. move toward next nav path position
-	move_and_slide()                        # 5. apply velocity with Jolt physics
-	_nav_agent.velocity = velocity          # 6. report actual velocity to nav agent
+	_update_ai_vision()                     # 3. update AI line-of-sight to player
+	_action_update_look_detection()         # 4. always refresh look state before tree ticks
+	_behavior_tree.tick()                   # 5. evaluate tree (sets speed, sets nav target)
+	_apply_movement(delta)                  # 6. move toward next nav path position
+	move_and_slide()                        # 7. apply velocity with Jolt physics
+	_nav_agent.velocity = velocity          # 8. report actual velocity to nav agent
 
 	# ── Throttled debug snapshot ──────────────────────────────────────────────
 	_debug_timer += delta
@@ -175,7 +189,9 @@ func _physics_process(delta: float) -> void:
 		print("  dist_to_player : ", snappedf(blackboard["distance_to_player"], 0.1))
 		print("  is_hunting     : ", blackboard["is_hunting"])
 		print("  is_looked_at   : ", blackboard["is_being_looked_at"])
+		print("  ai_sees_player : ", blackboard["player_visible_to_ai"])
 		print("  has_sound_tgt  : ", blackboard["has_sound_target"])
+		print("  has_last_known : ", blackboard["has_last_known_target"])
 		print("  current_speed  : ", _current_speed)
 		print("  velocity       : ", velocity.snapped(Vector3.ONE * 0.01))
 		print("  on_floor       : ", is_on_floor())
@@ -197,6 +213,45 @@ func _update_blackboard() -> void:
 	)
 
 
+## Updates blackboard["player_visible_to_ai"].
+## The AI can see the player when:
+##   1. Same floor (y difference within same_floor_y_threshold)
+##   2. Within ai_sight_distance
+##   3. Player is inside the AI's forward vision cone (ai_sight_dot_threshold)
+##   4. Unobstructed line of sight (physics raycast hits the player)
+func _update_ai_vision() -> void:
+	if not is_instance_valid(player_node):
+		blackboard["player_visible_to_ai"] = false
+		return
+
+	# Same-floor guard.
+	if absf(player_node.global_position.y - global_position.y) > same_floor_y_threshold:
+		blackboard["player_visible_to_ai"] = false
+		return
+
+	# Range guard.
+	if blackboard["distance_to_player"] > ai_sight_distance:
+		blackboard["player_visible_to_ai"] = false
+		return
+
+	# FOV check: player must be inside the AI's forward cone.
+	var ai_forward: Vector3    = -global_transform.basis.z
+	var dir_to_player: Vector3 = (player_node.global_position - global_position).normalized()
+	if ai_forward.dot(dir_to_player) < ai_sight_dot_threshold:
+		blackboard["player_visible_to_ai"] = false
+		return
+
+	# Line-of-sight raycast from AI torso to player.
+	var space: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
+	var params := PhysicsRayQueryParameters3D.create(
+		global_position,
+		player_node.global_position
+	)
+	params.exclude = [get_rid()]
+	var hit: Dictionary = space.intersect_ray(params)
+	blackboard["player_visible_to_ai"] = hit and hit.get("collider") == player_node
+
+
 # ── Behaviour Tree Construction ───────────────────────────────────────────────
 
 func _build_behavior_tree() -> void:
@@ -204,9 +259,10 @@ func _build_behavior_tree() -> void:
 	# ── HUNT_PLAYER ───────────────────────────────────────────────────────────
 	# Activates when the player is within hunt_enter_distance.
 	# Weeping Angel: the AI freezes while the player's camera is facing it.
+	# Look state is updated in _physics_process before the tree ticks, so it
+	# is current for every branch — including investigate and explore.
 	var hunt_seq := SequenceNode.new([
 		ConditionNode.new(_condition_should_hunt),
-		ActionNode.new(_action_update_look_detection),
 		ActionNode.new(_action_hunt_movement),
 		ActionNode.new(_action_check_caught),
 	])
@@ -224,26 +280,58 @@ func _build_behavior_tree() -> void:
 		ActionNode.new(_action_random_exploration),
 	])
 
-	# Root Selector tries branches in priority order.
-	# INVESTIGATE_SOUND fires before HUNT so the AI goes to a noise position
-	# rather than directly chasing the player when both conditions are active.
-	var root := SelectorNode.new([investigate_seq, hunt_seq, explore_seq])
+	# ── PURSUE_LAST_KNOWN ─────────────────────────────────────────────────────
+	# Activated when hunt mode ends. The AI moves to the player's last seen
+	# position, then falls through to exploration on arrival.
+	var last_known_seq := SequenceNode.new([
+		ConditionNode.new(func() -> bool: return blackboard["has_last_known_target"]),
+		ActionNode.new(_action_pursue_last_known),
+	])
+
+	# Root Selector tries branches in priority order:
+	#   1. INVESTIGATE_SOUND   — react to loud noise on the same floor
+	#   2. HUNT_PLAYER         — chase the player when close and on same floor
+	#   3. PURSUE_LAST_KNOWN   — walk to the spot where the player last escaped
+	#   4. EXPLORE             — roam idle
+	var root := SelectorNode.new([investigate_seq, hunt_seq, last_known_seq, explore_seq])
 	_behavior_tree.set_root(root)
 
 
 # ── Conditions ────────────────────────────────────────────────────────────────
 
 ## Hysteresis gate: engage hunt at <=hunt_enter_distance, hold until >hunt_exit_distance.
-## Prevents the AI from rapidly toggling in/out of hunt at the boundary.
+## Also triggers hunt when the AI directly sees the player (vision cone + raycast),
+## which immediately discards any active noise investigation.
+## A floor guard runs first — the AI never hunts a player on a different storey.
 func _condition_should_hunt() -> bool:
 	var dist: float = blackboard["distance_to_player"]
+
+	# Floor guard: stop hunting and record last known position if the player
+	# is on a different floor.
+	var y_diff: float = absf(player_node.global_position.y - global_position.y)
+	if y_diff > same_floor_y_threshold:
+		if blackboard["is_hunting"]:
+			blackboard["is_hunting"] = false
+			blackboard["last_known_player_position"] = player_node.global_position
+			blackboard["has_last_known_target"] = true
+			_clear_path()
+		return false
+
+	# Vision trigger: AI spots the player inside its FOV — start hunting and
+	# discard any noise target so the chase takes immediate priority.
+	if blackboard["player_visible_to_ai"] and not blackboard["is_hunting"]:
+		blackboard["is_hunting"]       = true
+		blackboard["has_sound_target"] = false
+		_clear_path()
+		return true
 
 	if blackboard["is_hunting"]:
 		# Currently hunting — keep hunting unless the player has escaped far enough.
 		if dist > hunt_exit_distance:
 			blackboard["is_hunting"] = false
+			blackboard["last_known_player_position"] = player_node.global_position
+			blackboard["has_last_known_target"] = true
 			_clear_path()
-			_pick_explore_target()
 			return false
 		return true
 	else:
@@ -260,8 +348,15 @@ func _condition_should_hunt() -> bool:
 ## Weeping Angel logic.
 ## Checks whether the player's camera is directly facing the AI and whether
 ## an unobstructed line of sight exists. Updates blackboard["is_being_looked_at"].
+## The freeze only activates within hunt_enter_distance metres — beyond
+## that the player is too far away for the mechanic to feel intentional.
 ## Always returns SUCCESS — it is a sensor update, not a decision.
 func _action_update_look_detection() -> int:
+	# Distance guard: freeze only applies within the hunt engagement zone.
+	if blackboard["distance_to_player"] > hunt_enter_distance:
+		blackboard["is_being_looked_at"] = false
+		return BaseNode.Status.SUCCESS
+
 	# Lazily refresh the camera reference if it was lost.
 	if not is_instance_valid(_player_camera):
 		_player_camera = player_node.get_node_or_null("Head/Camera3D")
@@ -319,11 +414,43 @@ func _action_check_caught() -> int:
 	return BaseNode.Status.SUCCESS
 
 
+# ── Actions: Pursue Last Known Branch ────────────────────────────────────────
+
+## Navigate to the position where the player was last seen when hunt mode ended.
+## Weeping Angel freeze still applies. Clears the target on arrival and falls
+## through to exploration if the player has not re-entered hunt range.
+func _action_pursue_last_known() -> int:
+	# Weeping Angel: freeze while the player is watching.
+	if blackboard["is_being_looked_at"]:
+		_current_speed = 0.0
+		return BaseNode.Status.RUNNING
+
+	var target: Vector3 = blackboard["last_known_player_position"]
+	_current_speed = investigate_speed
+
+	if _nav_agent.is_navigation_finished() or _can_recompute_path():
+		_compute_path_to(target)
+
+	if global_position.distance_to(target) <= sound_reach_distance:
+		# Reached the last known position — give up and explore.
+		blackboard["has_last_known_target"] = false
+		_pick_explore_target()
+		return BaseNode.Status.SUCCESS
+
+	return BaseNode.Status.RUNNING
+
+
 # ── Actions: Investigate Branch ───────────────────────────────────────────────
 
 ## Navigate toward the last heard sound using the navmesh.
 ## Clears the sound target on arrival (within sound_reach_distance).
 func _action_navigate_to_sound() -> int:
+	# Weeping Angel: freeze in place while the player is watching,
+	# even during investigation so the effect applies to all movement.
+	if blackboard["is_being_looked_at"]:
+		_current_speed = 0.0
+		return BaseNode.Status.RUNNING
+
 	var target: Vector3 = blackboard["last_heard_sound_position"]
 
 	_current_speed = investigate_speed

@@ -6,4 +6,5 @@ assets/
 ./build/
 ./export_presets.cfg
 tmpclaude-*-cwd
+.claude
 NUL
