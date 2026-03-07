@@ -259,7 +259,7 @@ radius = 70.0
 script = ExtResource("1_vovif")
 
 [node name="Skeleton3D" type="Skeleton3D" parent="." unique_id=1509978980]
-transform = Transform3D(0.01, 0, 0, 0, 0.01, 7.549789e-10, 0, -7.549789e-10, 0.01, 0, -0.93, 0)
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 7.549789e-10, 0, -7.549789e-10, 0.01, 0, -1, 0)
 bones/0/name = "_rootJoint"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -757,7 +757,7 @@ shape = SubResource("CapsuleShape3D_7pcws")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=488180980]
 
-[node name="BehaviorTree" type="Node3D" parent="." unique_id=35526427]
+[node name="BehaviorTree" type="Node" parent="." unique_id=178288388]
 script = ExtResource("2_f35ro")
 
 [node name="NoiseDetector" type="Area3D" parent="." unique_id=1645572898]

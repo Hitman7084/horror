@@ -35,9 +35,9 @@ extends CharacterBody3D
 
 @export_group("Detection")
 ## Distance at which the AI begins hunting the player (m).
-@export var hunt_enter_distance: float = 50.0
+@export var hunt_enter_distance: float = 10
 ## Hysteresis distance — AI stops hunting only when player moves beyond this (m).
-@export var hunt_exit_distance: float  = 55.0
+@export var hunt_exit_distance: float  = 15
 ## Camera-to-AI dot product threshold that counts as "being looked at".
 ## 0.6 means the player must be facing within ~53° of the AI.
 @export var look_dot_threshold: float  = 0.6
@@ -57,7 +57,7 @@ extends CharacterBody3D
 
 @export_group("Movement")
 ## Speed while hunting the player (m/s).
-@export var hunt_speed: float        = 3.5
+@export var hunt_speed: float        = 5.5
 ## Speed while investigating a sound (m/s).
 @export var investigate_speed: float = 3.0
 ## Speed while exploring randomly (m/s).
@@ -67,6 +67,112 @@ extends CharacterBody3D
 ## Gravity force applied manually each frame (must match Jolt world gravity).
 @export var gravity_force: float     = 20.0
 
+@export_group("Look Behavior")
+## Radius within which the player triggers the neck/body look-at sequence (m).
+## Separate from hunt_enter_distance — the AI notices the player before hunting.
+@export var look_detect_radius: float  = 15.0
+## Seconds the AI waits after the player enters look_detect_radius before the
+## neck begins moving (the "slow realization" beat).
+@export var neck_track_delay: float    = 1.0
+## Seconds after the neck starts tracking before the body also begins rotating.
+@export var body_track_delay: float    = 1.0
+## Slerp speed factor for neck yaw each physics frame (higher = snappier turn).
+@export var neck_rotation_speed: float = 3.0
+## Lerp speed for body look-at rotation. Keep below rotation_speed so movement
+## direction dominates during navigation.
+@export var body_look_speed: float     = 2.0
+## Half-angle clamp for neck yaw in degrees — prevents unnatural neck poses.
+@export var neck_yaw_clamp_deg: float  = 60.0
+
+@export_group("Walk Animation")
+@export var walk_cycle_speed: float        = 2.5
+@export var walk_leg_swing_amp: float      = 0.45
+@export var walk_knee_bend_amp: float      = 0.4
+@export var walk_arm_swing_amp: float      = 0.35
+@export var walk_elbow_bend_amp: float     = 0.25
+@export var walk_hip_sway_amp: float       = 0.08
+@export var walk_blend_in_speed: float     = 5.0
+@export var walk_blend_out_speed: float    = 4.0
+@export var walk_shoulder_amp: float       = 0.06
+@export var walk_toe_amp: float            = 0.15
+@export var walk_spine1_amp: float         = 0.04
+@export var walk_spine2_amp: float         = 0.03
+@export var walk_hip_bob_amp: float        = 0.03
+@export var walk_finger_curl_amp: float    = 0.1
+## Asymmetry offset in radians added to right leg phase for horror limp.
+@export var walk_asymmetry: float          = 0.15
+## Left arm swings this factor wider than right (1.0 = symmetric).
+@export var walk_left_arm_factor: float    = 1.2
+
+@export_group("Idle Animation")
+@export var idle_breath_speed: float        = 1.2
+@export var idle_breath_spine_amp: float    = 0.02
+@export var idle_breath_shoulder_amp: float = 0.015
+@export var idle_finger_twitch_chance: float = 0.02
+@export var idle_weight_shift_speed: float  = 0.3
+@export var idle_weight_shift_amp: float    = 0.025
+
+@export_group("Ambient Animation")
+@export var ambient_min_interval: float  = 5.0
+@export var ambient_max_interval: float  = 15.0
+@export var ambient_anim_duration: float = 2.0
+
+@export_group("Lunge Animation")
+@export var lunge_duration: float        = 0.6
+@export var lunge_arm_extend_amp: float  = 1.2
+@export var lunge_spine_lean_amp: float  = 0.3
+@export var lunge_finger_spread: float   = 0.4
+
+@export_group("Run Animation")
+## Leg swing amplitude while hunting (larger than walk for aggressive stride).
+@export var run_leg_swing_amp: float    = 0.72
+## Knee lift amplitude while hunting.
+@export var run_knee_bend_amp: float    = 0.65
+## Arm swing amplitude while hunting.
+@export var run_arm_swing_amp: float    = 0.58
+## Elbow bend amplitude while hunting.
+@export var run_elbow_bend_amp: float   = 0.42
+## Hip sway amplitude while hunting.
+@export var run_hip_sway_amp: float     = 0.13
+## Hip vertical bob amplitude while hunting.
+@export var run_hip_bob_amp: float      = 0.06
+## Forward spine lean in radians at full run blend.
+@export var run_spine_lean: float       = 0.14
+## Speed at which the blend transitions between walk and run poses (higher = snappier).
+@export var run_blend_speed: float      = 4.0
+
+@export_group("Footfall")
+## Magnitude of the hip/spine compression on each foot plant.
+@export var footfall_impact_amp: float  = 0.07
+## Decay rate of the impact impulse per second (higher = shorter thud).
+@export var footfall_decay_rate: float  = 10.0
+
+@export_group("Posture")
+## Radians to rotate upper arms down from the T-pose (arm adduction).
+## Positive for left arm; mirrored negative applied to right arm automatically.
+@export var arm_adduction_angle: float    = 0.35
+## Radians to bring shoulder sockets forward (protraction).
+@export var shoulder_protract_angle: float = 0.12
+## Radians of natural resting elbow bend applied to both forearms.
+@export var elbow_rest_bend: float        = 0.10
+
+@export_group("Explore Behavior")
+## ±Degrees of random head yaw during exploration scan.
+@export var explore_head_scan_range_deg: float    = 65.0
+## Lerp speed toward each new scan target (higher = snappier head snap).
+@export var explore_head_scan_speed: float        = 1.2
+## Minimum seconds between random head scan target picks.
+@export var explore_head_scan_min_interval: float = 0.6
+## Maximum seconds between random head scan target picks.
+@export var explore_head_scan_max_interval: float = 2.8
+
+@export_group("Stuck Reset")
+## Minimum metres the AI must travel per 1-second sample window to not be considered stuck.
+## At explore_speed=2.0 m/s the AI covers ~2m in 1s, so 0.3m is a very conservative floor.
+@export var stuck_min_move: float = 0.3
+## Seconds of accumulated stuck time before the AI teleports back to its spawn position.
+@export var stuck_timeout: float = 5.0
+
 
 # ── Node References ────────────────────────────────────────────────────────────
 
@@ -74,6 +180,7 @@ extends CharacterBody3D
 @onready var _behavior_tree:  BehaviorTree      = $BehaviorTree
 @onready var _noise_detector: NoiseDetector     = $NoiseDetector
 @onready var _explore_timer:  Timer             = $ExploreTimer
+@onready var _skeleton:       Skeleton3D        = $Skeleton3D
 
 
 # ── Blackboard ────────────────────────────────────────────────────────────────
@@ -94,6 +201,17 @@ var blackboard: Dictionary = {
 }
 
 
+# ── Look-At State ─────────────────────────────────────────────────────────────
+
+enum LookState {
+	IDLE,           ## Player is outside look_detect_radius — neck at rest
+	DELAY_NECK,     ## Player entered radius; counting down neck_track_delay
+	TRACKING_NECK,  ## Neck rotating toward player; counting down body_track_delay
+	TRACKING_FULL,  ## Neck AND body both rotating toward the player
+	RETURNING,      ## Player exited radius; neck yaw blending back to 0
+}
+
+
 # ── Internal State ────────────────────────────────────────────────────────────
 
 ## Target speed applied this frame. Set by whichever branch is active.
@@ -109,10 +227,111 @@ var _last_path_time: float = -1.0
 ## Minimum seconds between NavigationAgent3D path requests.
 const PATH_COOLDOWN: float = 0.5
 
+# ── Look-At Runtime State ─────────────────────────────────────────────────────
+
+## Current stage of the neck/body look-at sequence.
+var _look_state: LookState          = LookState.IDLE
+## General-purpose timer for delays within the look state machine (seconds).
+var _look_state_timer: float        = 0.0
+## Resolved index of mixamorig_Neck_05. Set in _ready(); -1 = unresolved.
+var _neck_bone_idx: int             = -1
+## T-pose rest rotation of the neck bone, cached once in _ready().
+var _neck_rest_rotation: Quaternion = Quaternion.IDENTITY
+## Yaw (radians) currently applied to the neck bone this frame.
+var _neck_current_yaw: float        = 0.0
+## Desired yaw (radians) toward the player; 0 when not tracking.
+var _neck_target_yaw: float         = 0.0
+## True while TRACKING_FULL is active — read by _apply_movement().
+var _body_look_active: bool         = false
+## World-space yaw angle toward the player for body rotation, updated in TRACKING_FULL.
+var _body_look_target_angle: float  = 0.0
+
+## Neck yaw applied during explore scanning (IDLE look state only).
+var _explore_head_yaw: float        = 0.0
+## Current target yaw for the explore scan.
+var _explore_head_target_yaw: float = 0.0
+## Seconds since the last explore scan target was picked.
+var _explore_head_scan_timer: float = 0.0
+## Seconds until the next explore scan target pick.  Randomised on first tick.
+var _explore_head_scan_next: float  = 0.0
+
+# ── Bone Animation System ─────────────────────────────────────────────────────
+
+## Bone index lookup: bone_name (String) → index (int).
+var _bone_idx: Dictionary = {}
+## Precomputed bone-local axis vectors for world-space sagittal (forward/back) swing.
+var _bone_sagittal_axis: Dictionary = {}
+## Precomputed bone-local axis vectors for world-space lateral (side-to-side) swing.
+var _bone_lateral_axis: Dictionary = {}
+## Precomputed bone-local axis vectors for world-space vertical (up/down) rotation.
+var _bone_vertical_axis: Dictionary = {}
+## T-pose rest rotation per bone index.
+var _bone_rest_quat: Dictionary = {}
+
+## Per-layer offset dictionaries: bone_idx (int) → Quaternion.
+var _walk_offsets: Dictionary = {}
+var _idle_offsets: Dictionary = {}
+var _ambient_offsets: Dictionary = {}
+var _lunge_offsets: Dictionary = {}
+## Constant rest-pose correction applied independent of animation blend weight.
+## Populated once in _ready() via _build_posture_offsets().
+var _posture_offsets: Dictionary = {}
+
+## Walk animation phase and blend weight.
+var _walk_cycle: float       = 0.0
+var _walk_anim_weight: float = 0.0
+## Blend weight: 0 = walk parameters, 1 = run parameters. Driven by hunt state.
+var _run_blend_weight: float = 0.0
+
+## Footfall impact impulses. Set to 1.0 on foot plant, decay to 0.
+var _impact_left: float  = 0.0
+var _impact_right: float = 0.0
+## Previous leg phase values used to detect foot-plant zero-crossings.
+var _prev_left_phase: float  = 0.0
+var _prev_right_phase: float = 0.0
+
+## Idle animation time accumulator.
+var _idle_time: float = 0.0
+## Finger currently twitching (-1 = none).
+var _idle_finger_twitch_bone: int = -1
+## Progress 0→1 of the current finger twitch.
+var _idle_finger_twitch_progress: float = 0.0
+
+## Ambient animation state.
+var _ambient_timer: float       = 0.0
+var _ambient_next_trigger: float = 8.0
+var _ambient_active: bool       = false
+## 0=neck_roll, 1=shoulder_shrug, 2=finger_flex, 3=posture_shift
+var _ambient_type: int          = -1
+var _ambient_progress: float    = 0.0
+## Which hand for finger_flex ambient: 0=left, 1=right
+var _ambient_flex_hand: int     = 0
+
+## Lunge attack state.
+var _lunge_active: bool     = false
+var _lunge_progress: float  = 0.0
+
+## Cached arrays of finger bone indices for quick iteration.
+var _finger_bones_left: Array[int]  = []
+var _finger_bones_right: Array[int] = []
+## Combined left + right finger cache — avoids per-roll allocation in idle twitches.
+var _all_finger_bones: Array[int]   = []
+
+# ── Stuck-Reset State ──────────────────────────────────────────────────────────
+
+## World-space position where this instance spawned — the teleport destination.
+var _spawn_position: Vector3    = Vector3.ZERO
+## Position snapshot taken at the start of the current 1-second sample window.
+var _stuck_sample_pos: Vector3  = Vector3.ZERO
+## Elapsed time within the current sample window.
+var _stuck_sample_elapsed: float = 0.0
+## Seconds of accumulated stuck time while not hunting.
+var _stuck_timer: float         = 0.0
+
 # ── Debug ──────────────────────────────────────────────────────────────────────
 ## Accumulates delta; prints a status snapshot every DEBUG_INTERVAL seconds.
 var _debug_timer: float = 0.0
-const DEBUG_INTERVAL: float = 2.0
+const DEBUG_INTERVAL: float = 5.0
 
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
@@ -163,6 +382,130 @@ func _ready() -> void:
 
 	# Build and activate the behaviour tree.
 	_build_behavior_tree()
+
+	# Resolve and cache the neck bone index for procedural look-at.
+	# find_bone() is used rather than hardcoding index 5 — a skeleton re-import
+	# can change bone ordering, which would silently break a hardcoded index.
+	_neck_bone_idx = _skeleton.find_bone("mixamorig_Neck_05")
+	assert(_neck_bone_idx >= 0,
+		"RitualWatcher: bone 'mixamorig_Neck_05' not found — " +
+		"check skeleton was not re-imported with different bone names.")
+	# Cache the rest rotation: the neck's T-pose anatomical tilt (~6° forward).
+	# This is the neutral orientation we layer yaw on top of.
+	_neck_rest_rotation = _skeleton.get_bone_rest(_neck_bone_idx).basis.get_rotation_quaternion()
+
+	# Resolve ALL skeleton bone indices, rest rotations, and precomputed axes.
+	var _all_bone_names: Array[String] = [
+		"_rootJoint",
+		"mixamorig_Hips_01",
+		"mixamorig_Spine_02",
+		"mixamorig_Spine1_03",
+		"mixamorig_Spine2_04",
+		"mixamorig_Neck_05",
+		"mixamorig_Head_06",
+		"mixamorig_HeadTop_End_07",
+		"mixamorig_LeftShoulder_08",
+		"mixamorig_LeftArm_09",
+		"mixamorig_LeftForeArm_010",
+		"mixamorig_LeftHand_011",
+		"mixamorig_LeftHandThumb1_012",
+		"mixamorig_LeftHandThumb2_013",
+		"mixamorig_LeftHandThumb3_014",
+		"mixamorig_LeftHandThumb4_015",
+		"mixamorig_LeftHandIndex1_016",
+		"mixamorig_LeftHandIndex2_017",
+		"mixamorig_LeftHandIndex3_018",
+		"mixamorig_LeftHandIndex4_019",
+		"mixamorig_LeftHandMiddle1_020",
+		"mixamorig_LeftHandMiddle2_021",
+		"mixamorig_LeftHandMiddle3_022",
+		"mixamorig_LeftHandMiddle4_023",
+		"mixamorig_LeftHandRing1_024",
+		"mixamorig_LeftHandRing2_025",
+		"mixamorig_LeftHandRing3_026",
+		"mixamorig_LeftHandRing4_027",
+		"mixamorig_RightShoulder_028",
+		"mixamorig_RightArm_029",
+		"mixamorig_RightForeArm_030",
+		"mixamorig_RightHand_031",
+		"mixamorig_RightHandThumb1_032",
+		"mixamorig_RightHandThumb2_033",
+		"mixamorig_RightHandThumb3_034",
+		"mixamorig_RightHandThumb4_035",
+		"mixamorig_RightHandIndex1_036",
+		"mixamorig_RightHandIndex2_037",
+		"mixamorig_RightHandIndex3_038",
+		"mixamorig_RightHandIndex4_039",
+		"mixamorig_RightHandMiddle1_040",
+		"mixamorig_RightHandMiddle2_041",
+		"mixamorig_RightHandMiddle3_042",
+		"mixamorig_RightHandMiddle4_043",
+		"mixamorig_RightHandRing1_044",
+		"mixamorig_RightHandRing2_045",
+		"mixamorig_RightHandRing3_046",
+		"mixamorig_RightHandRing4_047",
+		"mixamorig_LeftUpLeg_048",
+		"mixamorig_LeftLeg_049",
+		"mixamorig_LeftFoot_050",
+		"mixamorig_LeftToeBase_051",
+		"mixamorig_RightUpLeg_053",
+		"mixamorig_RightLeg_054",
+		"mixamorig_RightFoot_055",
+		"mixamorig_RightToeBase_00",
+	]
+
+	for bone_name: String in _all_bone_names:
+		var idx: int = _skeleton.find_bone(bone_name)
+		if idx >= 0:
+			_bone_idx[bone_name] = idx
+			_bone_rest_quat[idx] = _skeleton.get_bone_rest(idx).basis.get_rotation_quaternion()
+			var bone_global_basis: Basis = _skeleton.get_bone_global_rest(idx).basis
+			var inv_basis: Basis = bone_global_basis.transposed()
+			_bone_sagittal_axis[idx] = (inv_basis * Vector3.RIGHT).normalized()
+			_bone_lateral_axis[idx]  = (inv_basis * Vector3.FORWARD).normalized()
+			_bone_vertical_axis[idx] = (inv_basis * Vector3.UP).normalized()
+
+	# Cache finger bone arrays for quick iteration by idle/ambient/lunge layers.
+	var _l_finger_names: Array[String] = [
+		"mixamorig_LeftHandThumb1_012", "mixamorig_LeftHandThumb2_013",
+		"mixamorig_LeftHandThumb3_014", "mixamorig_LeftHandThumb4_015",
+		"mixamorig_LeftHandIndex1_016", "mixamorig_LeftHandIndex2_017",
+		"mixamorig_LeftHandIndex3_018", "mixamorig_LeftHandIndex4_019",
+		"mixamorig_LeftHandMiddle1_020", "mixamorig_LeftHandMiddle2_021",
+		"mixamorig_LeftHandMiddle3_022", "mixamorig_LeftHandMiddle4_023",
+		"mixamorig_LeftHandRing1_024", "mixamorig_LeftHandRing2_025",
+		"mixamorig_LeftHandRing3_026", "mixamorig_LeftHandRing4_027",
+	]
+	var _r_finger_names: Array[String] = [
+		"mixamorig_RightHandThumb1_032", "mixamorig_RightHandThumb2_033",
+		"mixamorig_RightHandThumb3_034", "mixamorig_RightHandThumb4_035",
+		"mixamorig_RightHandIndex1_036", "mixamorig_RightHandIndex2_037",
+		"mixamorig_RightHandIndex3_038", "mixamorig_RightHandIndex4_039",
+		"mixamorig_RightHandMiddle1_040", "mixamorig_RightHandMiddle2_041",
+		"mixamorig_RightHandMiddle3_042", "mixamorig_RightHandMiddle4_043",
+		"mixamorig_RightHandRing1_044", "mixamorig_RightHandRing2_045",
+		"mixamorig_RightHandRing3_046", "mixamorig_RightHandRing4_047",
+	]
+	for fn: String in _l_finger_names:
+		if _bone_idx.has(fn):
+			_finger_bones_left.append(_bone_idx[fn])
+	for fn: String in _r_finger_names:
+		if _bone_idx.has(fn):
+			_finger_bones_right.append(_bone_idx[fn])
+
+	_all_finger_bones.append_array(_finger_bones_left)
+	_all_finger_bones.append_array(_finger_bones_right)
+
+	_ambient_next_trigger = randf_range(ambient_min_interval, ambient_max_interval)
+
+	# Build constant rest-pose posture corrections (arm adduction, shoulder protraction).
+	_build_posture_offsets()
+
+	# Record spawn position for stuck-reset teleport destination.
+	_spawn_position       = global_position
+	_stuck_sample_pos     = global_position
+	_stuck_sample_elapsed = 0.0
+
 	print("[RW] _ready() complete. NavigationAgent3D active, behaviour tree built.")
 
 
@@ -177,30 +520,37 @@ func _physics_process(delta: float) -> void:
 	_action_update_look_detection()         # 4. always refresh look state before tree ticks
 	_behavior_tree.tick()                   # 5. evaluate tree (sets speed, sets nav target)
 	_apply_movement(delta)                  # 6. move toward next nav path position
-	move_and_slide()                        # 7. apply velocity with Jolt physics
-	_nav_agent.velocity = velocity          # 8. report actual velocity to nav agent
+	_update_look_at_player(delta)           # 7. look-at state machine (reads final rotation.y)
+	_update_explore_head_scan(delta)        # 8. random neck scan during exploration
+	_apply_neck_look()                      # 9. write neck bone pose from current yaw
+	_update_walk_animation(delta)           # 10. procedural walk/run bone offsets
+	_update_idle_animation(delta)           # 11. breathing, twitches, weight shift
+	_update_ambient_animation(delta)        # 12. random ambient motions
+	_update_lunge_animation(delta)          # 13. lunge attack when catching player
+	_compose_and_apply_all_bones()          # 14. compose all layers and write to skeleton
+	move_and_slide()                        # 15. apply velocity with Jolt physics
+	_nav_agent.velocity = velocity          # 16. report actual velocity to nav agent
+	_update_stuck_check(delta)              # 17. teleport to spawn if stuck while not hunting
 
 	# ── Throttled debug snapshot ──────────────────────────────────────────────
 	_debug_timer += delta
 	if _debug_timer >= DEBUG_INTERVAL:
 		_debug_timer = 0.0
-		print("────────── [RitualWatcher] DEBUG ──────────")
-		print("  ai_position    : ", global_position.snapped(Vector3.ONE * 0.01))
-		print("  dist_to_player : ", snappedf(blackboard["distance_to_player"], 0.1))
-		print("  is_hunting     : ", blackboard["is_hunting"])
-		print("  is_looked_at   : ", blackboard["is_being_looked_at"])
-		print("  ai_sees_player : ", blackboard["player_visible_to_ai"])
-		print("  has_sound_tgt  : ", blackboard["has_sound_target"])
-		print("  has_last_known : ", blackboard["has_last_known_target"])
-		print("  current_speed  : ", _current_speed)
-		print("  velocity       : ", velocity.snapped(Vector3.ONE * 0.01))
-		print("  on_floor       : ", is_on_floor())
-		print("  nav_finished   : ", _nav_agent.is_navigation_finished())
-		var _dbg_path := _nav_agent.get_current_navigation_path()
-		print("  path_size      : ", _dbg_path.size())
-		if _dbg_path.size() > 0:
-			print("  next_path_pos  : ", _nav_agent.get_next_path_position().snapped(Vector3.ONE * 0.01))
-		print("───────────────────────────────────────────")
+		var _dbg_mode: String = (
+			"HUNT"  if blackboard["is_hunting"] else
+			"SOUND" if blackboard["has_sound_target"] else
+			"LASTK" if blackboard["has_last_known_target"] else
+			"ROAM"
+		)
+		print("[RW] %s | dist=%.1fm spd=%.1f | vis:%s frz:%s flr:%s | nav:%dwp" % [
+			_dbg_mode,
+			blackboard["distance_to_player"],
+			_current_speed,
+			"Y" if blackboard["player_visible_to_ai"] else "N",
+			"Y" if blackboard["is_being_looked_at"] else "N",
+			"Y" if is_on_floor() else "N",
+			_nav_agent.get_current_navigation_path().size(),
+		])
 
 
 # ── Blackboard Sensor Update ──────────────────────────────────────────────────
@@ -410,7 +760,10 @@ func _action_hunt_movement() -> int:
 ## Check whether the AI has reached the player and trigger the catch event.
 func _action_check_caught() -> int:
 	if blackboard["distance_to_player"] <= catch_distance:
-		trigger_player_caught.rpc()
+		if not _lunge_active:
+			_lunge_active = true
+			_lunge_progress = 0.0
+			trigger_player_caught.rpc()
 	return BaseNode.Status.SUCCESS
 
 
@@ -483,13 +836,57 @@ func _action_random_exploration() -> int:
 
 
 ## Pick a random point on the baked navmesh as the next exploration target.
+## Always restarts the timer so it is ready when the AI returns to explore.
+## Does NOT set a nav target while a higher-priority behavior holds the path:
+## the ExploreTimer fires unconditionally (including during hunt and freeze),
+## so without this guard it would corrupt the nav target with a random point
+## and reset PATH_COOLDOWN, causing the AI to chase walls for up to 0.5 s.
 func _pick_explore_target() -> void:
+	_explore_timer.wait_time = randf_range(4.0, 8.0)
+	_explore_timer.start()
+	if blackboard["is_hunting"] or blackboard["has_sound_target"] or blackboard["has_last_known_target"]:
+		return
 	var map_rid: RID = get_world_3d().navigation_map
 	var target: Vector3 = NavigationServer3D.map_get_random_point(map_rid, 0xFFFF, false)
 	if target != Vector3.ZERO:
 		_compute_path_to(target)
-	_explore_timer.wait_time = randf_range(4.0, 8.0)
-	_explore_timer.start()
+
+
+## Detects when the AI has not moved for [stuck_timeout] seconds while not hunting
+## and teleports it back to its original spawn position to break the stuck state.
+##
+## Uses a 1-second sample window rather than a per-frame comparison so the check
+## is frame-rate independent and won't false-fire on normal movement speeds.
+func _update_stuck_check(delta: float) -> void:
+	if blackboard["is_hunting"]:
+		# Reset everything so the clock only runs outside hunt mode.
+		_stuck_timer          = 0.0
+		_stuck_sample_elapsed = 0.0
+		_stuck_sample_pos     = global_position
+		return
+
+	_stuck_sample_elapsed += delta
+
+	# Evaluate every ~1 second how far the AI has actually moved.
+	if _stuck_sample_elapsed >= 1.0:
+		var moved: float = global_position.distance_to(_stuck_sample_pos)
+		if moved < stuck_min_move:
+			_stuck_timer += _stuck_sample_elapsed   # genuinely not moving
+		else:
+			_stuck_timer = 0.0                      # moved enough — reset
+
+		_stuck_sample_elapsed = 0.0
+		_stuck_sample_pos     = global_position
+
+	# Teleport to spawn once stuck time exceeds the threshold.
+	if _stuck_timer >= stuck_timeout:
+		_stuck_timer          = 0.0
+		_stuck_sample_elapsed = 0.0
+		_stuck_sample_pos     = _spawn_position
+		global_position       = _spawn_position
+		velocity              = Vector3.ZERO
+		_compute_path_to(_spawn_position)
+		print("[RW] Stuck reset — teleported to spawn: ", _spawn_position)
 
 
 # ── Path Computation ─────────────────────────────────────────────────────────
@@ -526,6 +923,8 @@ func _apply_movement(delta: float) -> void:
 	if _current_speed <= 0.0 or _nav_agent.is_navigation_finished():
 		velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
 		velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
+		if _body_look_active:
+			rotation.y = lerp_angle(rotation.y, _body_look_target_angle, body_look_speed * delta)
 		return
 
 	# Get the next position on the navmesh path.
@@ -549,6 +948,650 @@ func _apply_movement(delta: float) -> void:
 	# Smoothly rotate the AI body to face its direction of travel.
 	var target_angle: float = atan2(flat_dir.x, flat_dir.z)
 	rotation.y = lerp_angle(rotation.y, target_angle, rotation_speed * delta)
+	# Layer a weaker pull toward the player when body look is active.
+	# body_look_speed (2.0) < rotation_speed (5.0) so movement direction dominates.
+	if _body_look_active:
+		rotation.y = lerp_angle(rotation.y, _body_look_target_angle, body_look_speed * delta)
+
+
+# ── Procedural Look-At ───────────────────────────────────────────────────────
+
+## Drives the five-stage neck/body look-at sequence.
+## Runs after _apply_movement() so rotation.y is this frame's final body angle,
+## giving an accurate neck yaw offset with no visible lag.
+func _update_look_at_player(delta: float) -> void:
+	if not is_instance_valid(player_node):
+		_body_look_active = false
+		_neck_target_yaw  = 0.0
+		_neck_current_yaw = lerpf(_neck_current_yaw, 0.0, neck_rotation_speed * delta)
+		return
+
+	var dist: float = blackboard["distance_to_player"]
+
+	match _look_state:
+
+		LookState.IDLE:
+			if dist <= look_detect_radius:
+				_look_state       = LookState.DELAY_NECK
+				_look_state_timer = 0.0
+
+		LookState.DELAY_NECK:
+			if dist > look_detect_radius:
+				# Player left before delay expired — neck never moved, go straight back.
+				_look_state = LookState.IDLE
+				return
+			_look_state_timer += delta
+			if _look_state_timer >= neck_track_delay:
+				_look_state       = LookState.TRACKING_NECK
+				_look_state_timer = 0.0
+
+		LookState.TRACKING_NECK:
+			if dist > look_detect_radius:
+				_look_state = LookState.RETURNING
+				return
+			_neck_target_yaw   = _compute_neck_yaw_to_player()
+			_look_state_timer += delta
+			if _look_state_timer >= body_track_delay:
+				_look_state       = LookState.TRACKING_FULL
+				_look_state_timer = 0.0
+				_body_look_active = true
+
+		LookState.TRACKING_FULL:
+			if dist > look_detect_radius:
+				_look_state       = LookState.RETURNING
+				_body_look_active = false
+				return
+			_body_look_active       = true
+			_neck_target_yaw        = _compute_neck_yaw_to_player()
+			_body_look_target_angle = _compute_body_look_angle()
+
+		LookState.RETURNING:
+			_neck_target_yaw  = 0.0
+			_body_look_active = false
+			if absf(_neck_current_yaw) < deg_to_rad(1.0):
+				_neck_current_yaw = 0.0
+				_look_state = LookState.IDLE
+				# Re-enter delay immediately if the player is still nearby.
+				if dist <= look_detect_radius:
+					_look_state       = LookState.DELAY_NECK
+					_look_state_timer = 0.0
+
+	# Lerp neck yaw toward target every frame regardless of state.
+	# In RETURNING, target is 0 so this naturally blends the neck back to rest.
+	_neck_current_yaw = lerpf(_neck_current_yaw, _neck_target_yaw, neck_rotation_speed * delta)
+
+
+## Returns the signed yaw offset (radians) from the body's current forward to
+## the player direction, clamped to ±neck_yaw_clamp_deg.
+func _compute_neck_yaw_to_player() -> float:
+	var to_player: Vector3 = player_node.global_position - global_position
+	to_player.y = 0.0
+	if to_player.length_squared() < 0.0001:
+		return 0.0
+	to_player = to_player.normalized()
+	# atan2(x, z) produces a world-space yaw consistent with rotation.y convention.
+	var world_angle: float = atan2(to_player.x, to_player.z)
+	# wrapf gives the shortest signed difference, guaranteed in [-PI, PI].
+	var yaw_offset: float  = wrapf(world_angle - rotation.y, -PI, PI)
+	return clampf(yaw_offset, -deg_to_rad(neck_yaw_clamp_deg), deg_to_rad(neck_yaw_clamp_deg))
+
+
+## Returns the world-space yaw angle toward the player for body rotation.
+func _compute_body_look_angle() -> float:
+	var to_player: Vector3 = player_node.global_position - global_position
+	to_player.y = 0.0
+	if to_player.length_squared() < 0.0001:
+		return rotation.y
+	return atan2(to_player.x, to_player.z)
+
+
+## Writes the current neck yaw to the Skeleton3D bone pose.
+##
+## Quaternion math:
+##   goal = yaw_quat * _neck_rest_rotation
+##   Reading right-to-left: first the rest rotation places the neck in its
+##   anatomical ~6° forward tilt (in parent bone space), then yaw_quat rotates
+##   THAT result around the parent/world Y axis by _neck_current_yaw radians.
+##
+##   Order matters: reversing it would yaw around the neck's own tilted local Y,
+##   producing off-axis wobble.
+##
+##   At _neck_current_yaw == 0.0: goal == _neck_rest_rotation — exact T-pose rest,
+##   so the transition back to animation control produces no visible pop.
+func _apply_neck_look() -> void:
+	if _neck_bone_idx < 0:
+		return
+	var yaw: float
+	if _look_state == LookState.IDLE:
+		# In IDLE the player-tracker is inactive; use the explore scan yaw instead.
+		yaw = _explore_head_yaw
+		if absf(yaw) < 0.001:
+			return  # nothing to write; let skeleton render the rest pose
+	else:
+		yaw = _neck_current_yaw
+	var yaw_quat: Quaternion = Quaternion(Vector3.UP, yaw)
+	_skeleton.set_bone_pose_rotation(_neck_bone_idx, yaw_quat * _neck_rest_rotation)
+
+
+## Drives random neck yaw during exploration.
+## Only active when look state is IDLE (no player tracking) and no priority
+## behaviour is running.  Smoothly returns to 0 when any other state engages.
+func _update_explore_head_scan(delta: float) -> void:
+	var active: bool = (
+		_look_state == LookState.IDLE
+		and not blackboard["is_hunting"]
+		and not blackboard["has_sound_target"]
+		and not blackboard["has_last_known_target"]
+	)
+	if not active:
+		_explore_head_yaw = lerpf(_explore_head_yaw, 0.0, neck_rotation_speed * delta)
+		return
+	_explore_head_scan_timer += delta
+	if _explore_head_scan_timer >= _explore_head_scan_next:
+		_explore_head_scan_timer = 0.0
+		_explore_head_scan_next  = randf_range(
+			explore_head_scan_min_interval, explore_head_scan_max_interval
+		)
+		_explore_head_target_yaw = randf_range(
+			-deg_to_rad(explore_head_scan_range_deg),
+			 deg_to_rad(explore_head_scan_range_deg)
+		)
+	_explore_head_yaw = lerpf(
+		_explore_head_yaw, _explore_head_target_yaw, explore_head_scan_speed * delta
+	)
+
+
+# ── Bone Animation Helpers ───────────────────────────────────────────────────
+
+## Shorthand to look up a bone index from its name.
+## Returns -1 if the name was not cached.
+func _bi(bone_name: String) -> int:
+	return _bone_idx.get(bone_name, -1)
+
+
+## Store an idle-layer rotation offset for a bone (by index).
+func _idle_offset_idx(idx: int, axis: Vector3, angle: float) -> void:
+	if idx < 0:
+		return
+	if _idle_offsets.has(idx):
+		_idle_offsets[idx] = _idle_offsets[idx] * Quaternion(axis, angle)
+	else:
+		_idle_offsets[idx] = Quaternion(axis, angle)
+
+
+## Store an ambient-layer rotation offset for a bone (by index).
+func _ambient_offset_idx(idx: int, axis: Vector3, angle: float) -> void:
+	if idx < 0:
+		return
+	if _ambient_offsets.has(idx):
+		_ambient_offsets[idx] = _ambient_offsets[idx] * Quaternion(axis, angle)
+	else:
+		_ambient_offsets[idx] = Quaternion(axis, angle)
+
+
+## Store a lunge-layer rotation offset for a bone (by index).
+func _lunge_offset_idx(idx: int, axis: Vector3, angle: float) -> void:
+	if idx < 0:
+		return
+	if _lunge_offsets.has(idx):
+		_lunge_offsets[idx] = _lunge_offsets[idx] * Quaternion(axis, angle)
+	else:
+		_lunge_offsets[idx] = Quaternion(axis, angle)
+
+
+## Builds the constant rest-pose posture correction dictionary.
+## Called once in _ready() after all bone indices are resolved.
+## Re-call if arm_adduction_angle / shoulder_protract_angle exports are changed.
+func _build_posture_offsets() -> void:
+	_posture_offsets.clear()
+	# Upper arms: adduct from T-pose horizontal toward a natural hang.
+	# _bone_lateral_axis aligns with world -Z; positive angle adducts left arm,
+	# negative angle adducts right arm (opposing T-pose directions).
+	var la: int = _bi("mixamorig_LeftArm_09")
+	if la >= 0:
+		_posture_offsets[la] = Quaternion(_bone_lateral_axis[la],  arm_adduction_angle)
+	var ra: int = _bi("mixamorig_RightArm_029")
+	if ra >= 0:
+		_posture_offsets[ra] = Quaternion(_bone_lateral_axis[ra], -arm_adduction_angle)
+	# Shoulders: protract forward to close the gap between upper arm and torso.
+	# _bone_vertical_axis aligns with world +Y; rotating around it moves the
+	# shoulder tip forward (-Z) for the left side and matching for right.
+	var ls: int = _bi("mixamorig_LeftShoulder_08")
+	if ls >= 0:
+		_posture_offsets[ls] = Quaternion(_bone_vertical_axis[ls],  shoulder_protract_angle)
+	var rs: int = _bi("mixamorig_RightShoulder_028")
+	if rs >= 0:
+		_posture_offsets[rs] = Quaternion(_bone_vertical_axis[rs], -shoulder_protract_angle)
+	# Forearms: slight natural resting elbow bend.
+	var lfa: int = _bi("mixamorig_LeftForeArm_010")
+	if lfa >= 0:
+		_posture_offsets[lfa] = Quaternion(_bone_lateral_axis[lfa],  elbow_rest_bend)
+	var rfa: int = _bi("mixamorig_RightForeArm_030")
+	if rfa >= 0:
+		_posture_offsets[rfa] = Quaternion(_bone_lateral_axis[rfa], -elbow_rest_bend)
+
+
+## Compose all layer offsets and write final bone poses.
+## Neck bone is skipped when owned by the look-at system (not IDLE) or when the
+## explore head scan has active yaw — _apply_neck_look() owns it in those cases.
+func _compose_and_apply_all_bones() -> void:
+	for idx: int in _bone_rest_quat:
+		if idx == _neck_bone_idx and (_look_state != LookState.IDLE or absf(_explore_head_yaw) >= 0.001):
+			continue  # Neck owned by look-at or explore scan; _apply_neck_look() handles it
+		var final_offset: Quaternion = Quaternion.IDENTITY
+		if _walk_offsets.has(idx):
+			final_offset = final_offset * _walk_offsets[idx]
+		if _idle_offsets.has(idx):
+			final_offset = final_offset * _idle_offsets[idx]
+		if _ambient_offsets.has(idx):
+			final_offset = final_offset * _ambient_offsets[idx]
+		if _lunge_offsets.has(idx):
+			final_offset = final_offset * _lunge_offsets[idx]
+		if _posture_offsets.has(idx):
+			final_offset = final_offset * _posture_offsets[idx]
+		_skeleton.set_bone_pose_rotation(idx, _bone_rest_quat[idx] * final_offset)
+
+
+# ── Walk / Run Animation ────────────────────────────────────────────────────
+
+func _update_walk_animation(delta: float) -> void:
+	_walk_offsets.clear()
+	var xz_speed: float = Vector2(velocity.x, velocity.z).length()
+
+	if xz_speed > 0.05:
+		_walk_cycle      += delta * xz_speed * walk_cycle_speed
+		_walk_anim_weight = move_toward(_walk_anim_weight, 1.0, walk_blend_in_speed * delta)
+	else:
+		_walk_anim_weight = move_toward(_walk_anim_weight, 0.0, walk_blend_out_speed * delta)
+
+	# ── Run blend: transitions to run parameters during hunt state ────────
+	var _is_running: bool = blackboard["is_hunting"] and _current_speed > 0.5
+	_run_blend_weight = move_toward(
+		_run_blend_weight, 1.0 if _is_running else 0.0, run_blend_speed * delta
+	)
+	var rw: float = _run_blend_weight
+
+	# Pre-blended amplitude locals — avoids repeating lerp calls per-bone.
+	var _leg_amp:   float = lerpf(walk_leg_swing_amp,  run_leg_swing_amp,   rw)
+	var _knee_amp:  float = lerpf(walk_knee_bend_amp,  run_knee_bend_amp,   rw)
+	var _arm_amp:   float = lerpf(walk_arm_swing_amp,  run_arm_swing_amp,   rw)
+	var _elbow_amp: float = lerpf(walk_elbow_bend_amp, run_elbow_bend_amp,  rw)
+	var _hip_sway_amp_blended: float = lerpf(walk_hip_sway_amp, run_hip_sway_amp, rw)
+	var _hip_bob_amp_blended:  float = lerpf(walk_hip_bob_amp,  run_hip_bob_amp,  rw)
+
+	# Decay footfall impact impulses (runs regardless of walk weight so they finish).
+	_impact_left  = move_toward(_impact_left,  0.0, footfall_decay_rate * delta)
+	_impact_right = move_toward(_impact_right, 0.0, footfall_decay_rate * delta)
+
+	if _walk_anim_weight < 0.001:
+		return
+
+	var w: float = _walk_anim_weight
+	var t: float = _walk_cycle
+
+	# ── Phase values (asymmetric for horror limp) ─────────────────────────
+	var left_leg: float   = sin(t)
+	var right_leg: float  = sin(t + PI + walk_asymmetry)
+	# Contralateral arm swing.
+	var left_arm: float   = right_leg
+	var right_arm: float  = left_leg
+
+	# ── Footfall detection: positive → negative zero-crossing = foot plant ─
+	if left_leg  < 0.0 and _prev_left_phase  >= 0.0:
+		_impact_left  = 1.0
+	if right_leg < 0.0 and _prev_right_phase >= 0.0:
+		_impact_right = 1.0
+	_prev_left_phase  = left_leg
+	_prev_right_phase = right_leg
+
+	# Hip sway (lateral roll).
+	var hip_sway: float   = sin(t) * _hip_sway_amp_blended * w
+	# Hip vertical bob at double frequency.
+	var hip_bob: float    = sin(2.0 * t) * _hip_bob_amp_blended * w
+
+	# Knee bends only during the swing/lift phase.
+	var l_knee: float     = maxf(0.0,  left_leg) * _knee_amp * w
+	var r_knee: float     = maxf(0.0, right_leg) * _knee_amp * w
+	# Foot counter-rotation.
+	var l_foot: float     = -l_knee * 0.5
+	var r_foot: float     = -r_knee * 0.5
+	# Toe push-off.
+	var l_toe: float      = maxf(0.0, -left_leg) * walk_toe_amp * w
+	var r_toe: float      = maxf(0.0, -right_leg) * walk_toe_amp * w
+
+	# Spine chain undulation with progressive phase delay.
+	var spine_sway: float  = -hip_sway * 0.5
+	var spine1_sway: float = sin(t - 0.2) * walk_spine1_amp * w
+	var spine2_sway: float = sin(t - 0.4) * walk_spine2_amp * w
+
+	# Shoulder rise on contralateral step.
+	var l_shoulder_rise: float = maxf(0.0, right_leg) * walk_shoulder_amp * w
+	var r_shoulder_rise: float = maxf(0.0, left_leg) * walk_shoulder_amp * w
+
+	# ── Apply bone offsets using precomputed axes ─────────────────────────
+
+	# Hips: lateral sway + vertical bob + footfall impact compression.
+	var hips_idx: int = _bi("mixamorig_Hips_01")
+	if hips_idx >= 0:
+		var sway_q: Quaternion   = Quaternion(_bone_lateral_axis[hips_idx], hip_sway)
+		var bob_q: Quaternion    = Quaternion(_bone_sagittal_axis[hips_idx], hip_bob)
+		var impact_total: float  = (_impact_left + _impact_right) * footfall_impact_amp * w
+		var impact_q: Quaternion = Quaternion(_bone_sagittal_axis[hips_idx], -impact_total)
+		_walk_offsets[hips_idx] = sway_q * bob_q * impact_q
+
+	# Spine chain (lateral sway + forward lean at run blend weight + footfall spine snap).
+	var impact_spine: float = (_impact_left + _impact_right) * footfall_impact_amp * 0.4 * w
+	var run_lean: float     = run_spine_lean * rw * w
+	var spine_idx: int = _bi("mixamorig_Spine_02")
+	if spine_idx >= 0:
+		var lat_q:    Quaternion = Quaternion(_bone_lateral_axis[spine_idx],   spine_sway)
+		var lean_q:   Quaternion = Quaternion(_bone_sagittal_axis[spine_idx],  run_lean * 0.33 + impact_spine)
+		_walk_offsets[spine_idx] = lat_q * lean_q
+	var spine1_idx: int = _bi("mixamorig_Spine1_03")
+	if spine1_idx >= 0:
+		var lat_q:  Quaternion = Quaternion(_bone_lateral_axis[spine1_idx],  spine1_sway)
+		var lean_q: Quaternion = Quaternion(_bone_sagittal_axis[spine1_idx], run_lean * 0.33)
+		_walk_offsets[spine1_idx] = lat_q * lean_q
+	var spine2_idx: int = _bi("mixamorig_Spine2_04")
+	if spine2_idx >= 0:
+		var lat_q:  Quaternion = Quaternion(_bone_lateral_axis[spine2_idx],  spine2_sway)
+		var lean_q: Quaternion = Quaternion(_bone_sagittal_axis[spine2_idx], run_lean * 0.33)
+		_walk_offsets[spine2_idx] = lat_q * lean_q
+
+	# Left leg chain.
+	var l_upper_idx: int = _bi("mixamorig_LeftUpLeg_048")
+	if l_upper_idx >= 0:
+		_walk_offsets[l_upper_idx] = Quaternion(_bone_sagittal_axis[l_upper_idx], left_leg * _leg_amp * w)
+	var l_knee_idx: int = _bi("mixamorig_LeftLeg_049")
+	if l_knee_idx >= 0:
+		_walk_offsets[l_knee_idx] = Quaternion(_bone_sagittal_axis[l_knee_idx], l_knee)
+	var l_foot_idx: int = _bi("mixamorig_LeftFoot_050")
+	if l_foot_idx >= 0:
+		_walk_offsets[l_foot_idx] = Quaternion(_bone_sagittal_axis[l_foot_idx], l_foot)
+	var l_toe_idx: int = _bi("mixamorig_LeftToeBase_051")
+	if l_toe_idx >= 0:
+		_walk_offsets[l_toe_idx] = Quaternion(_bone_sagittal_axis[l_toe_idx], l_toe)
+
+	# Right leg chain.
+	var r_upper_idx: int = _bi("mixamorig_RightUpLeg_053")
+	if r_upper_idx >= 0:
+		_walk_offsets[r_upper_idx] = Quaternion(_bone_sagittal_axis[r_upper_idx], right_leg * _leg_amp * w)
+	var r_knee_idx: int = _bi("mixamorig_RightLeg_054")
+	if r_knee_idx >= 0:
+		_walk_offsets[r_knee_idx] = Quaternion(_bone_sagittal_axis[r_knee_idx], r_knee)
+	var r_foot_idx: int = _bi("mixamorig_RightFoot_055")
+	if r_foot_idx >= 0:
+		_walk_offsets[r_foot_idx] = Quaternion(_bone_sagittal_axis[r_foot_idx], r_foot)
+	var r_toe_idx: int = _bi("mixamorig_RightToeBase_00")
+	if r_toe_idx >= 0:
+		_walk_offsets[r_toe_idx] = Quaternion(_bone_sagittal_axis[r_toe_idx], r_toe)
+
+	# Shoulders (slight rise on contralateral step + constant forward hunch).
+	var l_sh_idx: int = _bi("mixamorig_LeftShoulder_08")
+	if l_sh_idx >= 0:
+		var rise_q: Quaternion  = Quaternion(_bone_lateral_axis[l_sh_idx], l_shoulder_rise)
+		var hunch_q: Quaternion = Quaternion(_bone_sagittal_axis[l_sh_idx], 0.05 * w)
+		_walk_offsets[l_sh_idx] = rise_q * hunch_q
+	var r_sh_idx: int = _bi("mixamorig_RightShoulder_028")
+	if r_sh_idx >= 0:
+		var rise_q: Quaternion  = Quaternion(_bone_lateral_axis[r_sh_idx], r_shoulder_rise)
+		var hunch_q: Quaternion = Quaternion(_bone_sagittal_axis[r_sh_idx], 0.05 * w)
+		_walk_offsets[r_sh_idx] = rise_q * hunch_q
+
+	# Left arm (contralateral swing — left arm with right leg, swings wider).
+	var l_arm_idx: int = _bi("mixamorig_LeftArm_09")
+	if l_arm_idx >= 0:
+		_walk_offsets[l_arm_idx] = Quaternion(_bone_sagittal_axis[l_arm_idx], left_arm * _arm_amp * walk_left_arm_factor * w)
+	var l_fa_idx: int = _bi("mixamorig_LeftForeArm_010")
+	if l_fa_idx >= 0:
+		_walk_offsets[l_fa_idx] = Quaternion(_bone_sagittal_axis[l_fa_idx], maxf(0.0, left_arm) * _elbow_amp * w)
+
+	# Right arm.
+	var r_arm_idx: int = _bi("mixamorig_RightArm_029")
+	if r_arm_idx >= 0:
+		_walk_offsets[r_arm_idx] = Quaternion(_bone_sagittal_axis[r_arm_idx], right_arm * _arm_amp * w)
+	var r_fa_idx: int = _bi("mixamorig_RightForeArm_030")
+	if r_fa_idx >= 0:
+		_walk_offsets[r_fa_idx] = Quaternion(_bone_sagittal_axis[r_fa_idx], maxf(0.0, right_arm) * _elbow_amp * w)
+
+	# Hands — slight wrist rotation during walk.
+	var l_hand_idx: int = _bi("mixamorig_LeftHand_011")
+	if l_hand_idx >= 0:
+		_walk_offsets[l_hand_idx] = Quaternion(_bone_lateral_axis[l_hand_idx], sin(t) * 0.05 * w)
+	var r_hand_idx: int = _bi("mixamorig_RightHand_031")
+	if r_hand_idx >= 0:
+		_walk_offsets[r_hand_idx] = Quaternion(_bone_lateral_axis[r_hand_idx], sin(t + PI) * 0.05 * w)
+
+	# Fingers curl slightly inward during walk (predatory claw look).
+	var finger_curl: float = walk_finger_curl_amp * w
+	for fidx: int in _finger_bones_left:
+		if _bone_sagittal_axis.has(fidx):
+			_walk_offsets[fidx] = Quaternion(_bone_sagittal_axis[fidx], finger_curl)
+	for fidx: int in _finger_bones_right:
+		if _bone_sagittal_axis.has(fidx):
+			_walk_offsets[fidx] = Quaternion(_bone_sagittal_axis[fidx], finger_curl)
+
+
+# ── Idle Animation ──────────────────────────────────────────────────────────
+
+func _update_idle_animation(delta: float) -> void:
+	_idle_offsets.clear()
+	_idle_time += delta
+
+	# Idle blends inversely with walk: fully active when still, fades during walk.
+	var idle_weight: float = 1.0 - _walk_anim_weight
+	if idle_weight < 0.001:
+		return
+
+	var breath: float = sin(_idle_time * idle_breath_speed * TAU)
+	var iw: float = idle_weight
+
+	# Breathing — spine chain expands/contracts.
+	var spine_idx: int = _bi("mixamorig_Spine_02")
+	if spine_idx >= 0:
+		_idle_offset_idx(spine_idx, _bone_sagittal_axis[spine_idx], breath * idle_breath_spine_amp * iw)
+	var spine1_idx: int = _bi("mixamorig_Spine1_03")
+	if spine1_idx >= 0:
+		_idle_offset_idx(spine1_idx, _bone_sagittal_axis[spine1_idx], breath * idle_breath_spine_amp * 0.7 * iw)
+	var spine2_idx: int = _bi("mixamorig_Spine2_04")
+	if spine2_idx >= 0:
+		_idle_offset_idx(spine2_idx, _bone_sagittal_axis[spine2_idx], breath * idle_breath_spine_amp * 0.4 * iw)
+
+	# Shoulders rise/fall with breathing.
+	var l_sh_idx: int = _bi("mixamorig_LeftShoulder_08")
+	if l_sh_idx >= 0:
+		_idle_offset_idx(l_sh_idx, _bone_vertical_axis[l_sh_idx], breath * idle_breath_shoulder_amp * iw)
+	var r_sh_idx: int = _bi("mixamorig_RightShoulder_028")
+	if r_sh_idx >= 0:
+		_idle_offset_idx(r_sh_idx, _bone_vertical_axis[r_sh_idx], breath * idle_breath_shoulder_amp * iw)
+
+	# Hips — subtle weight shifting side to side.
+	var hips_idx: int = _bi("mixamorig_Hips_01")
+	if hips_idx >= 0:
+		var shift: float = sin(_idle_time * idle_weight_shift_speed * TAU) * idle_weight_shift_amp * iw
+		_idle_offset_idx(hips_idx, _bone_lateral_axis[hips_idx], shift)
+
+	# Hips — subtle vertical breathing bob.
+	if hips_idx >= 0:
+		_idle_offset_idx(hips_idx, _bone_sagittal_axis[hips_idx], breath * 0.01 * iw)
+
+	# Hands — slight wrist fidget.
+	var l_hand_idx: int = _bi("mixamorig_LeftHand_011")
+	if l_hand_idx >= 0:
+		_idle_offset_idx(l_hand_idx, _bone_lateral_axis[l_hand_idx], sin(_idle_time * 0.8) * 0.03 * iw)
+	var r_hand_idx: int = _bi("mixamorig_RightHand_031")
+	if r_hand_idx >= 0:
+		_idle_offset_idx(r_hand_idx, _bone_lateral_axis[r_hand_idx], sin(_idle_time * 0.6) * 0.03 * iw)
+
+	# Feet — subtle weight shifting.
+	var l_foot_idx: int = _bi("mixamorig_LeftFoot_050")
+	if l_foot_idx >= 0:
+		_idle_offset_idx(l_foot_idx, _bone_lateral_axis[l_foot_idx], sin(_idle_time * idle_weight_shift_speed * TAU + PI * 0.5) * 0.01 * iw)
+	var r_foot_idx: int = _bi("mixamorig_RightFoot_055")
+	if r_foot_idx >= 0:
+		_idle_offset_idx(r_foot_idx, _bone_lateral_axis[r_foot_idx], sin(_idle_time * idle_weight_shift_speed * TAU - PI * 0.5) * 0.01 * iw)
+
+	# Random finger micro-twitches.
+	if _idle_finger_twitch_bone < 0:
+		# No active twitch — roll for a new one.
+		if randf() < idle_finger_twitch_chance:
+			if _all_finger_bones.size() > 0:
+				_idle_finger_twitch_bone = _all_finger_bones[randi() % _all_finger_bones.size()]
+				_idle_finger_twitch_progress = 0.0
+	else:
+		# Advance the current twitch.
+		_idle_finger_twitch_progress += delta * 4.0
+		if _idle_finger_twitch_progress >= 1.0:
+			_idle_finger_twitch_bone = -1
+		else:
+			# Quick curl then release (sin peak at 0.5).
+			var twitch_angle: float = sin(_idle_finger_twitch_progress * PI) * 0.3 * iw
+			if _bone_sagittal_axis.has(_idle_finger_twitch_bone):
+				_idle_offset_idx(_idle_finger_twitch_bone, _bone_sagittal_axis[_idle_finger_twitch_bone], twitch_angle)
+
+	# Head micro-tremor (only when look-at is idle).
+	if _look_state == LookState.IDLE:
+		var head_idx: int = _bi("mixamorig_Head_06")
+		if head_idx >= 0:
+			var tremor_x: float = sin(_idle_time * 3.7) * 0.008 * iw
+			var tremor_z: float = sin(_idle_time * 2.3) * 0.005 * iw
+			_idle_offset_idx(head_idx, _bone_sagittal_axis[head_idx], tremor_x)
+			_idle_offset_idx(head_idx, _bone_lateral_axis[head_idx], tremor_z)
+
+
+# ── Ambient Animation ───────────────────────────────────────────────────────
+
+func _update_ambient_animation(delta: float) -> void:
+	_ambient_offsets.clear()
+
+	# Suppressed during lunge.
+	if _lunge_active:
+		return
+
+	if not _ambient_active:
+		_ambient_timer += delta
+		if _ambient_timer >= _ambient_next_trigger:
+			_ambient_active = true
+			_ambient_progress = 0.0
+			_ambient_timer = 0.0
+			# Pick a random ambient type. Skip neck_roll if look-at is active.
+			var choices: Array[int] = [1, 2, 3]  # shoulder_shrug, finger_flex, posture_shift
+			if _look_state == LookState.IDLE:
+				choices.append(0)  # neck_roll allowed
+			_ambient_type = choices[randi() % choices.size()]
+			if _ambient_type == 2:
+				_ambient_flex_hand = randi() % 2
+		return
+
+	_ambient_progress += delta / ambient_anim_duration
+	if _ambient_progress >= 1.0:
+		_ambient_active = false
+		_ambient_next_trigger = randf_range(ambient_min_interval, ambient_max_interval)
+		return
+
+	# Smooth envelope: ease in and out.
+	var envelope: float = sin(_ambient_progress * PI)
+
+	match _ambient_type:
+		0:  # Neck roll: left → center → right → center
+			var neck_idx: int = _bi("mixamorig_Neck_05")
+			if neck_idx >= 0 and _look_state == LookState.IDLE:
+				var roll_angle: float = sin(_ambient_progress * TAU) * 0.15 * envelope
+				_ambient_offset_idx(neck_idx, _bone_lateral_axis[neck_idx], roll_angle)
+
+		1:  # Shoulder shrug: both shoulders rise then lower.
+			var l_sh_idx: int = _bi("mixamorig_LeftShoulder_08")
+			var r_sh_idx: int = _bi("mixamorig_RightShoulder_028")
+			var shrug: float = envelope * 0.1
+			if l_sh_idx >= 0:
+				_ambient_offset_idx(l_sh_idx, _bone_vertical_axis[l_sh_idx], shrug)
+			if r_sh_idx >= 0:
+				_ambient_offset_idx(r_sh_idx, _bone_vertical_axis[r_sh_idx], shrug)
+
+		2:  # Finger flex: one hand curls closed then open.
+			var hand_fingers: Array[int] = _finger_bones_left if _ambient_flex_hand == 0 else _finger_bones_right
+			var curl: float = envelope * 0.35
+			for fidx: int in hand_fingers:
+				if _bone_sagittal_axis.has(fidx):
+					_ambient_offset_idx(fidx, _bone_sagittal_axis[fidx], curl)
+
+		3:  # Posture shift: hips shift laterally, spine compensates.
+			var hips_idx: int = _bi("mixamorig_Hips_01")
+			var spine_idx: int = _bi("mixamorig_Spine_02")
+			var shift: float = envelope * 0.06
+			if hips_idx >= 0:
+				_ambient_offset_idx(hips_idx, _bone_lateral_axis[hips_idx], shift)
+			if spine_idx >= 0:
+				_ambient_offset_idx(spine_idx, _bone_lateral_axis[spine_idx], -shift * 0.7)
+
+
+# ── Lunge Attack Animation ──────────────────────────────────────────────────
+
+func _update_lunge_animation(delta: float) -> void:
+	_lunge_offsets.clear()
+
+	if not _lunge_active:
+		return
+
+	_lunge_progress += delta / lunge_duration
+	if _lunge_progress >= 1.0:
+		_lunge_active = false
+		return
+
+	# Fast attack (ease-in over first 30%), slow retract (ease-out).
+	var attack_env: float
+	if _lunge_progress < 0.3:
+		attack_env = smoothstep(0.0, 0.3, _lunge_progress)
+	else:
+		attack_env = smoothstep(1.0, 0.3, _lunge_progress)
+
+	# Spine chain leans forward.
+	for sn: String in ["mixamorig_Spine_02", "mixamorig_Spine1_03", "mixamorig_Spine2_04"]:
+		var idx: int = _bi(sn)
+		if idx >= 0:
+			_lunge_offset_idx(idx, _bone_sagittal_axis[idx], lunge_spine_lean_amp * attack_env * 0.5)
+
+	# Hips thrust forward.
+	var hips_idx: int = _bi("mixamorig_Hips_01")
+	if hips_idx >= 0:
+		_lunge_offset_idx(hips_idx, _bone_sagittal_axis[hips_idx], lunge_spine_lean_amp * attack_env * 0.3)
+
+	# Both shoulders roll forward aggressively.
+	for sn: String in ["mixamorig_LeftShoulder_08", "mixamorig_RightShoulder_028"]:
+		var idx: int = _bi(sn)
+		if idx >= 0:
+			_lunge_offset_idx(idx, _bone_sagittal_axis[idx], 0.3 * attack_env)
+
+	# Arms extend forward.
+	for sn: String in ["mixamorig_LeftArm_09", "mixamorig_RightArm_029"]:
+		var idx: int = _bi(sn)
+		if idx >= 0:
+			_lunge_offset_idx(idx, _bone_sagittal_axis[idx], lunge_arm_extend_amp * attack_env)
+
+	# Forearms straighten.
+	for sn: String in ["mixamorig_LeftForeArm_010", "mixamorig_RightForeArm_030"]:
+		var idx: int = _bi(sn)
+		if idx >= 0:
+			_lunge_offset_idx(idx, _bone_sagittal_axis[idx], lunge_arm_extend_amp * 0.6 * attack_env)
+
+	# Hands flex.
+	for sn: String in ["mixamorig_LeftHand_011", "mixamorig_RightHand_031"]:
+		var idx: int = _bi(sn)
+		if idx >= 0:
+			_lunge_offset_idx(idx, _bone_sagittal_axis[idx], 0.2 * attack_env)
+
+	# Fingers spread open then clench during attack.
+	var finger_angle: float
+	if _lunge_progress < 0.3:
+		finger_angle = -lunge_finger_spread * attack_env  # Spread open
+	else:
+		finger_angle = lunge_finger_spread * attack_env  # Clench
+	for fidx: int in _finger_bones_left:
+		if _bone_sagittal_axis.has(fidx):
+			_lunge_offset_idx(fidx, _bone_sagittal_axis[fidx], finger_angle)
+	for fidx: int in _finger_bones_right:
+		if _bone_sagittal_axis.has(fidx):
+			_lunge_offset_idx(fidx, _bone_sagittal_axis[fidx], finger_angle)
 
 
 # ── Multiplayer ───────────────────────────────────────────────────────────────
