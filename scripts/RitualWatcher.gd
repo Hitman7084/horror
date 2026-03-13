@@ -39,9 +39,9 @@ extends CharacterBody3D
 ## When false the AI ignores whether the player is looking and always moves.
 @export var weeping_angel_enabled: bool = false
 ## Distance at which the AI begins hunting the player (m).
-@export var hunt_enter_distance: float = 70
+@export var hunt_enter_distance: float = 20
 ## Hysteresis distance — AI stops hunting only when player moves beyond this (m).
-@export var hunt_exit_distance: float  = 75
+@export var hunt_exit_distance: float  = 25
 ## Camera-to-AI dot product threshold that counts as "being looked at".
 ## 0.6 means the player must be facing within ~53° of the AI.
 @export var look_dot_threshold: float  = 0.6
