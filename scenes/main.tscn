@@ -23,11 +23,16 @@ background_color = Color(0.039215688, 0.039215688, 0.07058824, 1)
 ambient_light_source = 2
 ambient_light_energy = 0.2
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_jyhfs"]
-size = Vector2(700, 700)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_tbgi4"]
-size = Vector3(700, 0.1, 700)
+[sub_resource type="ArrayMesh" id="ArrayMesh_muem4"]
+_surfaces = [{
+"aabb": AABB(-350, -0.05, -350, 700, 0.1, 700),
+"attribute_data": PackedByteArray("q6oqPwAAgD+rqio/AAAAP5yFRj++4ks/q6oqPwAAgD+chUY/vuJLPzvjRj++4ks/q6oqPwAAgD8740Y/vuJLPwAAgD8AAAA/AACAPwAAAD+rqio/AAAAPwAAgD8AAAAAq6oqPwAAAD+chUY/4MlKP5yFRj++4ks/q6oqPwAAAD8740Y/4MlKP5yFRj/gyUo/AAAAAAAAgD+rqqo+AAAAP6uqqj4AAIA/q6oqPwAAAD8AAIA/AAAAPzvjRj/gyUo/AAAAAAAAgD8AAAAAAAAAP6uqqj4AAAA/q6oqPwAAgD+6zw4/vuJLP6uqKj8AAAA/q6oqPwAAgD8bcg4/vuJLP7rPDj++4ks/q6oqPwAAgD+rqqo+AACAPxtyDj++4ks/q6oqPwAAAD8bcg4/4MlKP6uqqj4AAIA/q6oqPwAAAD+6zw4/vuJLP7rPDj/gyUo/q6oqPwAAAD+6zw4/4MlKPxtyDj/gyUo/AAAAAAAAAD8AAAAAAAAAAKuqqj4AAAAAq6oqPwAAgD8AAIA/AAAAPwAAgD8AAIA/q6oqPwAAAD+rqqo+AAAAP6uqKj8AAAAAAACAPwAAAD8740Y/vuJLPzvjRj/gyUo/AAAAAAAAAD+rqqo+AAAAAKuqqj4AAAA/AACAPwAAAACrqio/AAAAP6uqKj8AAAAAq6qqPgAAgD8bcg4/4MlKPxtyDj++4ks/q6oqPwAAAD+rqqo+AACAP6uqqj4AAAA/q6qqPgAAAD+rqqo+AAAAAKuqKj8AAAAAq6oqPwAAAD8AAIA/AAAAPwAAgD8AAAAAq6qqPgAAgD+rqqo+AAAAPwAAAAAAAIA/q6oqPwAAAD+rqio/AAAAAKuqqj4AAAA/AAAAAAAAAD+rqqo+AAAAP6uqqj4AAAAAAAAAAAAAAD8AAAAAAACAP6uqqj4AAAA/AAAAAAAAAAAAAAAAAAAAP6uqqj4AAAAAq6oqPwAAAD8AAIA/AAAAAKuqKj8AAAAAq6qqPgAAAACrqqo+AAAAP6uqKj8AAAAA"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 96,
+"vertex_data": PackedByteArray("AACvw83MTL0AAK/DAACvw83MTL0AAK9DAADzws3MTL0AAILCAACvw83MTL0AAK/DAADzws3MTL0AAILCAADtws3MTL0AAILCAACvw83MTL0AAK/DAADtws3MTL0AAILCAACvQ83MTL0AAK9DAACvw83MTL0AAK/DAACvQ83MTL0AAK/DAACvw83MTD0AAK/DAACvw83MTL0AAK9DAADzws3MTL0AAGzCAADzws3MTL0AAILCAACvw83MTL0AAK9DAADtws3MTL0AAGzCAADzws3MTL0AAGzCAACvw83MTL0AAK/DAACvw83MTD0AAK9DAACvw83MTL0AAK9DAACvw83MTL0AAK9DAACvQ83MTL0AAK9DAADtws3MTL0AAGzCAACvw83MTL0AAK/DAACvw83MTD0AAK/DAACvw83MTD0AAK9DAACvw83MTD0AAK/DAADzws3MTD0AAILCAACvw83MTD0AAK9DAACvw83MTD0AAK/DAADtws3MTD0AAILCAADzws3MTD0AAILCAACvw83MTD0AAK/DAACvQ83MTD0AAK/DAADtws3MTD0AAILCAACvw83MTD0AAK9DAADtws3MTD0AAGzCAACvQ83MTD0AAK/DAACvw83MTD0AAK9DAADzws3MTD0AAILCAADzws3MTD0AAGzCAACvw83MTD0AAK9DAADzws3MTD0AAGzCAADtws3MTD0AAGzCAACvw83MTL0AAK9DAACvw83MTD0AAK9DAACvQ83MTD0AAK9DAACvw83MTL0AAK/DAACvQ83MTL0AAK9DAACvQ83MTL0AAK/DAACvQ83MTL0AAK/DAACvQ83MTL0AAK9DAACvQ83MTD0AAK/DAACvQ83MTL0AAK9DAADtws3MTL0AAILCAADtws3MTL0AAGzCAACvw83MTL0AAK9DAACvQ83MTD0AAK9DAACvQ83MTL0AAK9DAACvw83MTD0AAK/DAACvQ83MTL0AAK/DAACvQ83MTD0AAK/DAACvQ83MTD0AAK/DAADtws3MTD0AAGzCAADtws3MTD0AAILCAACvw83MTD0AAK9DAACvQ83MTD0AAK/DAACvQ83MTD0AAK9DAACvQ83MTL0AAK9DAACvQ83MTD0AAK9DAACvQ83MTD0AAK/DAADtws3MTL0AAILCAADzws3MTL0AAILCAADzws3MTD0AAILCAADzws3MTL0AAGzCAADzws3MTD0AAGzCAADzws3MTL0AAILCAADtws3MTL0AAILCAADtws3MTD0AAILCAADtws3MTL0AAGzCAADzws3MTL0AAGzCAADtws3MTL0AAGzCAADtws3MTD0AAGzCAADzws3MTD0AAILCAADzws3MTL0AAILCAADzws3MTD0AAGzCAADzws3MTD0AAGzCAADzws3MTL0AAGzCAADtws3MTD0AAGzCAADtws3MTL0AAILCAADzws3MTD0AAILCAADtws3MTD0AAILCAADtws3MTD0AAGzCAADtws3MTL0AAGzCAADtws3MTD0AAILC/38AAP///7//fwAA////v/9/AAD+//+//38AAP///7//fwAA/v//v/9/AAD///+//38AAP///7//fwAA////v/9/AAD///+//////wAA/7//////AAD/v/////8AAP+//38AAP///7//fwAA/v//v/9/AAD+//+//38AAP///7//fwAA////v/9/AAD+//+/AAD/f/9//78AAP9//3//vwAA/3//f/+//38AAP///7//fwAA////v/9/AAD///+/AAD/f/9//78AAP9//3//vwAA/3//f/+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3//f////7//f/9/////v/9//3////+//38AAP///7//fwAA////v/9/AAD///+/////f/////////9//////////3///////38AAP///7//fwAA////v/9/AAD///+//3//f////7//f/9/////v/9//3////+//////wAA/7//////AAD/v/////8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/////f/////////9//////////3///////3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//z////9//3//P////3//f/8/AAD/f///AAAAAP9///8AAAAA/3///wAA/////////z//////////P/////////8/////f/9//z////9//3//P////3//f/8//////////z//////////P/////////8//3//fwAA/z//f/9/AAD/P/9//38AAP8/AAD/f///AAAAAP9///8AAAAA/3///wAA")
+}]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pj6mf"]
 resource_name = "muretdroitmat"
@@ -286,13 +291,8 @@ volume_db = -8.0
 
 [node name="OutsideBoundary" type="Node3D" parent="." unique_id=1307619359]
 
-[node name="Ground" type="MeshInstance3D" parent="OutsideBoundary" unique_id=1185400219]
-mesh = SubResource("PlaneMesh_jyhfs")
-
-[node name="GroundCollision" type="StaticBody3D" parent="OutsideBoundary" unique_id=1808074258]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="OutsideBoundary/GroundCollision" unique_id=1831546974]
-shape = SubResource("BoxShape3D_tbgi4")
+[node name="Ground" type="MeshInstance3D" parent="OutsideBoundary" unique_id=1202319385]
+mesh = SubResource("ArrayMesh_muem4")
 
 [node name="OutsideWalls" type="Node3D" parent="OutsideBoundary" unique_id=1539136102]
 
@@ -2197,4 +2197,4 @@ light_energy = 2.0
 shadow_enabled = true
 
 [node name="Mansion" parent="." unique_id=116153108 instance=ExtResource("17_dp3eg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -30)
