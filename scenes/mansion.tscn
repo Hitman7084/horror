@@ -759,6 +759,21 @@ shadow_mesh = SubResource("ArrayMesh_0eh0k")
 [sub_resource type="BoxShape3D" id="BoxShape3D_5gmoe"]
 size = Vector3(1, 2.5, 2.2)
 
+[sub_resource type="BoxMesh" id="BoxMesh_1k5ql"]
+size = Vector3(0.3, 20, 230)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mgusg"]
+size = Vector3(0.3, 20, 230)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vwu2c"]
+size = Vector3(270, 20, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vjkd7"]
+size = Vector3(15, 10, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qlyod"]
+size = Vector3(270, 20, 0.3)
+
 [node name="Mansion" type="Node3D" unique_id=116153108]
 
 [node name="MoonLight" type="DirectionalLight3D" parent="." unique_id=1447115917]
@@ -1446,7 +1461,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -3.9, -10)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, -3.9, -90)
 
 [node name="BasementCeiling" type="Node3D" parent="." unique_id=794757617]
-visible = false
 
 [node name="Ceiling1" type="StaticBody3D" parent="BasementCeiling" unique_id=1598817989]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
@@ -1584,3 +1598,38 @@ stream = ExtResource("5_85jle")
 
 [node name="Player" parent="GroundFloor/Stairs" unique_id=638567615 groups=["player"] instance=ExtResource("1_t0213")]
 transform = Transform3D(1, 0, 0, 0, 1, 3.5527137e-15, 0, -3.5527137e-15, 1, 3, 7.5, 4)
+
+[node name="GroundWalls" type="Node3D" parent="GroundFloor" unique_id=574470199]
+
+[node name="Wall1" type="CSGCombiner3D" parent="GroundFloor/GroundWalls" unique_id=37807968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.3, 10, 0)
+use_collision = true
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="GroundFloor/GroundWalls/Wall1" unique_id=456887224]
+mesh = SubResource("BoxMesh_1k5ql")
+
+[node name="Wall2" type="CSGCombiner3D" parent="GroundFloor/GroundWalls" unique_id=343427462]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -131.3, 10, 0)
+use_collision = true
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="GroundFloor/GroundWalls/Wall2" unique_id=568368667]
+mesh = SubResource("BoxMesh_mgusg")
+
+[node name="Wall3" type="CSGCombiner3D" parent="GroundFloor/GroundWalls" unique_id=674203260]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 10, 114.8)
+use_collision = true
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="GroundFloor/GroundWalls/Wall3" unique_id=2038971998]
+mesh = SubResource("BoxMesh_vwu2c")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="GroundFloor/GroundWalls/Wall3" unique_id=708921482]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+operation = 2
+mesh = SubResource("BoxMesh_vjkd7")
+
+[node name="Wall4" type="CSGCombiner3D" parent="GroundFloor/GroundWalls" unique_id=574243518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 10, -114.8)
+use_collision = true
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="GroundFloor/GroundWalls/Wall4" unique_id=1101909628]
+mesh = SubResource("BoxMesh_qlyod")
